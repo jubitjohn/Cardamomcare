@@ -27,8 +27,8 @@ const diseases = [
   },
 ];
 
-const DiseaseScreen = ({navigation,route}) => {
-  const { selectedImage } = route.params;
+const DiseaseScreen = ({navigation}) => {
+  // const { selectedImage } = route.params;
   const [selectedDisease, setSelectedDisease] = useState(diseases[0]);
 
   const handleDiseaseSelect = disease => {
@@ -42,7 +42,7 @@ const DiseaseScreen = ({navigation,route}) => {
     <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Image
-          source={{ uri: selectedImage }} 
+          source={require('../assets/background.jpg')} 
           style={styles.headerImage}
         />
         <View style={styles.card}>

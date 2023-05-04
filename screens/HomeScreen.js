@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import {ActionSheet} from 'react-native-actionsheet';
-import * as ImagePicker from 'expo-image-picker';
-import ImagePickerExample from './test';
-
+import React, { useState, useEffect } from "react";
+import { ActionSheet } from "react-native-actionsheet";
+import * as ImagePicker from "expo-image-picker";
+import ImagePickerExample from "./test";
 
 import {
   View,
@@ -13,17 +12,17 @@ import {
   StyleSheet,
   Button,
   ActionSheetIOS,
-} from 'react-native';
+} from "react-native";
 
-const HomeScreen = ({navigation}) => {
-  const [selectedCrop, setSelectedCrop] = useState('');
+const HomeScreen = ({ navigation }) => {
+  const [selectedCrop, setSelectedCrop] = useState("");
 
-  const handleCropSelection = crop => {
+  const handleCropSelection = (crop) => {
     setSelectedCrop(crop);
   };
   const [weatherData, setWeatherData] = useState(null);
 
-  const pressHandler = value => {
+  const pressHandler = (value) => {
     navigation.navigate(value);
   };
   useEffect(() => {
@@ -32,14 +31,11 @@ const HomeScreen = ({navigation}) => {
 
   const fetchWeatherData = async () => {
     const response = await fetch(
-      'https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid={API key}',
+      "https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid={API key}"
     );
     const data = await response.json();
     setWeatherData(data);
   };
-  
-
-  
 
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -47,51 +43,38 @@ const HomeScreen = ({navigation}) => {
         <View style={styles.cropSelectorContainer}>
           <View style={styles.cropsection}>
             <TouchableOpacity
-              onPress={() => handleCropSelection('Potato')}
+              onPress={() => handleCropSelection("Potato")}
               style={[
                 styles.cropSelectorButton,
-                selectedCrop === 'Potato' && styles.selectedCropButton,
-              ]}>
+                selectedCrop === "Potato" && styles.selectedCropButton,
+              ]}
+            >
               <Text
                 style={[
                   styles.cropSelectorButtonText,
-                  selectedCrop === 'Potato' && styles.selectedCropButtonText,
-                ]}>
-                Potato
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.cropsection}>
-            <TouchableOpacity
-              onPress={() => handleCropSelection('Cucumber')}
-              style={[
-                styles.cropSelectorButton,
-                selectedCrop === 'Cucumber' && styles.selectedCropButton,
-              ]}>
-              <Text
-                style={[
-                  styles.cropSelectorButtonText,
-                  selectedCrop === 'Cucumber' && styles.selectedCropButtonText,
-                ]}>
-                Cucumber
+                  selectedCrop === "Potato" && styles.selectedCropButtonText,
+                ]}
+              >
+                Cardamom
               </Text>
             </TouchableOpacity>
           </View>
         </View>
         <View style={styles.cropScreenContainer}>
-          {selectedCrop === '' && (
+          {selectedCrop === "" && (
             <View style={styles.placeholderContainer}>
               <Text style={styles.placeholderText}>
                 Please select a crop to start.
               </Text>
             </View>
           )}
-          {selectedCrop === 'Potato' && (
+          {selectedCrop === "Potato" && (
             <View style={[styles.cropScreenContainer]}>
               <View style={[styles.cropServiceScreen]}>
                 <TouchableOpacity
                   style={styles.serviceComponents}
-                  onPress={() => pressHandler('DiseaseScreen')}>
+                  onPress={() => pressHandler("DiseaseScreen")}
+                >
                   <View>
                     <Text style={styles.serviceContainerText}>
                       Fertilizer Calculator
@@ -100,7 +83,8 @@ const HomeScreen = ({navigation}) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.serviceComponents}
-                  onPress={() => pressHandler('pest_control')}>
+                  onPress={() => pressHandler("pest_control")}
+                >
                   <View>
                     <Text style={styles.serviceContainerText}>
                       Pet&Controls
@@ -109,7 +93,8 @@ const HomeScreen = ({navigation}) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.serviceComponents}
-                  onPress={() => pressHandler('cardamomtips')}>
+                  onPress={() => pressHandler("cardamomtips")}
+                >
                   <View>
                     <Text style={styles.serviceContainerText}>
                       Cultivation Tipss
@@ -117,7 +102,7 @@ const HomeScreen = ({navigation}) => {
                   </View>
                 </TouchableOpacity>
               </View>
-              <View>
+              <View style={styles.HealCropContainer}>
                 <View style={styles.HealCropTextContainer}>
                   <Text style={styles.HealCropText}>Heal Your Crop</Text>
                 </View>
@@ -134,12 +119,15 @@ const HomeScreen = ({navigation}) => {
                       <Text>Get Medicine</Text>
                     </View>
                   </View>
-                  <ImagePickerExample />
+                  <View style={styles.innerBox}>
+                    <ImagePickerExample />
+                  </View>
+                 
                 </View>
               </View>
             </View>
           )}
-          {selectedCrop === 'Cucumber' && (
+          {selectedCrop === "Cucumber" && (
             <View style={styles.cropServiceScreen}>
               <Text style={styles.cropScreenTitle}>Cucumber Screen</Text>
               <View style={styles.serviceComponents}>
@@ -178,150 +166,153 @@ const HomeScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   scrollViewContent: {
     flexGrow: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
   },
   cropSelectorContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     borderRadius: 50,
-    marginBottom: -10,
+    marginBottom: 10,
     marginTop: 10,
   },
   cropsection: {
-    borderRadius: 30,
-    borderWidth: 1,
-    padding: 10,
-    borderBottomEndRadius: 10,
+    borderRadius: 13,
+    flex: 1,
+    backgroundColor: "#F0F0F0",
+    margin: 10,
+    height: 40,
   },
   cropSelectorButton: {
-    paddingHorizontal: 16,
     paddingVertical: 8,
-    borderRadius: 10,
-    borderWidth: 1,
-    width: 60,
-    padding: 30,
-    height: 60,
-    borderColor: '#DDDDDD',
+    borderRadius: 13,
+    width: "30%",
+    height: 40,
+    justifyContent: "center", // center text horizontally
+    alignItems: "center", // center text vertically
   },
 
   pestandControl: {
-    width: '100%',
+    width: "100%",
     height: 140,
-    backgroundColor: 'red',
+    backgroundColor: "red",
   },
   selectedCropButton: {
-    backgroundColor: '#90EE90',
-    borderBottomEndRadius: 10,
+    backgroundColor: "#0B3104",
+    color: "white",
+  },
+  selectedCropButtonText: {
+    color: "white",
   },
   cropScreenContainer: {
-    flexDirection: 'column',
+    flexDirection: "column",
     flex: 1,
-    borderWidth: 1,
-    backgroundColor: '#90EE90',
-    borderTopRightRadius: 30,
-    alignItems: 'center',
+    alignItems: "center",
   },
   cropSelectorButtonText: {
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   serviceContainerText: {
     fontSize: 16,
-    fontWeight: '500',
-    color: '#333333',
+    fontWeight: "500",
+    color: "#333333",
   },
   DiseaseDetectionContainer: {
-    width: '100%',
+    width: "100%",
     height: 180,
     borderWidth: 3,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     margin: 0,
-    backgroundColor: '#90EE90',
-    flexWrap: 'wrap',
+    backgroundColor: "#90EE90",
+    flexWrap: "wrap",
   },
   cropServiceScreen: {
-    borderTopRightRadius: 50,
-
-    borderWidth: 0.5,
-    flexDirection: 'row',
+    margin:10,
+    borderRadius: 20,
+    backgroundColor:'#0B310417',
+    flexDirection: "row",
   },
   serviceComponents: {
-    flex: 1,
-    marginTop: 25,
-    margin: 10,
-    height: 90,
+    flex:1,
+    margin: 5,
+    marginTop:25,
+    marginBottom:25,
+    height: 95,
+    borderWidth: 1,
+    borderColor:'#CFCECE',
     padding: 10,
-    borderRadius: 10,
-    borderWidth: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'grey',
+    borderRadius: 13,
+
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: '',
+  },
+  HealCropContainer:{
+    flex:1,
+    
   },
   HealCropTextContainer: {
-    marginTop: 10,
-    padding: 10,
-    borderWidth: 1,
+    marginTop: 5,
+    margin:5,
+    padding: 0,
   },
   HealCropText: {
     padding: 1,
     fontSize: 16,
-    fontWeight: 'bold',
-    color: 'black',
-    textAlign: 'left',
-    textTransform: 'uppercase',
-    letterSpacing: 1.5,
+    fontWeight: "bold",
+    color: "black",
+    textAlign: "left",
+    textTransform: "uppercase",
+    letterSpacing: 1.3,
     lineHeight: 24,
   },
   outerBox: {
-    alignItems: 'center',
-    borderWidth: 1,
-    margin: 10,
-    justifyContent: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    borderColor: '#000',
-    borderRadius: 15,
-    height: 190,
-    shadowColor: 'black',
+    backgroundColor: "#0B3104",
+    borderColor: "#0B3104",
+    borderRadius: 20,
+    height: 201,
+    shadowColor: "black",
     shadowOffset: {
       width: 0,
       height: 4,
     },
     shadowOpacity: 0.8,
     shadowRadius: 4,
-    elevation: 5,
+
   },
   innerBox: {
-    borderWidth: 1,
+    
+    
     padding: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   subBox: {
-    margin: 10,
+    margin: 15,
     borderWidth: 1,
-    height: 50,
-    justifyContent: 'center',
-    borderColor: 'black',
+    height: 83,
+    justifyContent: "center",
+    borderColor: "black",
     borderRadius: 15,
     marginVertical: 5,
-    backgroundColor: '#ddd',
+    backgroundColor: "#ddd",
   },
   weatherSection: {
     marginTop: 40,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   weatherContainer: {
     flex: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
     padding: 10,
     marginTop: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: 'black',
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "black",
     shadowOffset: {
       width: 0,
       height: 4,
@@ -332,7 +323,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 8,
   },
   weatherText: {

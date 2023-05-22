@@ -7,6 +7,8 @@ import pest_control from "../screens/pest_control";
 import cardamomtips from "../screens/cardamomtips";
 import DiseaseScreen from "../screens/diseaseScreen";
 import AppointmentScreen from "../screens/appointments";
+import ImagePickerExample from "../screens/test";
+import resultScreen from "../screens/resultScreen";
 
 const screens = {
   Home: {
@@ -30,6 +32,13 @@ const screens = {
   },
   AppointmentScreen: {
     screen: AppointmentScreen,
+  },
+  Imagepick: {
+    screen: ImagePickerExample,
+  },
+  resultScreen:{
+    screen:resultScreen
+
   },
   DiseaseScreen: {
     screen: DiseaseScreen,

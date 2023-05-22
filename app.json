@@ -1,5 +1,13 @@
 {
   "expo": {
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
+        }
+      ]
+    ],
     "name": "Cardamomcare",
     "slug": "Cardamomcare",
     "version": "1.0.0",
@@ -15,12 +23,20 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Your description here",
+        "NSMicrophoneUsageDescription": "Your description here"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+        "permissions": [
+          "CAMERA",
+          "RECORD_AUDIO"
+        ]
       }
     },
     "web": {

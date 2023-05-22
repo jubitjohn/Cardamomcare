@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { ActionSheet } from "react-native-actionsheet";
 import * as ImagePicker from "expo-image-picker";
 import ImagePickerExample from "./test";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 import {
   View,
@@ -31,7 +35,7 @@ const HomeScreen = ({ navigation }) => {
 
   const fetchWeatherData = async () => {
     const response = await fetch(
-      "https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid={API key}"
+      "https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=da0620f67a528e9ba837c2296c9a4cd5"
     );
     const data = await response.json();
     setWeatherData(data);
@@ -73,9 +77,15 @@ const HomeScreen = ({ navigation }) => {
               <View style={[styles.cropServiceScreen]}>
                 <TouchableOpacity
                   style={styles.serviceComponents}
-                  onPress={() => pressHandler("DiseaseScreen")}
+                  onPress={() => pressHandler("FertilizerCalulator")}
                 >
                   <View>
+                    <FontAwesome5
+                      name="calculator"
+                      size={24}
+                      color="#0B3104"
+                      style={styles.serviceComponentsicons}
+                    />
                     <Text style={styles.serviceContainerText}>
                       Fertilizer Calculator
                     </Text>
@@ -86,16 +96,30 @@ const HomeScreen = ({ navigation }) => {
                   onPress={() => pressHandler("pest_control")}
                 >
                   <View>
+                    <View style={{ flex: 1, justifyContent: "center" }}>
+                      <MaterialCommunityIcons
+                        name="virus"
+                        size={24}
+                        color="#0B3104"
+                        style={styles.serviceComponentsicons}
+                      />
+                    </View>
                     <Text style={styles.serviceContainerText}>
-                      Pet&Controls
+                      Pests & Controls
                     </Text>
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.serviceComponents}
-                  onPress={() => pressHandler("cardamomtips")}
+                  onPress={() => pressHandler("resultScreen")}
                 >
-                  <View>
+                  <View style={styles.serviceComponentsView}>
+                    <Entypo
+                      name="leaf"
+                      size={24}
+                      color="#0B3104"
+                      style={styles.serviceComponentsicons}
+                    />
                     <Text style={styles.serviceContainerText}>
                       Cultivation Tipss
                     </Text>
@@ -110,46 +134,85 @@ const HomeScreen = ({ navigation }) => {
                 <View style={styles.outerBox}>
                   <View style={styles.innerBox}>
                     <View style={styles.subBox}>
-                      <Text>Upload Image</Text>
+                      <Ionicons name="ios-camera" size={54} color="white" />
+                      <Text style={styles.subBoxtext}>Upload Image</Text>
                     </View>
                     <View style={styles.subBox}>
-                      <Text>Get Diagonis</Text>
+                      <MaterialCommunityIcons
+                        name="magnify-scan"
+                        size={54}
+                        color="white"
+                      />
+                      <Text style={styles.subBoxtext}>Get Diagonis</Text>
                     </View>
                     <View style={styles.subBox}>
-                      <Text>Get Medicine</Text>
+                      <View>
+                        <MaterialCommunityIcons
+                          name="leaf-circle"
+                          size={54}
+                          color="white"
+                        />
+                      </View>
+                      <View>
+                        <Text style={styles.subBoxtext}>Get Medicine</Text>
+                      </View>
                     </View>
                   </View>
-                  <View style={styles.innerBox}>
-                    <ImagePickerExample />
+                  <View style={styles.innerCameraBox}>
+                    <TouchableOpacity
+                      style={styles.cameraButton}
+                      onPress={() => pressHandler("Imagepick")}
+                    >
+                      <View>
+                       
+                        <Text style={styles.cameraButtonText}>
+                         Take a picture
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
                   </View>
-                 
                 </View>
               </View>
             </View>
           )}
-          {selectedCrop === "Cucumber" && (
-            <View style={styles.cropServiceScreen}>
-              <Text style={styles.cropScreenTitle}>Cucumber Screen</Text>
-              <View style={styles.serviceComponents}>
-                <Text style={styles.serviceContainerText}>
-                  Fertilizer Calculator
+          <View style={styles.consultationBox}>
+            <View style={styles.consultationContainer}>
+              <View style={styles.consultationTextContainer}>
+                <Text style={styles.consultationBoxText}>
+                  Book your <Text style={styles.freeText}>FREE</Text>{" "}
+                  consultation {"\n"}
+                  now!
                 </Text>
               </View>
+              <View style={styles.bookingButtonContainer}>
+                <TouchableOpacity style={styles.bookingButton}>
+                  <Text style={styles.consultationBoxButtonText}>Book</Text>
+                </TouchableOpacity>
+                <View>
+                  <FontAwesome5
+                    name="leaf"
+                    size={114}
+                    color="green"
+                    style={styles.consultationBoxButtonIcon}
+                  />
+                </View>
+              </View>
             </View>
-          )}
+          </View>
+
           <View style={styles.weatherSection}>
             <View style={styles.weatherContainer}>
               <Text style={styles.headerText}>Weather Update</Text>
               {weatherData ? (
                 <>
                   <Text style={styles.weatherText}>
-                    Current temperature: {weatherData.temp}
+                    Current temperature: {weatherData.main.temp}
                   </Text>
                   <Text style={styles.weatherText}>
-                    Humidity: {weatherData.humidity}
+                    Humidity: {weatherData.main.humidity}
                   </Text>
                   <Text style={styles.weatherText}>
-                    Wind speed: {weatherData.speed}
+                    Wind speed: {weatherData.main.speed}
                   </Text>
                 </>
               ) : (
@@ -178,6 +241,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
   },
+
   cropsection: {
     borderRadius: 13,
     flex: 1,
@@ -187,11 +251,18 @@ const styles = StyleSheet.create({
   },
   cropSelectorButton: {
     paddingVertical: 8,
-    borderRadius: 13,
-    width: "30%",
-    height: 40,
-    justifyContent: "center", // center text horizontally
-    alignItems: "center", // center text vertically
+  borderRadius: 13,
+  width: "30%",
+  height: 40,
+  justifyContent: "center", // center text horizontally
+  alignItems: "center", // center text vertically
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 3,
+    height: 0,
+  },
+  shadowOpacity: 0.5,
+  shadowRadius: 2,
   },
 
   pestandControl: {
@@ -217,6 +288,7 @@ const styles = StyleSheet.create({
   },
   serviceContainerText: {
     fontSize: 16,
+    textAlign: "center",
     fontWeight: "500",
     color: "#333333",
   },
@@ -231,33 +303,42 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   cropServiceScreen: {
-    margin:10,
+    margin: 10,
     borderRadius: 20,
-    backgroundColor:'#0B310417',
+    backgroundColor: "#0B310417",
     flexDirection: "row",
   },
   serviceComponents: {
-    flex:1,
+    flex: 1,
+    backgroundColor: "#FFFFFF",
     margin: 5,
-    marginTop:25,
-    marginBottom:25,
+    marginTop: 25,
+    marginBottom: 25,
     height: 95,
     borderWidth: 1,
-    borderColor:'#CFCECE',
+    borderColor: "#CFCECE",
     padding: 10,
     borderRadius: 13,
-
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: '',
+    shadowColor: "#000",
+  shadowOffset: {
+    width: 2,
+    height: 5,
   },
-  HealCropContainer:{
-    flex:1,
-    
+  shadowOpacity: 0.5,
+  shadowRadius: 2,
+  },
+  serviceComponentsicons: {
+    alignSelf: "center",
+    justifyContent: "center",
+  },
+  HealCropContainer: {
+    flex: 1,
   },
   HealCropTextContainer: {
     marginTop: 5,
-    margin:5,
+    margin: 5,
     padding: 0,
   },
   HealCropText: {
@@ -282,25 +363,99 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.8,
     shadowRadius: 4,
-
   },
   innerBox: {
-    
-    
     padding: 10,
     flexDirection: "row",
-    justifyContent: "space-between",
   },
   subBox: {
     margin: 15,
-    borderWidth: 1,
     height: 83,
-    justifyContent: "center",
-    borderColor: "black",
     borderRadius: 15,
     marginVertical: 5,
-    backgroundColor: "#ddd",
+    alignItems: "center",
   },
+  subBoxtext: {
+    color: "white",
+  },
+  cameraButton:{
+    height:42,
+    width:'80%',
+    justifyContent:'center',
+    alignItems:'center',
+    backgroundColor:"#046AE1",
+    borderRadius:18,
+    marginTop:10,
+    
+
+  },
+  innerCameraBox:{
+    
+    justifyContent:'center',
+    alignItems:'center',
+  },
+  
+  cameraButtonText:{
+    justifyContent:'center',
+    alignItems:'center',
+    color:'white',
+    fontSize:20,
+    fontWeight:500,
+  },
+
+  consultationBox: {
+    marginTop: 28,
+    margin: 10,
+    borderRadius: 20,
+    flexDirection: "row",
+    height: 170,
+    backgroundColor: "#0B310417",
+  },
+  consultationContainer: {
+    flex: 1,
+
+    flexDirection: "column",
+  },
+  consultationTextContainer: {
+    padding: 10,
+    margin: 10,
+    justifyContent: "center",
+  },
+  freeText: {
+    color: "green",
+    fontWeight: "bold",
+  },
+  consultationBoxText: {
+    fontSize: 23,
+    color: "black",
+    fontWeight: 500,
+  },
+  bookingButton: {
+    backgroundColor: "#046AE1",
+    width: "50%",
+    height: "48%",
+    margin: 15,
+    justifyContent: "center",
+
+    borderRadius: 18,
+    marginLeft: 18,
+  },
+  consultationBoxButtonText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: 700,
+    padding: 5,
+    textAlign: "center",
+  },
+  bookingButtonContainer: {
+    flexDirection: "row",
+  },
+  consultationBoxButtonIcon: {
+    position: "absolute",
+    top: -45,
+    left: 17,
+  },
+
   weatherSection: {
     marginTop: 40,
     flexDirection: "row",

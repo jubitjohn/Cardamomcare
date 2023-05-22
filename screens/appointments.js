@@ -28,7 +28,7 @@ const AppointmentScreen = () => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
+      <Image source={backgroundImage} style={styles.backgroundImage}>
         <Text style={styles.title}>Make an Appointment</Text>
         <View style={styles.inputContainer}>
           <TextInput
@@ -45,7 +45,7 @@ const AppointmentScreen = () => {
             <Text style={styles.buttonText}>Submit Appointment</Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
+      </Image>
     </View>
   );
 };

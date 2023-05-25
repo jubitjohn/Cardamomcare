@@ -106,8 +106,10 @@
 
 import { Camera, CameraType } from "expo-camera";
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
-import { Image, Animated } from "react-native";
+import { Image, Animated, ActivityIndicator } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
 import {
   Modal,
   Button,
@@ -116,22 +118,28 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import * as Animatable from "react-native-animatable";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import * as FileSystem from "expo-file-system";
+
 import * as ImageManipulator from "expo-image-manipulator";
-import resultScreen from "./resultScreen";
-import { useNavigation } from "@react-navigation/native";
+
 
 export default function ImagePickerExample({ navigation }) {
+  const Stack = createStackNavigator();
+  const animateIconRef = useRef(null);
+  const iconSize = 25;
+  const iconColor = "white";
+  const loadingText = "Detecting Crop";
+
+  
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [photo, setPhoto] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [imageUri, setImageUri] = useState(null);
-  const [predictionResult, setPredictionResult] = useState(null);
+  
   const [isLoading, setIsLoading] = useState(false);
-  const [overlayOpacity] = useState(new Animated.Value(0));
+  
 
   let cameraRef = null;
 
@@ -222,19 +230,9 @@ export default function ImagePickerExample({ navigation }) {
     return manipulatedPhoto.uri;
   };
 
-  
-
   const sendImageToApi = async (photoUri) => {
     try {
       setIsLoading(true);
-
-      // Show the dark overlay with animation
-      Animated.timing(overlayOpacity, {
-        toValue: 0.3,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-      
       const resizedPhotoUri = await reducePhotoSize(photoUri);
       const formData = new FormData();
       formData.append("image", {
@@ -255,27 +253,34 @@ export default function ImagePickerExample({ navigation }) {
         }
       );
 
-      // Handle the API response here
-      setIsLoading(true);
-
       const data = await response.json();
-      res = data.predictions[0].tagName;
-      navigation.navigate("resultScreen", { res });
+      result = data.predictions[0].tagName;
+      setTimeout(() => {
+        // Code to be executed after the delay
+        console.log("Delayed execution");
+
+        // Call your function or perform the desired actions here
+        navigation.navigate("resultScreen", {res: result});
+      }, 2000); // Delay of 2000 milliseconds (2 seconds)
+      animateIconRef.current?.swing(2000);
 
       console.log(data.predictions[0].tagName);
+      console.log(data.predictions[0].probability);
     } catch (error) {
       console.error(error);
     } finally {
-      // Hide the dark overlay after API response
-      Animated.timing(overlayOpacity, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
+      setTimeout(() => {
+        // Code to be executed after the delay
+        console.log("Delayed execution");
 
-      setIsLoading(false);
+        // Call your function or perform the desired actions here
+        setIsLoading(false);
+      }, 2000);
+      // Hide the dark overlay after API response
     }
   };
+
+  
 
   return (
     <View style={styles.container}>
@@ -284,6 +289,21 @@ export default function ImagePickerExample({ navigation }) {
           <Image source={photo} style={styles.previewImage} />
           <Button title="Retake" onPress={() => setPhoto(null)} />
           <Button title="Diagnose" onPress={() => handleTakePhoto()} />
+          {isLoading && (
+            <View style={styles.overlay}>
+              <View style={styles.overlayContent}>
+                <Animatable.View ref={animateIconRef}>
+                  <FontAwesome5
+                    name="leaf"
+                    size={iconSize}
+                    color={iconColor}
+                  />
+                </Animatable.View>
+                
+                <Text style={styles.loadingText}>{loadingText}</Text>
+              </View>
+            </View>
+          )}
         </View>
       )}
 
@@ -565,5 +585,21 @@ const styles = StyleSheet.create({
   dot14: {
     top: "30%",
     left: "680%",
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  overlayContent: {
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  loadingText: {
+    color: "white",
+    marginTop: 10,
   },
 });

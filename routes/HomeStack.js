@@ -1,5 +1,6 @@
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
+import { withNavigation } from "react-navigation";
 import HomeScreen from "../screens/HomeScreen";
 import Profile from "../screens/Profile";
 import FertilizerCalulator from "../screens/FertilizerCal";
@@ -8,7 +9,7 @@ import cardamomtips from "../screens/cardamomtips";
 import DiseaseScreen from "../screens/diseaseScreen";
 import AppointmentScreen from "../screens/appointments";
 import ImagePickerExample from "../screens/test";
-import resultScreen from "../screens/resultScreen";
+import ResultScreen from "../screens/ResultScreen";
 
 const screens = {
   Home: {
@@ -36,9 +37,12 @@ const screens = {
   Imagepick: {
     screen: ImagePickerExample,
   },
-  resultScreen:{
-    screen:resultScreen
-
+  ResultScreen: {
+    screen: ResultScreen,
+    navigationOptions: {
+      headerTitle: "Result",
+      headerTitleAlign: "left",
+    },
   },
   DiseaseScreen: {
     screen: DiseaseScreen,

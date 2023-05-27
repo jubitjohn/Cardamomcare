@@ -1,109 +1,3 @@
-// import React, { useState } from "react";
-// import { View, Text, Button, Image, Platform, StyleSheet, TouchableOpacity } from "react-native";
-// import * as ImagePicker from "expo-image-picker";
-// import Constants from "expo-constants";
-// import * as Permissions from "expo-permissions";
-// import { MaterialIcons } from '@expo/vector-icons';
-
-// const ImagePickerExample = ({navigation}) => {
-//   const [selectedImage, setSelectedImage] = useState(null);
-//   const navigateToDifferentPage = image => {
-//     navigation.navigate("DiseaseScreen", { selectedImage: image });
-//   };
-
-//   const pickImage = async () => {
-//     try {
-//       if (Platform.OS !== "web") {
-//         const { status } =
-//           await ImagePicker.requestMediaLibraryPermissionsAsync();
-//         if (status !== "granted") {
-//           alert("Sorry, we need media library permissions to make this work!");
-//           return;
-//         }
-//       }
-
-//       let result = await ImagePicker.launchImageLibraryAsync({
-//         mediaTypes: ImagePicker.MediaTypeOptions.All,
-//         allowsEditing: true,
-//         aspect: [4, 3],
-//         quality: 1,
-//       });
-
-//       if (!result.cancelled) {
-//         navigateToDifferentPage(result.uri);
-//         setSelectedImage(result.uri);
-
-//       }
-//     } catch (error) {
-//       console.log("Error when picking image: ", error);
-//     }
-//   };
-
-//   const takeImage = async () => {
-//     try {
-//       if (Platform.OS !== "web") {
-//         const { status } = await Permissions.askAsync(
-//           Permissions.CAMERA,
-//           Permissions.MEDIA_LIBRARY
-//         );
-//         if (status !== "granted") {
-//           alert(
-//             "Sorry, we need camera and media library permissions to make this work!"
-//           );
-//           return;
-//         }
-//       }
-
-//       let result = await ImagePicker.launchCameraAsync({
-//         mediaTypes: ImagePicker.MediaTypeOptions.All,
-//         allowsEditing: true,
-//         aspect: [4, 3],
-//         quality: 1,
-//       });
-
-//       if (!result.cancelled) {
-//         setSelectedImage(result.uri);
-//       }
-//     } catch (error) {
-//       console.log("Error when taking image: ", error);
-//     }
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <TouchableOpacity style={styles.imageButtons}><Button  title="Pick an image from camera roll" onPress={pickImage} /></TouchableOpacity>
-//       <TouchableOpacity ><Button title="Take a photo" onPress={takeImage}  /></TouchableOpacity>
-
-//       <View>{selectedImage && (
-//         <Image source={{ uri: selectedImage }} style={styles.image} />
-//       )}</View>
-
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     alignItems: "center",
-//     justifyContent: "center",
-//     backgroundColor: "rgba(11, 49, 4, 0)",
-
-//   },
-//   image: {
-//     width: 200,
-//     height: 200,
-//     resizeMode: "contain",
-//   },
-//   imageButtons:{
-//     backgroundColor:'#046AE1',
-//     borderRadius:20,
-//     padding:2,
-//   },
-// });
-
-// export default ImagePickerExample;
-
 import { Camera, CameraType } from "expo-camera";
 import { useState, useEffect, useRef } from "react";
 import { Image, Animated, ActivityIndicator } from "react-native";
@@ -124,7 +18,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 import * as ImageManipulator from "expo-image-manipulator";
 
-
 export default function ImagePickerExample({ navigation }) {
   const Stack = createStackNavigator();
   const animateIconRef = useRef(null);
@@ -132,14 +25,12 @@ export default function ImagePickerExample({ navigation }) {
   const iconColor = "white";
   const loadingText = "Detecting Crop";
 
-  
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [photo, setPhoto] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  
+
   const [isLoading, setIsLoading] = useState(false);
-  
 
   let cameraRef = null;
 
@@ -231,6 +122,7 @@ export default function ImagePickerExample({ navigation }) {
   };
 
   const sendImageToApi = async (photoUri) => {
+    result ="test"
     try {
       setIsLoading(true);
       const resizedPhotoUri = await reducePhotoSize(photoUri);
@@ -254,24 +146,30 @@ export default function ImagePickerExample({ navigation }) {
       );
 
       const data = await response.json();
-      result = data.predictions[0].tagName;
-      setTimeout(() => {
-        // Code to be executed after the delay
-        console.log("Delayed execution");
-
-        // Call your function or perform the desired actions here
-        navigation.navigate("resultScreen", {res: result});
-      }, 2000); // Delay of 2000 milliseconds (2 seconds)
+      result = await data.predictions[0].tagName;
+      
+      
+     
       animateIconRef.current?.swing(2000);
 
       console.log(data.predictions[0].tagName);
+      console.log("Result Value",result);
       console.log(data.predictions[0].probability);
+      setTimeout(() => {
+        // Code to be executed after the delay
+        
+        console.log("Delayed execution of prediction results");
+        navigation.navigate('ResultScreen', { res: result });
+        
+      }, 2000); // Delay of 2000 milliseconds (2 seconds)
+
+      
     } catch (error) {
       console.error(error);
     } finally {
       setTimeout(() => {
         // Code to be executed after the delay
-        console.log("Delayed execution");
+        console.log("Delayed execution final");
 
         // Call your function or perform the desired actions here
         setIsLoading(false);
@@ -279,8 +177,6 @@ export default function ImagePickerExample({ navigation }) {
       // Hide the dark overlay after API response
     }
   };
-
-  
 
   return (
     <View style={styles.container}>
@@ -293,13 +189,9 @@ export default function ImagePickerExample({ navigation }) {
             <View style={styles.overlay}>
               <View style={styles.overlayContent}>
                 <Animatable.View ref={animateIconRef}>
-                  <FontAwesome5
-                    name="leaf"
-                    size={iconSize}
-                    color={iconColor}
-                  />
+                  <FontAwesome5 name="leaf" size={iconSize} color={iconColor} />
                 </Animatable.View>
-                
+
                 <Text style={styles.loadingText}>{loadingText}</Text>
               </View>
             </View>

@@ -111,7 +111,7 @@ const HomeScreen = ({ navigation }) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.serviceComponents}
-                  onPress={() => pressHandler("resultScreen")}
+                  onPress={() => pressHandler("ResultScreen")}
                 >
                   <View style={styles.serviceComponentsView}>
                     <Entypo

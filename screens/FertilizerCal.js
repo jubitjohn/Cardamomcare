@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -15,6 +15,7 @@ const FertilizerCal= () => {
   const [unit, setUnit] = useState("Acre");
   const [plotSize, setPlotSize] = useState(0);
   const [result, setResult] = useState('');
+  const [formCompleted, setFormCompleted] = useState(false);
 
   const handleNChange = (value) => {
     setNValue(value);
@@ -36,10 +37,21 @@ const FertilizerCal= () => {
     setPlotSize(value);
   };
 
+  useEffect(() => {
+    if (nValue !== 0 && pValue !== 0 && kValue !== 0 && plotSize !== 0) {
+      setFormCompleted(true);
+    } else {
+      setFormCompleted(false);
+    }
+  }, [nValue, pValue, kValue, plotSize]);
+
   const handleCalculate = () => {
     const resultText = `N:${nValue}, P:${pValue}, K:${kValue}, Unit:${unit}, Plot Size:${plotSize}`;
     setResult(resultText);
   };
+
+  // Add a useEffect hook to check form completion whenever the input values change
+  
 
   // return (
   //   <ScrollView style={styles.container}>
@@ -290,7 +302,7 @@ const FertilizerCal= () => {
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.calculateButton}
         onPress={handleCalculate}
       >
@@ -298,7 +310,15 @@ const FertilizerCal= () => {
       </TouchableOpacity>
       <View>
         <Text>{result}</Text>
-      </View>
+      </View> */}
+      <TouchableOpacity
+        onPress={handleCalculate}
+        disabled={!formCompleted}
+        style={[styles.calculateButton, !formCompleted && styles.disabledButton]}
+      >
+        <Text style={styles.buttonText}>Calculate</Text>
+      </TouchableOpacity>
+      
       
     </ScrollView>
     
@@ -306,6 +326,9 @@ const FertilizerCal= () => {
 };
 
 const styles = StyleSheet.create({
+  disabledButton:{
+    opacity:0.5
+  },
   container: {
     flex: 1,
     padding: 25,

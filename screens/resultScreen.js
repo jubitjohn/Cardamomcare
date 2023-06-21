@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import DiseaseDetails from "./ResultScreenDetails/DiseaseDetails";
 
 const ResultScreen = ({ navigation }) => {
   const prop1 = navigation.getParam("res");
@@ -42,8 +43,13 @@ const ResultScreen = ({ navigation }) => {
       {/* Second Section */}
       <View style={styles.secondSection}>
         <Text style={styles.cardHeading}>{prop1}</Text>
-        <Text style={styles.cardSubHeading}>Card Sub Heading</Text>
+        <View>
+        <DiseaseDetails disease={prop1}/>
       </View>
+      </View>
+     
+
+      
     </ScrollView>
   );
 };

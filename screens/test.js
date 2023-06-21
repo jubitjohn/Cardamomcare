@@ -134,7 +134,7 @@ export default function ImagePickerExample({ navigation }) {
       });
 
       const response = await fetch(
-        "https://cardamomdiseaseprediction-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/22a1ef84-a940-4f32-99cb-a26c6a6aedf8/classify/iterations/Cardamom_disease_Detection_model/image",
+        "https://cardamomdiseaseprediction-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/22a1ef84-a940-4f32-99cb-a26c6a6aedf8/classify/iterations/Iteration2/image",
         {
           method: "POST",
           headers: {

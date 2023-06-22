@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import PropTypes from "prop-types";
 
 import { Foundation } from "@expo/vector-icons";
@@ -16,7 +16,7 @@ const diseasesSet = [
       "Capsule rot is a fungal disease that affects the developing capsules of the cardamom plant. The disease causes the capsules to rot and the seeds inside to turn black. The disease can be controlled by using fungicides and improving ventilation in the plantation.",
   },
   {
-    name: "Fuzarium_2",
+    name: "Root Rot",
     description:
       "Root rot is a soil-borne disease caused by fungi that affects the roots of the cardamom plant. The disease causes the roots to rot, which results in stunted growth and yellowing of leaves. It can be controlled by using fungicides and improving drainage in the plantation.",
   },
@@ -27,68 +27,78 @@ const diseasesSet = [
   },
 ];
 
-const DiseaseDetails = ({ disease }) => {
-
-  const selectedDisease = diseasesSet.find(
-    (item) => item.name === disease
-  );
+const DiseasesRelatedPictures = ({ disease }) => {
+  const selectedDisease = diseasesSet.find((item) => item.name === disease);
   return (
-    <View>
-      <View style={styles.headingBox}>
-        <View style={styles.innerHeadingBoxLeft}>
-          <Foundation name="clipboard-notes" size={34} color="black" />
+    <View style={styles.container}>
+      <View style={styles.diseasePictureBox}>
+        <View style={styles.diseasePictureBoxLeft}>
+          <Image
+            style={styles.image}
+            source={require("../../assets/capsule_borer.jpeg")}
+            resizeMode="cover"
+          />
         </View>
-        <View style={styles.innerHeadingBoxRight}>
-          <Text style={styles.innerHeadingBoxRightText}>Symptoms</Text>
+        <View style={styles.diseasePictureBoxRight}>
+          <View style={styles.diseasePictureBoxRightTop}>
+            <Image
+             style={styles.image}
+              source={require("../../assets/capsule_rot.jpeg")}
+              resizeMode="cover"
+            />
+          </View>
+          <View style={styles.diseasePictureBoxRightBottom}>
+            <Image
+             style={styles.image}
+              source={require("../../assets/thrips.jpeg")}
+              resizeMode="cover"
+            />
+          </View>
         </View>
       </View>
-      <View>
-      {selectedDisease && (
-        <View style={styles.descriptionBox}>
-          <Text style={styles.descriptionText}>
-            {selectedDisease.description}
-          </Text>
-        </View>
-      )}
-      </View>
+
+     
     </View>
   );
 };
 
-DiseaseDetails.propTypes = {
+DiseasesRelatedPictures.propTypes = {
   disease: PropTypes.string,
 };
 
-export default DiseaseDetails;
+export default DiseasesRelatedPictures;
 
 const styles = StyleSheet.create({
-  headingBox: {
-    paddingTop: 10,
+  container: {
     flex: 1,
+    borderRadius: 30,
+  },
+  diseasePictureBox: {
+    padding: 10,
     flexDirection: "row",
+    height: 300,
   },
-  innerHeadingBoxLeft: {
+  diseasePictureBoxLeft: {
     flex: 1,
-    padding: 0,
-    alignItems: "center",
+    
   },
-  innerHeadingBoxRight: {
-    flex: 5,
-    justifyContent: "center",
-    alignItems: "flex-start",
+  diseasePictureBoxRight: {
+    flex: 1,
+    flexDirection: "column",
   },
-  innerHeadingBoxRightText: {
-    fontSize: 16,
-    fontWeight: 700,
+  diseasePictureBoxRightTop: {
+    flex: 1,
+   
   },
-  descriptionBox :{
-    padding:10,
-    paddingTop:15,
-
+  diseasePictureBoxRightBottom: {
+    flex: 1,
+    
   },
-  descriptionText:{
-
-    fontSize:15,
-
+  image: {
+    margin:5,
+    flex: 1,
+    borderRadius: 10,
+    width: undefined,
+    height: undefined,
   },
 });

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import DiseaseDetails from "./ResultScreenDetails/DiseaseDetails";
+import DiseasesRelatedPictures from "./ResultScreenDetails/DiseaseRelatedPictures";
 
 const ResultScreen = ({ navigation }) => {
   const prop1 = navigation.getParam("res");
@@ -45,6 +46,9 @@ const ResultScreen = ({ navigation }) => {
         <Text style={styles.cardHeading}>{prop1}</Text>
         <View>
         <DiseaseDetails disease={prop1}/>
+      </View>
+      <View>
+        <DiseasesRelatedPictures disease={prop1}/>
       </View>
       </View>
      
@@ -107,8 +111,8 @@ const styles = StyleSheet.create({
   secondSection: {
     marginTop: -25,
     borderRadius:30,
-    padding: 20,
-    backgroundColor: "#f2f3f0",
+    padding: 10,
+    backgroundColor: "#ffffff",
 
    
    

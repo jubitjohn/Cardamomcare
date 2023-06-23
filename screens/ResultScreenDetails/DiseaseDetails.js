@@ -8,12 +8,12 @@ const diseasesSet = [
   {
     name: "Thrips_1",
     description:
-      "Leaf blight is a fungal disease that causes brown spots to appear on the leaves of the cardamom plant. The spots can grow in size and cause the leaves to wither and die. It can be controlled with fungicides and proper hygiene practices in the plantation.",
+      "• The panicles (flower clusters) become stunted\n\n• Shedding of flowers and immature capsules thus reducing the total number of capsules formed.\n\n• Infestation causes formation of corky encrustations on pods resulting in their malformed and shriveled condition. \n\n• Such pods lack their fine aroma and the seeds within are also poorly developed.",
   },
   {
     name: "Capsule Rot",
     description:
-      "Capsule rot is a fungal disease that affects the developing capsules of the cardamom plant. The disease causes the capsules to rot and the seeds inside to turn black. The disease can be controlled by using fungicides and improving ventilation in the plantation.",
+    "• The disease appears during the rainy season.\n\n• On the infected leaves, water soaked lesions appear fi rst followed by rotting and shredding of leaves along the veins.\n\n• The infected capsules become dull greenish brown and decay. This emits a foul smell and subsequently shed. \n\n• Infection spreads to the panicles and tillers resulting in their decay.",
   },
   {
     name: "Fuzarium_2",

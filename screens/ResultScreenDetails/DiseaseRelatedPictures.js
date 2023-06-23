@@ -7,23 +7,35 @@ import { Foundation } from "@expo/vector-icons";
 const diseasesSet = [
   {
     name: "Thrips_1",
-    description:
-      "Leaf blight is a fungal disease that causes brown spots to appear on the leaves of the cardamom plant. The spots can grow in size and cause the leaves to wither and die. It can be controlled with fungicides and proper hygiene practices in the plantation.",
+    // images: [
+    //   require("../../assets/image1.jpg"),
+    //   require("../../assets/image2.jpg"),
+    //   require("../../assets/image3.jpg"),
+    // ],
   },
   {
     name: "Capsule Rot",
-    description:
-      "Capsule rot is a fungal disease that affects the developing capsules of the cardamom plant. The disease causes the capsules to rot and the seeds inside to turn black. The disease can be controlled by using fungicides and improving ventilation in the plantation.",
+    // images: [
+    //   require("../../assets/image4.jpg"),
+    //   require("../../assets/image5.jpg"),
+    //   require("../../assets/image6.jpg"),
+    // ],
   },
   {
     name: "Root Rot",
-    description:
-      "Root rot is a soil-borne disease caused by fungi that affects the roots of the cardamom plant. The disease causes the roots to rot, which results in stunted growth and yellowing of leaves. It can be controlled by using fungicides and improving drainage in the plantation.",
+    // images: [
+    //   require("../../assets/image7.jpg"),
+    //   require("../../assets/image8.jpg"),
+    //   require("../../assets/image9.jpg"),
+    // ],
   },
   {
     name: "Clump Rot",
-    description:
-      "Root rot is a soil-borne disease caused by fungi that affects the roots of the cardamom plant. The disease causes the roots to rot, which results in stunted growth and yellowing of leaves. It can be controlled by using fungicides and improving drainage in the plantation.",
+    // images: [
+    //   require("../../assets/image10.jpg"),
+    //   require("../../assets/image11.jpg"),
+    //   require("../../assets/image12.jpg"),
+    // ],
   },
 ];
 

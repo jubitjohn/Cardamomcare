@@ -120,6 +120,12 @@ const styles = StyleSheet.create({
    
   },
   cardHeading: {
+
+
+  
+    borderWidth:5,
+    borderRadius:20,
+    padding:15,
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,

@@ -27,7 +27,8 @@
       "infoPlist": {
         "NSCameraUsageDescription": "Your description here",
         "NSMicrophoneUsageDescription": "Your description here"
-      }
+      },
+      "bundleIdentifier": "com.jubitjohn1.Cardamomcare"
     },
     "android": {
       "adaptiveIcon": {
@@ -37,10 +38,20 @@
           "CAMERA",
           "RECORD_AUDIO"
         ]
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.jubitjohn1.Cardamomcare"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0ab92057-06a8-4d81-aec1-b912745e5dca"
+      }
     }
   }
 }

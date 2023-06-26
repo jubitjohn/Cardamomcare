@@ -33,11 +33,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff",
-        "permissions": [
-          "CAMERA",
-          "RECORD_AUDIO"
-        ]
+        "backgroundColor": "#ffffff"
       },
       "permissions": [
         "android.permission.CAMERA",

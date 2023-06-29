@@ -36,12 +36,16 @@ const screens = {
   },
   Imagepick: {
     screen: ImagePickerExample,
+    navigationOptions: {
+      headerTitle: "Scan",
+      headerTitleAlign: "centre",
+    },
   },
   ResultScreen: {
     screen: ResultScreen,
     navigationOptions: {
       headerTitle: "Result",
-      headerTitleAlign: "left",
+      headerTitleAlign: "centre",
     },
   },
   DiseaseScreen: {

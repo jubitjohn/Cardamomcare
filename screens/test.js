@@ -1,8 +1,11 @@
 import { Camera, CameraType } from "expo-camera";
 import { useState, useEffect, useRef } from "react";
-import { Image, Animated, ActivityIndicator } from "react-native";
+import { Image, Animated, ActivityIndicator, Dimensions } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { PinchGestureHandler } from "react-native-gesture-handler";
+const windowHeight = Dimensions.get("window").height;
+// const windowWidth = Dimensions.get("window").width;
 
 import {
   Modal,
@@ -122,7 +125,7 @@ export default function ImagePickerExample({ navigation }) {
   };
 
   const sendImageToApi = async (photoUri) => {
-    result ="test"
+    result = "Cardamom plant not identified";
     try {
       setIsLoading(true);
       const resizedPhotoUri = await reducePhotoSize(photoUri);
@@ -133,8 +136,10 @@ export default function ImagePickerExample({ navigation }) {
         name: "photo.jpg",
       });
 
-      const response = await fetch(
-        "https://cardamomdiseaseprediction-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/22a1ef84-a940-4f32-99cb-a26c6a6aedf8/classify/iterations/Iteration2/image",
+      //overlay prediction for cardamom
+
+      const responseOverlay = await fetch(
+        "https://cardamomdiseaseprediction-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/3e4f1dfa-d45f-49b4-a506-76af551dbe37/classify/iterations/Iteration1/image",
         {
           method: "POST",
           headers: {
@@ -145,25 +150,44 @@ export default function ImagePickerExample({ navigation }) {
         }
       );
 
-      const data = await response.json();
-      result = await data.predictions[0].tagName;
-      
-      
-     
+      const dataOverlay = await responseOverlay.json();
+      resultOverlay = await dataOverlay.predictions[0].tagName;
+      console.log("Is cardamom or not :", dataOverlay.predictions[0].tagName);
+
+      if (resultOverlay == "Cardamom") {
+        setIsCardamom(true);
+      }
+
+      // Main model
+
+      if (resultOverlay == "Cardamom") {
+        const response = await fetch(
+          "https://cardamomdiseaseprediction-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/22a1ef84-a940-4f32-99cb-a26c6a6aedf8/classify/iterations/Iteration2/image",
+          {
+            method: "POST",
+            headers: {
+              "Prediction-Key": "1b115ee4bde443f78e946912687a8fab",
+              "Content-Type": "multipart/form-data",
+            },
+            body: formData,
+          }
+        );
+
+        const data = await response.json();
+        result = await data.predictions[0].tagName;
+        console.log(data.predictions[0].tagName);
+        console.log("Result Value", result);
+        console.log(data.predictions[0].probability);
+      }
+
       animateIconRef.current?.swing(2000);
 
-      console.log(data.predictions[0].tagName);
-      console.log("Result Value",result);
-      console.log(data.predictions[0].probability);
       setTimeout(() => {
         // Code to be executed after the delay
-        
-        console.log("Delayed execution of prediction results");
-        navigation.navigate('ResultScreen', { res: result });
-        
-      }, 2000); // Delay of 2000 milliseconds (2 seconds)
 
-      
+        console.log("Delayed execution of prediction results");
+        navigation.navigate("ResultScreen", { res: result });
+      }, 2000); // Delay of 2000 milliseconds (2 seconds)
     } catch (error) {
       console.error(error);
     } finally {
@@ -200,98 +224,101 @@ export default function ImagePickerExample({ navigation }) {
       )}
 
       {!photo && (
-        <Camera
-          style={styles.camera}
-          type={type}
-          ref={(ref) => (cameraRef = ref)}
-        >
-          <Dot style={styles.dot1} />
-          <Dot style={styles.dot2} />
-          <Dot style={styles.dot3} />
-          <Dot style={styles.dot4} />
-          <Dot style={styles.dot5} />
-          <Dot style={styles.dot6} />
-          <Dot style={styles.dot7} />
-          <Dot style={styles.dot8} />
-          <Dot style={styles.dot9} />
-          <Dot style={styles.dot10} />
-          <Dot style={styles.dot11} />
-          <Dot style={styles.dot12} />
-          <Dot style={styles.dot13} />
-          <Dot style={styles.dot14} />
-          <View style={styles.cameraFrameContainer}>
-            <View style={styles.cameraFrame}></View>
-          </View>
-          <View>
-            <Text style={styles.frameInstruction}>
-              Fit the crop damage within the frame
-            </Text>
-          </View>
+        <View style={{ flex: 1, maxHeight: windowHeight }}>
+          <Camera
+            ratio="1:1"
+            style={styles.camera}
+            type={type}
+            ref={(ref) => (cameraRef = ref)}
+          >
+            <Dot style={styles.dot1} />
+            <Dot style={styles.dot2} />
+            <Dot style={styles.dot3} />
+            <Dot style={styles.dot4} />
+            <Dot style={styles.dot5} />
+            <Dot style={styles.dot6} />
+            <Dot style={styles.dot7} />
+            <Dot style={styles.dot8} />
+            <Dot style={styles.dot9} />
+            <Dot style={styles.dot10} />
+            <Dot style={styles.dot11} />
+            <Dot style={styles.dot12} />
+            <Dot style={styles.dot13} />
+            <Dot style={styles.dot14} />
+            <View style={styles.cameraFrameContainer}>
+              <View style={styles.cameraFrame}></View>
+            </View>
+            <View>
+              <Text style={styles.frameInstruction}>
+                Fit the crop damage within the frame
+              </Text>
+            </View>
 
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.galleryButton}
-              onPress={toggleCameraType}
-            >
-              <MaterialIcons
-                name="flip-camera-android"
-                size={44}
-                color="white"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.captureButton}
-              onPress={takePicture}
-            >
-              <Text style={styles.text}></Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.infoButton}
-              onPress={() => setModalVisible(true)}
-            >
-              <FontAwesome5 name="question-circle" size={44} color="white" />
-            </TouchableOpacity>
-            <Modal
-              animationType="fade"
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => {
-                Alert.alert("Modal has been closed.");
-                setModalVisible(false);
-              }}
-            >
-              <View style={styles.popUpinfo}>
-                <View style={styles.popUpinfoContent}>
-                  <View>
-                    <Text style={styles.popUpinfoContentTitle}>
-                      Diagnose Tips
-                    </Text>
-                  </View>
-                  <View>
-                    <Text style={styles.popUpinfoDescription}>
-                      1. Get close to the crop and make sure to fit the crop
-                      damage within the frame. {"\n"}
-                      {"\n"}
-                      2. Make sure the camera is properly focused on the crop
-                      damage. {"\n"}
-                      {"\n"}
-                      3. Make sure the crop is clearly visible and its not too
-                      dark or bright. {"\n"}
-                      {"\n"}
-                    </Text>
-                  </View>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.galleryButton}
+                onPress={toggleCameraType}
+              >
+                <MaterialIcons
+                  name="flip-camera-android"
+                  size={44}
+                  color="white"
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.captureButton}
+                onPress={takePicture}
+              >
+                <Text style={styles.text}></Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.infoButton}
+                onPress={() => setModalVisible(true)}
+              >
+                <FontAwesome5 name="question-circle" size={44} color="white" />
+              </TouchableOpacity>
+              <Modal
+                animationType="fade"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                  Alert.alert("Modal has been closed.");
+                  setModalVisible(false);
+                }}
+              >
+                <View style={styles.popUpinfo}>
+                  <View style={styles.popUpinfoContent}>
+                    <View>
+                      <Text style={styles.popUpinfoContentTitle}>
+                        Diagnose Tips
+                      </Text>
+                    </View>
+                    <View>
+                      <Text style={styles.popUpinfoDescription}>
+                        1. Get close to the crop and make sure to fit the crop
+                        damage within the frame. {"\n"}
+                        {"\n"}
+                        2. Make sure the camera is properly focused on the crop
+                        damage. {"\n"}
+                        {"\n"}
+                        3. Make sure the crop is clearly visible and its not too
+                        dark or bright. {"\n"}
+                        {"\n"}
+                      </Text>
+                    </View>
 
-                  <TouchableOpacity
-                    style={styles.popUpCloseButton}
-                    onPress={() => setModalVisible(false)}
-                  >
-                    <Text style={styles.popUpCloseButtonText}>Got it</Text>
-                  </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.popUpCloseButton}
+                      onPress={() => setModalVisible(false)}
+                    >
+                      <Text style={styles.popUpCloseButtonText}>Got it</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
-            </Modal>
-          </View>
-        </Camera>
+              </Modal>
+            </View>
+          </Camera>
+        </View>
       )}
     </View>
   );

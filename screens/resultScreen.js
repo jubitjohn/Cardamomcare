@@ -10,6 +10,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import DiseaseDetails from "./ResultScreenDetails/DiseaseDetails";
 import DiseasesRelatedPictures from "./ResultScreenDetails/DiseaseRelatedPictures";
+import ProductSuggestion from "./ResultScreenDetails/ProductSuggestion";
 
 const ResultScreen = ({ navigation }) => {
   const prop1 = navigation.getParam("res");
@@ -19,25 +20,27 @@ const ResultScreen = ({ navigation }) => {
       {/* First Section */}
 
       <LinearGradient
-        colors={["#1a961a", "white","white","white","#1a961a"]}
+        colors={["#1a961a", "white", "white", "white", "#1a961a"]}
         start={[0, 1]} // Top-left corner
         end={[1, 0]} // Bottom-right corner
       >
         <View style={styles.firstSection}>
           <Text style={styles.sectionText}>
-            Get your <Text style={{ color: 'green',fontSize:20 }}>FREE </Text>personalised consultation now!
+            Get your <Text style={{ color: "green", fontSize: 20 }}>FREE </Text>
+            personalised consultation now!
           </Text>
           <TouchableOpacity style={styles.bookingButton}>
             <Text style={styles.bookingButtonText}>Book</Text>
           </TouchableOpacity>
           <View style={styles.imageContainer}>
             <View style={styles.imageContainerFirst}></View>
-            <View style={styles.imageContainerSecond}><Image
-            source={require("../assets/consultant.png")}
-            style={styles.sectionImage}
-          /></View>
+            <View style={styles.imageContainerSecond}>
+              <Image
+                source={require("../assets/consultant.png")}
+                style={styles.sectionImage}
+              />
+            </View>
           </View>
-          
         </View>
       </LinearGradient>
 
@@ -45,15 +48,15 @@ const ResultScreen = ({ navigation }) => {
       <View style={styles.secondSection}>
         <Text style={styles.cardHeading}>{prop1}</Text>
         <View>
-        <DiseaseDetails disease={prop1}/>
+          <DiseaseDetails disease={prop1} />
+        </View>
+        <View>
+          <DiseasesRelatedPictures disease={prop1} />
+        </View>
+        <View>
+          <ProductSuggestion disease={prop1} />
+        </View>
       </View>
-      <View>
-        <DiseasesRelatedPictures disease={prop1}/>
-      </View>
-      </View>
-     
-
-      
     </ScrollView>
   );
 };
@@ -65,7 +68,6 @@ const styles = StyleSheet.create({
   },
   firstSection: {
     padding: 10,
-  
   },
   sectionText: {
     fontSize: 20,
@@ -81,8 +83,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 14,
-    marginLeft:18,
-    
+    marginLeft: 18,
   },
   bookingButtonText: {
     color: "#fff",
@@ -91,45 +92,30 @@ const styles = StyleSheet.create({
   },
   sectionImage: {
     width: "100%",
-    height: 200,
+    height: 100,
     resizeMode: "contain",
-    
-    
-   
   },
-  imageContainer:{
-    flexDirection:'row',
+  imageContainer: {
+    flexDirection: "row",
   },
-  imageContainerFirst:{
-    flex:1,
-    
+  imageContainerFirst: {
+    flex: 1,
   },
-  imageContainerSecond:{
-    flex:2,
-    
+  imageContainerSecond: {
+    flex: 2,
   },
   secondSection: {
     marginTop: -25,
-    borderRadius:30,
+    borderRadius: 30,
     padding: 10,
     backgroundColor: "#ffffff",
-
-   
-   
- 
-   
   },
   cardHeading: {
-
-
-  
-    borderWidth:5,
-    borderRadius:20,
-    padding:15,
+    padding: 25,
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
-    textAlign:'center',
+    textAlign: "center",
   },
   cardSubHeading: {
     fontSize: 16,

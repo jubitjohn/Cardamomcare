@@ -320,45 +320,50 @@ export default function ImagePickerExample({ navigation }) {
               </View>
             </Camera>
           </View>
-          <Modal
-            animationType="fade"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-              Alert.alert("Modal has been closed.");
-              setModalVisible(false);
-            }}
-          >
-            <View style={styles.popUpinfo}>
-              <View style={styles.popUpinfoContent}>
-                <View>
-                  <Text style={styles.popUpinfoContentTitle}>
-                    Diagnose Tips
-                  </Text>
-                </View>
-                <View>
-                  <Text style={styles.popUpinfoDescription}>
-                    1. Get close to the crop and make sure to fit the crop
-                    damage within the frame. {"\n"}
-                    {"\n"}
-                    2. Make sure the camera is properly focused on the crop
-                    damage. {"\n"}
-                    {"\n"}
-                    3. Make sure the crop is clearly visible and its not too
-                    dark or bright. {"\n"}
-                    {"\n"}
-                  </Text>
-                </View>
+          {modalVisible && (
+            <View>
+              <Modal
+                animationType="fade"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                  Alert.alert("Modal has been closed.");
+                  setModalVisible(false);
+                  setPhoto(null);
+                }}
+              >
+                <View style={styles.popUpinfo}>
+                  <View style={styles.popUpinfoContent}>
+                    <View>
+                      <Text style={styles.popUpinfoContentTitle}>
+                        Diagnose Tips
+                      </Text>
+                    </View>
+                    <View>
+                      <Text style={styles.popUpinfoDescription}>
+                        1. Get close to the crop and make sure to fit the crop
+                        damage within the frame. {"\n"}
+                        {"\n"}
+                        2. Make sure the camera is properly focused on the crop
+                        damage. {"\n"}
+                        {"\n"}
+                        3. Make sure the crop is clearly visible and its not too
+                        dark or bright. {"\n"}
+                        {"\n"}
+                      </Text>
+                    </View>
 
-                <TouchableOpacity
-                  style={styles.popUpCloseButton}
-                  onPress={() => setModalVisible(false)}
-                >
-                  <Text style={styles.popUpCloseButtonText}>Got it</Text>
-                </TouchableOpacity>
-              </View>
+                    <TouchableOpacity
+                      style={styles.popUpCloseButton}
+                      onPress={() => (setModalVisible(false), setPhoto(null))}
+                    >
+                      <Text style={styles.popUpCloseButtonText}>Got it</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </Modal>
             </View>
-          </Modal>
+          )}
         </View>
       )}
     </View>

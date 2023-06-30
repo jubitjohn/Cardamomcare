@@ -261,98 +261,104 @@ export default function ImagePickerExample({ navigation }) {
 
       {!photo && (
         <View style={{ flex: 1, maxHeight: windowHeight }}>
-          <Camera
-            style={styles.camera}
-            type={type}
-            ref={(ref) => (cameraRef = ref)}
+          <View style={styles.cameraContainer}>
+            <Camera
+              style={[styles.camera, { aspectRatio: 3 / 4 }]}
+              type={type}
+              ref={(ref) => (cameraRef = ref)}
+            >
+              <Dot style={styles.dot1} />
+              <Dot style={styles.dot2} />
+              <Dot style={styles.dot3} />
+              <Dot style={styles.dot4} />
+              <Dot style={styles.dot5} />
+              <Dot style={styles.dot6} />
+              <Dot style={styles.dot7} />
+              <Dot style={styles.dot8} />
+              <Dot style={styles.dot9} />
+              <Dot style={styles.dot10} />
+              <Dot style={styles.dot11} />
+              <Dot style={styles.dot12} />
+              <Dot style={styles.dot13} />
+              <Dot style={styles.dot14} />
+              <View style={styles.cameraFrameContainer}>
+                <View style={styles.cameraFrame}></View>
+              </View>
+              <View>
+                <Text style={styles.frameInstruction}>
+                  Fit the crop damage within the frame
+                </Text>
+              </View>
+
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.galleryButton}
+                  onPress={toggleCameraType}
+                >
+                  <MaterialIcons
+                    name="flip-camera-android"
+                    size={44}
+                    color="white"
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.captureButton}
+                  onPress={takePicture}
+                >
+                  <Text style={styles.text}></Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.infoButton}
+                  onPress={() => setModalVisible(true)}
+                >
+                  <FontAwesome5
+                    name="question-circle"
+                    size={44}
+                    color="white"
+                  />
+                </TouchableOpacity>
+              </View>
+            </Camera>
+          </View>
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setModalVisible(false);
+            }}
           >
-            <Dot style={styles.dot1} />
-            <Dot style={styles.dot2} />
-            <Dot style={styles.dot3} />
-            <Dot style={styles.dot4} />
-            <Dot style={styles.dot5} />
-            <Dot style={styles.dot6} />
-            <Dot style={styles.dot7} />
-            <Dot style={styles.dot8} />
-            <Dot style={styles.dot9} />
-            <Dot style={styles.dot10} />
-            <Dot style={styles.dot11} />
-            <Dot style={styles.dot12} />
-            <Dot style={styles.dot13} />
-            <Dot style={styles.dot14} />
-            <View style={styles.cameraFrameContainer}>
-              <View style={styles.cameraFrame}></View>
-            </View>
-            <View>
-              <Text style={styles.frameInstruction}>
-                Fit the crop damage within the frame
-              </Text>
-            </View>
-
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.galleryButton}
-                onPress={toggleCameraType}
-              >
-                <MaterialIcons
-                  name="flip-camera-android"
-                  size={44}
-                  color="white"
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.captureButton}
-                onPress={takePicture}
-              >
-                <Text style={styles.text}></Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.infoButton}
-                onPress={() => setModalVisible(true)}
-              >
-                <FontAwesome5 name="question-circle" size={44} color="white" />
-              </TouchableOpacity>
-              <Modal
-                animationType="fade"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                  Alert.alert("Modal has been closed.");
-                  setModalVisible(false);
-                }}
-              >
-                <View style={styles.popUpinfo}>
-                  <View style={styles.popUpinfoContent}>
-                    <View>
-                      <Text style={styles.popUpinfoContentTitle}>
-                        Diagnose Tips
-                      </Text>
-                    </View>
-                    <View>
-                      <Text style={styles.popUpinfoDescription}>
-                        1. Get close to the crop and make sure to fit the crop
-                        damage within the frame. {"\n"}
-                        {"\n"}
-                        2. Make sure the camera is properly focused on the crop
-                        damage. {"\n"}
-                        {"\n"}
-                        3. Make sure the crop is clearly visible and its not too
-                        dark or bright. {"\n"}
-                        {"\n"}
-                      </Text>
-                    </View>
-
-                    <TouchableOpacity
-                      style={styles.popUpCloseButton}
-                      onPress={() => setModalVisible(false)}
-                    >
-                      <Text style={styles.popUpCloseButtonText}>Got it</Text>
-                    </TouchableOpacity>
-                  </View>
+            <View style={styles.popUpinfo}>
+              <View style={styles.popUpinfoContent}>
+                <View>
+                  <Text style={styles.popUpinfoContentTitle}>
+                    Diagnose Tips
+                  </Text>
                 </View>
-              </Modal>
+                <View>
+                  <Text style={styles.popUpinfoDescription}>
+                    1. Get close to the crop and make sure to fit the crop
+                    damage within the frame. {"\n"}
+                    {"\n"}
+                    2. Make sure the camera is properly focused on the crop
+                    damage. {"\n"}
+                    {"\n"}
+                    3. Make sure the crop is clearly visible and its not too
+                    dark or bright. {"\n"}
+                    {"\n"}
+                  </Text>
+                </View>
+
+                <TouchableOpacity
+                  style={styles.popUpCloseButton}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Text style={styles.popUpCloseButtonText}>Got it</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </Camera>
+          </Modal>
         </View>
       )}
     </View>
@@ -364,14 +370,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  camera: {
+  cameraContainer: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  camera: {
+    width: "100%",
+    height: "100%",
   },
   buttonContainer: {
     flex: 1,
     flexDirection: "row",
     backgroundColor: "transparent",
-    paddingBottom: 45,
+    paddingBottom: 25,
   },
   previewButtonContainer: {
     position: "absolute",
@@ -384,7 +396,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     alignSelf: "center",
     height: "70%",
-    width: "85%",
+    width: "55%",
     borderWidth: 3,
     borderRadius: 58,
     borderColor: "#ccc",
@@ -401,10 +413,8 @@ const styles = StyleSheet.create({
   galleryButton: {
     padding: 15,
     marginLeft: 25,
-    borderRadius: 10,
     flex: 1,
-    alignSelf: "flex-end",
-    alignItems: "flex-start",
+    alignItems: "center",
   },
   captureButton: {
     width: 70,
@@ -413,9 +423,15 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "flex-end",
     borderColor: "#ccc",
     borderWidth: 5,
+  },
+  infoButton: {
+    padding: 15,
+    marginRight: 25,
+    borderRadius: 10,
+    flex: 1,
+    alignItems: "center",
   },
   captureSubmitButton: {
     flex: 1,
@@ -443,7 +459,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    borderRadius: 30,
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
     height: "35%",
     backgroundColor: "#ffffff",
     alignItems: "center",
@@ -480,14 +497,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  infoButton: {
-    padding: 15,
-    marginRight: 25,
-    borderRadius: 10,
-    flex: 1,
-    alignSelf: "flex-end",
-    alignItems: "flex-end",
-  },
   popUpinfo: {
     flex: 1,
     justifyContent: "center",

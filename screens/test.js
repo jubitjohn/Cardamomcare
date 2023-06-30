@@ -320,7 +320,7 @@ export default function ImagePickerExample({ navigation }) {
           </View>
         </View>
       )}
-
+      {/* Info screen */}
       {modalVisible && (
         <View>
           <Modal

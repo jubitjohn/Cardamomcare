@@ -1,12 +1,9 @@
 import { Camera, CameraType } from "expo-camera";
 import { useState, useEffect, useRef } from "react";
 import { Image, Animated, ActivityIndicator, Dimensions } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { PinchGestureHandler } from "react-native-gesture-handler";
 const windowHeight = Dimensions.get("window").height;
 import { FontAwesome } from "@expo/vector-icons";
-// const windowWidth = Dimensions.get("window").width;
 
 import {
   Modal,
@@ -23,7 +20,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import * as ImageManipulator from "expo-image-manipulator";
 
 export default function ImagePickerExample({ navigation }) {
-  const Stack = createStackNavigator();
   const animateIconRef = useRef(null);
   const iconSize = 25;
   const iconColor = "white";

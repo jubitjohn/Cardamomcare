@@ -8,9 +8,10 @@ import {
   ScrollView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import DiseaseDetails from "./ResultScreenDetails/DiseaseDetails";
-import DiseasesRelatedPictures from "./ResultScreenDetails/DiseaseRelatedPictures";
-import ProductSuggestion from "./ResultScreenDetails/ProductSuggestion";
+import DiseaseDetails from "./DiseaseDetails";
+import DiseasesRelatedPictures from "./DiseaseRelatedPictures";
+import ProductSuggestion from "./ProductSuggestion";
+// import TreatmentPlan from "./TreatmentPlan";
 
 const ResultScreen = ({ navigation }) => {
   const prop1 = navigation.getParam("res");
@@ -36,7 +37,7 @@ const ResultScreen = ({ navigation }) => {
             <View style={styles.imageContainerFirst}></View>
             <View style={styles.imageContainerSecond}>
               <Image
-                source={require("../assets/consultant.png")}
+                source={require("../../assets/consultant.png")}
                 style={styles.sectionImage}
               />
             </View>
@@ -57,6 +58,12 @@ const ResultScreen = ({ navigation }) => {
           <ProductSuggestion disease={prop1} />
         </View>
       </View>
+
+      {/* ///Treatment section */}
+
+      {/* <View>
+        <TreatmentPlan />
+      </View> */}
     </ScrollView>
   );
 };

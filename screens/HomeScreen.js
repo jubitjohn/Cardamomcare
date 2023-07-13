@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { ActionSheet } from "react-native-actionsheet";
-import * as ImagePicker from "expo-image-picker";
-import ImagePickerExample from "./test";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
@@ -17,7 +14,6 @@ import {
   Button,
   ActionSheetIOS,
 } from "react-native";
-import PackageSelector from "./ConsultationScreens/PackageSelector";
 
 const HomeScreen = ({ navigation }) => {
   const [selectedCrop, setSelectedCrop] = useState("Cardamom");

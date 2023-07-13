@@ -17,7 +17,7 @@ import * as Animatable from "react-native-animatable";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import * as ImageManipulator from "expo-image-manipulator";
+import * as ScanImage from "expo-image-manipulator";
 
 export default function ImagePickerExample({ navigation }) {
   const animateIconRef = useRef(null);
@@ -113,7 +113,7 @@ export default function ImagePickerExample({ navigation }) {
   };
 
   const reducePhotoSize = async (photoUri) => {
-    const manipulatedPhoto = await ImageManipulator.manipulateAsync(
+    const manipulatedPhoto = await ScanImage.manipulateAsync(
       photoUri,
       [{ resize: { width: 800 } }], // Adjust the width as needed
       { compress: 0.7, format: "jpeg" } // Adjust the compression and format as needed
@@ -148,9 +148,11 @@ export default function ImagePickerExample({ navigation }) {
         }
       );
 
-      const dataOverlay = await responseOverlay.json();
-      resultOverlay = await dataOverlay.predictions[0].tagName;
-      console.log("Is cardamom or not :", dataOverlay.predictions[0].tagName);
+      // Commented out the overlay prediction for cardamom because the model is not active now
+
+      // const dataOverlay = await responseOverlay.json();
+      // resultOverlay = await dataOverlay.predictions[0].tagName;
+      // console.log("Is cardamom or not :", dataOverlay.predictions[0].tagName);
 
       // Main model
 
@@ -168,7 +170,7 @@ export default function ImagePickerExample({ navigation }) {
         );
 
         const data = await response.json();
-        result = await data.predictions[0].tagName;
+        result = (await data.predictions[0].tagName) || "Thrips_1";
         console.log(data.predictions[0].tagName);
         console.log("Result Value", result);
         console.log(data.predictions[0].probability);

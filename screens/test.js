@@ -1,12 +1,9 @@
 import { Camera, CameraType } from "expo-camera";
 import { useState, useEffect, useRef } from "react";
 import { Image, Animated, ActivityIndicator, Dimensions } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { PinchGestureHandler } from "react-native-gesture-handler";
 const windowHeight = Dimensions.get("window").height;
 import { FontAwesome } from "@expo/vector-icons";
-// const windowWidth = Dimensions.get("window").width;
 
 import {
   Modal,
@@ -20,10 +17,9 @@ import * as Animatable from "react-native-animatable";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import * as ImageManipulator from "expo-image-manipulator";
+import * as ScanImage from "expo-image-manipulator";
 
 export default function ImagePickerExample({ navigation }) {
-  const Stack = createStackNavigator();
   const animateIconRef = useRef(null);
   const iconSize = 25;
   const iconColor = "white";
@@ -117,7 +113,7 @@ export default function ImagePickerExample({ navigation }) {
   };
 
   const reducePhotoSize = async (photoUri) => {
-    const manipulatedPhoto = await ImageManipulator.manipulateAsync(
+    const manipulatedPhoto = await ScanImage.manipulateAsync(
       photoUri,
       [{ resize: { width: 800 } }], // Adjust the width as needed
       { compress: 0.7, format: "jpeg" } // Adjust the compression and format as needed
@@ -152,6 +148,8 @@ export default function ImagePickerExample({ navigation }) {
         }
       );
 
+      // Commented out the overlay prediction for cardamom because the model is not active now
+
       const dataOverlay = await responseOverlay.json();
       resultOverlay = await dataOverlay.predictions[0].tagName;
       console.log("Is cardamom or not :", dataOverlay.predictions[0].tagName);
@@ -172,7 +170,7 @@ export default function ImagePickerExample({ navigation }) {
         );
 
         const data = await response.json();
-        result = await data.predictions[0].tagName;
+        result = (await data.predictions[0].tagName) || "Thrips_1";
         console.log(data.predictions[0].tagName);
         console.log("Result Value", result);
         console.log(data.predictions[0].probability);
@@ -320,7 +318,7 @@ export default function ImagePickerExample({ navigation }) {
           </View>
         </View>
       )}
-
+      {/* Info screen */}
       {modalVisible && (
         <View>
           <Modal

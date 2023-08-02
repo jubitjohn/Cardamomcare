@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { ActionSheet } from "react-native-actionsheet";
-import * as ImagePicker from "expo-image-picker";
-import ImagePickerExample from "./test";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
@@ -19,7 +16,7 @@ import {
 } from "react-native";
 
 const HomeScreen = ({ navigation }) => {
-  const [selectedCrop, setSelectedCrop] = useState("");
+  const [selectedCrop, setSelectedCrop] = useState("Cardamom");
 
   const handleCropSelection = (crop) => {
     setSelectedCrop(crop);
@@ -47,16 +44,16 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.cropSelectorContainer}>
           <View style={styles.cropsection}>
             <TouchableOpacity
-              onPress={() => handleCropSelection("Potato")}
+              onPress={() => handleCropSelection("Cardamom")}
               style={[
                 styles.cropSelectorButton,
-                selectedCrop === "Potato" && styles.selectedCropButton,
+                selectedCrop === "Cardamom" && styles.selectedCropButton,
               ]}
             >
               <Text
                 style={[
                   styles.cropSelectorButtonText,
-                  selectedCrop === "Potato" && styles.selectedCropButtonText,
+                  selectedCrop === "Cardamom" && styles.selectedCropButtonText,
                 ]}
               >
                 Cardamom
@@ -72,7 +69,7 @@ const HomeScreen = ({ navigation }) => {
               </Text>
             </View>
           )}
-          {selectedCrop === "Potato" && (
+          {selectedCrop === "Cardamom" && (
             <View style={[styles.cropScreenContainer]}>
               <View style={[styles.cropServiceScreen]}>
                 <TouchableOpacity
@@ -164,9 +161,8 @@ const HomeScreen = ({ navigation }) => {
                       onPress={() => pressHandler("Imagepick")}
                     >
                       <View>
-                       
                         <Text style={styles.cameraButtonText}>
-                         Take a picture
+                          Take a picture
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -185,7 +181,10 @@ const HomeScreen = ({ navigation }) => {
                 </Text>
               </View>
               <View style={styles.bookingButtonContainer}>
-                <TouchableOpacity style={styles.bookingButton}>
+                <TouchableOpacity
+                  style={styles.bookingButton}
+                  onPress={() => pressHandler("PackageSelector")}
+                >
                   <Text style={styles.consultationBoxButtonText}>Book</Text>
                 </TouchableOpacity>
                 <View>
@@ -251,18 +250,18 @@ const styles = StyleSheet.create({
   },
   cropSelectorButton: {
     paddingVertical: 8,
-  borderRadius: 13,
-  width: "30%",
-  height: 40,
-  justifyContent: "center", // center text horizontally
-  alignItems: "center", // center text vertically
-  shadowColor: "#000",
-  shadowOffset: {
-    width: 3,
-    height: 0,
-  },
-  shadowOpacity: 0.5,
-  shadowRadius: 2,
+    borderRadius: 13,
+    width: "30%",
+    height: 40,
+    justifyContent: "center", // center text horizontally
+    alignItems: "center", // center text vertically
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 3,
+      height: 0,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
   },
 
   pestandControl: {
@@ -322,12 +321,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     shadowColor: "#000",
-  shadowOffset: {
-    width: 2,
-    height: 5,
-  },
-  shadowOpacity: 0.5,
-  shadowRadius: 2,
+    shadowOffset: {
+      width: 2,
+      height: 5,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
   },
   serviceComponentsicons: {
     alignSelf: "center",
@@ -378,29 +377,26 @@ const styles = StyleSheet.create({
   subBoxtext: {
     color: "white",
   },
-  cameraButton:{
-    height:42,
-    width:'80%',
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor:"#046AE1",
-    borderRadius:18,
-    marginTop:10,
-    
+  cameraButton: {
+    height: 42,
+    width: "80%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#046AE1",
+    borderRadius: 18,
+    marginTop: 10,
+  },
+  innerCameraBox: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
-  },
-  innerCameraBox:{
-    
-    justifyContent:'center',
-    alignItems:'center',
-  },
-  
-  cameraButtonText:{
-    justifyContent:'center',
-    alignItems:'center',
-    color:'white',
-    fontSize:20,
-    fontWeight:500,
+  cameraButtonText: {
+    justifyContent: "center",
+    alignItems: "center",
+    color: "white",
+    fontSize: 20,
+    fontWeight: 500,
   },
 
   consultationBox: {

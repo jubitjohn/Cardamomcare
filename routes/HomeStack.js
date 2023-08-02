@@ -9,7 +9,9 @@ import cardamomtips from "../screens/cardamomtips";
 import DiseaseScreen from "../screens/diseaseScreen";
 import AppointmentScreen from "../screens/appointments";
 import ImagePickerExample from "../screens/test";
-import ResultScreen from "../screens/ResultScreen";
+import ResultScreen from "../screens/ResultScreenDetails/ResultScreen";
+import PackageSelector from "../screens/ConsultationScreens/PackageSelector";
+import SlotBooking from "../screens/ConsultationScreens/SlotBooking";
 
 const screens = {
   Home: {
@@ -52,6 +54,20 @@ const screens = {
     screen: DiseaseScreen,
     navigationOptions: ({ navigation }) => ({
       headerTitle: "Result",
+      headerTitleAlign: "left",
+    }),
+  },
+  PackageSelector: {
+    screen: PackageSelector,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: "Package Selector",
+      headerTitleAlign: "left",
+    }),
+  },
+  SlotBooking: {
+    screen: SlotBooking,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: "Slot Booking",
       headerTitleAlign: "left",
     }),
   },

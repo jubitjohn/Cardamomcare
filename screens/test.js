@@ -150,9 +150,9 @@ export default function ImagePickerExample({ navigation }) {
 
       // Commented out the overlay prediction for cardamom because the model is not active now
 
-      // const dataOverlay = await responseOverlay.json();
-      // resultOverlay = await dataOverlay.predictions[0].tagName;
-      // console.log("Is cardamom or not :", dataOverlay.predictions[0].tagName);
+      const dataOverlay = await responseOverlay.json();
+      resultOverlay = await dataOverlay.predictions[0].tagName;
+      console.log("Is cardamom or not :", dataOverlay.predictions[0].tagName);
 
       // Main model
 

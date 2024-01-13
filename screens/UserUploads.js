@@ -78,7 +78,7 @@ const UserUploads = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView>
       <View style={styles.diseasesSection}>
         <View style={styles.stageButtons}>
           <TouchableOpacity
@@ -184,10 +184,6 @@ const UserUploads = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F6F6F6",
-  },
   cardamomSection: {
     flex: 1,
     flexDirection: "row",

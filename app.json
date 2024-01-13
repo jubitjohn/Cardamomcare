@@ -6,7 +6,9 @@
         {
           "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
         }
-      ]
+      ],
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth"
     ],
     "name": "Cardamomcare",
     "slug": "Cardamomcare",

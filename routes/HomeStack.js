@@ -1,6 +1,7 @@
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
 import { withNavigation } from "react-navigation";
+import { useContext } from "react";
 import HomeScreen from "../screens/HomeScreen";
 import Profile from "../screens/Profile";
 import FertilizerCalulator from "../screens/FertilizerCal";
@@ -12,13 +13,21 @@ import ImagePickerExample from "../screens/test";
 import ResultScreen from "../screens/ResultScreenDetails/ResultScreen";
 import PackageSelector from "../screens/ConsultationScreens/PackageSelector";
 import SlotBooking from "../screens/ConsultationScreens/SlotBooking";
+import PhoneSignIn from "../screens/UserLogin/phone/PhoneSignIn";
+import PhoneAuth from "../screens/UserLogin/phone/PhoneAuth";
+import DataProvider from "../screens/UserLogin/data/DataProvider";
 
 const screens = {
+  Login: {
+    screen: PhoneAuth,
+  },
   Home: {
     screen: HomeScreen,
     navigationOptions: ({ navigation }) => ({
-      headerTitle: "Plant Doctor",
+      headerTitle: "Kizhakkemuri Agro Research",
       headerTitleAlign: "left",
+      headerLeft: null, // Disable back arrow
+      headerBackTitle: null,
     }),
   },
   ReviewDetails: {
@@ -71,9 +80,16 @@ const screens = {
       headerTitleAlign: "left",
     }),
   },
+  // DataProvider: {
+  //   screen: DataProvider,
+  // },
+};
+
+const stackNavigatorConfig = {
+  initialRouteName: "Login", // Default initial route
 };
 
 // home stack navigator screens
-const HomeStack = createStackNavigator(screens);
+const HomeStack = createStackNavigator(screens, stackNavigatorConfig);
 
 export default createAppContainer(HomeStack);

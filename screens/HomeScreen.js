@@ -1,8 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import DataContext from "./UserLogin/data/data-context";
+import UserUploads from "./UserUploads";
+import {
+  db,
+  firestore,
+  collection,
+  getDoc,
+  doc,
+} from "../firebase/firebaseConfig";
 
 import {
   View,
@@ -16,7 +25,41 @@ import {
 } from "react-native";
 
 const HomeScreen = ({ navigation }) => {
+  const [data, setData] = useState([]);
   const [selectedCrop, setSelectedCrop] = useState("Cardamom");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Specify the document ID you want to retrieve
+        const documentId = "test_id"; // Replace with the actual document ID
+
+        // Create a reference to the document
+        const documentRef = doc(db, "test", documentId);
+
+        // Get the document
+        const documentSnapshot = await getDoc(documentRef);
+
+        // Check if the document exists
+        if (documentSnapshot.exists()) {
+          // Document data
+          const documentData = documentSnapshot.data();
+          setData(documentData);
+        } else {
+          console.log("Document does not exist!");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  console.log("DATA FROM FIRESTORE", db);
+  console.log(
+    "useContext(DataContext).userNumber from home : ",
+    useContext(DataContext).userNumber
+  );
 
   const handleCropSelection = (crop) => {
     setSelectedCrop(crop);
@@ -201,7 +244,7 @@ const HomeScreen = ({ navigation }) => {
 
           <View style={styles.weatherSection}>
             <View style={styles.weatherContainer}>
-              <Text style={styles.headerText}>Weather Update</Text>
+              <Text style={styles.headerText}>{data.test}</Text>
               {weatherData ? (
                 <>
                   <Text style={styles.weatherText}>
@@ -220,6 +263,9 @@ const HomeScreen = ({ navigation }) => {
             </View>
           </View>
         </View>
+      </View>
+      <View>
+        <UserUploads></UserUploads>
       </View>
     </ScrollView>
   );

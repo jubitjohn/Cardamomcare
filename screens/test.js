@@ -1,9 +1,22 @@
 import { Camera, CameraType } from "expo-camera";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { Image, Animated, ActivityIndicator, Dimensions } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 const windowHeight = Dimensions.get("window").height;
 import { FontAwesome } from "@expo/vector-icons";
+// import firebas
+import {
+  storage,
+  uploadBytes,
+  ref,
+  getDownloadURL,
+  db,
+  collection,
+  getDoc,
+  setDoc,
+  addDoc,
+  doc,
+} from "../firebase/firebaseConfig";
 
 import {
   Modal,
@@ -18,8 +31,11 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 
 import * as ScanImage from "expo-image-manipulator";
+import DataContext from "./UserLogin/data/data-context";
 
 export default function ImagePickerExample({ navigation }) {
+  // const storage = getStorage(firebaseConfig);
+
   const animateIconRef = useRef(null);
   const iconSize = 25;
   const iconColor = "white";
@@ -30,8 +46,71 @@ export default function ImagePickerExample({ navigation }) {
   const [photo, setPhoto] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
+  // const [uploadId, setUploadId] = useState("");
+  const userId = useContext(DataContext).userNumber;
+
+  const handleFireBaseUpload = async (image) => {
+    const response = await fetch(image);
+    const imageData = await response.blob();
+    console.log("start of upload");
+    // async magic goes here...
+    if (image === "") {
+      console.error(`not an image, the image file is a ${typeof imageAsFile}`);
+    }
+    console.log("test1");
+    const storageRef = ref(storage);
+    console.log("test122");
+    console.log("test122", storageRef);
+    const fileRef = ref(storageRef, "images/" + userId + "/" + Date.now());
+    try {
+      // Upload the bytes to the file reference
+      await uploadBytes(fileRef, imageData);
+
+      // Get the download URL using the file reference
+      const downloadURL = await getDownloadURL(fileRef);
+
+      console.log("File uploaded successfully. Download URL:", downloadURL);
+
+      // 3. Add the image details to Firestore
+      const usersCollection = collection(db, "users");
+      const userDocRef = doc(usersCollection, userId);
+
+      // Check if the user already exists in Firestore
+      const userDocSnapshot = await getDoc(userDocRef);
+      const userData = {
+        userId,
+      };
+
+      if (!userDocSnapshot.exists()) {
+        // If the user doesn't exist, create a new user document
+        await setDoc(userDocRef, userData);
+      }
+
+      // Create a reference to the images subcollection
+      const imagesCollection = collection(userDocRef, "images");
+      console.log("Image test 1");
+
+      // Add a new image document to the images subcollection
+      console.log("addDoc", addDoc);
+      const imageDocRef = await addDoc(imagesCollection, {
+        downloadURL,
+        status: "Pending", // You can set the initial status as needed
+      });
+
+      console.log("Image uploaded and Firestore updated successfully.");
+      console.log("imageDocRef.id", imageDocRef.id);
+      const uploadTemp = await imageDocRef.id;
+      // setUploadId(uploadTemp);
+      // console.log("logging uploadID", uploadId);
+      return imageDocRef.id;
+    } catch (error) {
+      console.error("Error uploading file:", error.message);
+      throw error;
+    }
+  };
 
   let cameraRef = null;
 
@@ -124,6 +203,7 @@ export default function ImagePickerExample({ navigation }) {
 
   const sendImageToApi = async (photoUri) => {
     result = "Cardamom plant not identified";
+    let uploadId;
     try {
       setIsLoading(true);
       const resizedPhotoUri = await reducePhotoSize(photoUri);
@@ -157,6 +237,7 @@ export default function ImagePickerExample({ navigation }) {
       // Main model
 
       if (resultOverlay == "Cardamom") {
+        uploadId = await handleFireBaseUpload(resizedPhotoUri);
         const response = await fetch(
           "https://cardamomdiseaseprediction-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/22a1ef84-a940-4f32-99cb-a26c6a6aedf8/classify/iterations/Iteration2/image",
           {
@@ -175,7 +256,7 @@ export default function ImagePickerExample({ navigation }) {
         console.log("Result Value", result);
         console.log(data.predictions[0].probability);
       }
-
+      console.log("imageId inside try 11", uploadId);
       animateIconRef.current?.swing(2000);
 
       setTimeout(() => {
@@ -183,6 +264,7 @@ export default function ImagePickerExample({ navigation }) {
 
         console.log("Delayed execution of prediction results");
       }, 2000); // Delay of 2000 milliseconds (2 seconds)
+      console.log("imageId inside try", uploadId);
     } catch (error) {
       console.error(error);
     } finally {
@@ -195,7 +277,11 @@ export default function ImagePickerExample({ navigation }) {
         if (resultOverlay !== "Cardamom") {
           setIsDrawerOpen(true);
         } else {
-          navigation.navigate("ResultScreen", { res: result });
+          console.log("imageId inside finally", uploadId);
+          navigation.navigate("ResultScreen", {
+            res: result,
+            imageId: uploadId,
+          });
         }
       }, 2000);
       // Hide the dark overlay after API response

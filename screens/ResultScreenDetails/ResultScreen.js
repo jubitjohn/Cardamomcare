@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -11,10 +11,28 @@ import { LinearGradient } from "expo-linear-gradient";
 import DiseaseDetails from "./DiseaseDetails";
 import DiseasesRelatedPictures from "./DiseaseRelatedPictures";
 import ProductSuggestion from "./ProductSuggestion";
+import { MaterialIcons } from "@expo/vector-icons";
+import { fetchData } from "../../utils/getDataFromDb";
+import DataContext from "../UserLogin/data/data-context";
 // import TreatmentPlan from "./TreatmentPlan";
 
 const ResultScreen = ({ navigation }) => {
+  const [status, setStatus] = useState("");
   const prop1 = navigation.getParam("res");
+  const uploadId = navigation.getParam("imageId");
+  const userId = useContext(DataContext).userNumber;
+
+  console.log("userId", uploadId);
+
+  useEffect(() => {
+    const fetchDataFromFirestore = async () => {
+      const result = await fetchData("users", userId, "images", uploadId);
+      setStatus(result.status);
+      console.log("result from common db pick : ", result.status);
+    };
+
+    fetchDataFromFirestore();
+  }, [uploadId, userId]);
 
   return (
     <ScrollView style={styles.container}>
@@ -26,9 +44,13 @@ const ResultScreen = ({ navigation }) => {
         end={[1, 0]} // Bottom-right corner
       >
         <View style={styles.firstSection}>
+          <Text style={styles.headingText}>
+            Image successfully {"\n"}uploaded{" "}
+            <MaterialIcons name="check" size={23} color="green" />
+          </Text>
           <Text style={styles.sectionText}>
-            Get your <Text style={{ color: "green", fontSize: 20 }}>FREE </Text>
-            personalised consultation now!
+            Bringing expert farming advice directly to your{" "}
+            <Text style={{ color: "green", fontSize: 20 }}>doorstep </Text>
           </Text>
           <TouchableOpacity style={styles.bookingButton}>
             <Text style={styles.bookingButtonText}>Book</Text>
@@ -47,6 +69,7 @@ const ResultScreen = ({ navigation }) => {
 
       {/* Second Section */}
       <View style={styles.secondSection}>
+        <Text style={styles.cardHeading}>{status}</Text>
         <Text style={styles.cardHeading}>{prop1}</Text>
         <View>
           <DiseaseDetails disease={prop1} />
@@ -77,6 +100,12 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   sectionText: {
+    fontSize: 15,
+    padding: 18,
+    marginBottom: 1,
+    textAlign: "left",
+  },
+  headingText: {
     fontSize: 20,
     padding: 18,
     fontWeight: "bold",

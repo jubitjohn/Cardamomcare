@@ -38,11 +38,28 @@ const UserUploads = () => {
       const newData = { ...categorizedData }; // Copy the existing state
 
       data.forEach((item) => {
-        if (item.status === "Pending") {
+        const itemDownloadURL = item.downloadURL;
+
+        if (
+          item.status === "Pending" &&
+          !newData.Pending.some(
+            (existingItem) => existingItem.downloadURL === itemDownloadURL
+          )
+        ) {
           newData.Pending.push(item);
-        } else if (item.status === "vegetative") {
+        } else if (
+          item.status === "vegetative" &&
+          !newData.vegetative.some(
+            (existingItem) => existingItem.downloadURL === itemDownloadURL
+          )
+        ) {
           newData.vegetative.push(item);
-        } else if (item.status === "flowering") {
+        } else if (
+          item.status === "flowering" &&
+          !newData.flowering.some(
+            (existingItem) => existingItem.downloadURL === itemDownloadURL
+          )
+        ) {
           newData.flowering.push(item);
         }
       });
@@ -55,6 +72,8 @@ const UserUploads = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
+
+  console.log(" PRINTING CATEGORIZED DATA", categorizedData);
 
   return (
     <ScrollView>
@@ -121,7 +140,7 @@ const UserUploads = () => {
                   />
                   <View style={styles.diseaseInfo}>
                     <Text style={styles.diseaseTitle}>{uploads.status}</Text>
-                    <Text style={styles.diseaseType}>{uploads.type}</Text>
+                    <Text style={styles.diseaseType}>{uploads.message}</Text>
                   </View>
                 </TouchableOpacity>
               ))}

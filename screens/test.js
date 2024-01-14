@@ -97,7 +97,8 @@ export default function ImagePickerExample({ navigation }) {
       console.log("addDoc", addDoc);
       const imageDocRef = await addDoc(imagesCollection, {
         downloadURL,
-        status: "Pending", // You can set the initial status as needed
+        status: "Pending",
+        message: "Under Review with Scientist", // You can set the initial status as needed
       });
 
       console.log("Image uploaded and Firestore updated successfully.");

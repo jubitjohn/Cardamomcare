@@ -243,7 +243,7 @@ const HomeScreen = ({ navigation }) => {
             </View>
           </View>
 
-          <View style={styles.weatherSection}>
+          {/* <View style={styles.weatherSection}>
             <View style={styles.weatherContainer}>
               <Text style={styles.headerText}>{data.test}</Text>
               {weatherData ? (
@@ -262,7 +262,7 @@ const HomeScreen = ({ navigation }) => {
                 <Text style={styles.loadingText}>Loading...</Text>
               )}
             </View>
-          </View>
+          </View> */}
         </View>
       </View>
       <View>

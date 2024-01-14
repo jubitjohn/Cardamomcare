@@ -1,36 +1,36 @@
-import { db, getDocs, collection, query } from "../firebase/firebaseConfig";
+import {
+  db,
+  firestore,
+  collection,
+  getDoc,
+  getDocs,
+  doc,
+  listCollections,
+} from "../firebase/firebaseConfig";
 
 export const collectUserUploadedImageData = async (
   collection_id,
   documentId,
   imagesCollection
+  //   imageId
 ) => {
   try {
-    // Create a reference to the subcollection
-    const imagesCollectionRef = collection(
-      db,
-      collection_id,
-      documentId,
-      imagesCollection
-    );
+    // Create a reference to the document
+    // User document
+    const userDocRef = doc(db, collection_id, documentId);
 
-    // Create a query to get all documents in the subcollection
-    const q = query(imagesCollectionRef);
+    // Reference to image subcollections
+    const imagesCollectionRef = collection(userDocRef, imagesCollection);
 
-    // Get the documents
-    const querySnapshot = await getDocs(q);
+    // Fetch documents from the image subcollection
+    const querySnapshot = await getDocs(imagesCollectionRef);
+    console.log("Testing querySnapshot fetch", querySnapshot);
 
-    // Create an array to store the data of all documents
-    const documentDataArray = [];
+    const imageData = querySnapshot.docs.map((doc) => doc.data());
+    console.log("Testing imageData fetch", imageData);
 
-    // Loop through the documents and add their data to the array
-    querySnapshot.forEach((doc) => {
-      documentDataArray.push(doc.data());
-    });
-
-    return documentDataArray;
+    return imageData;
   } catch (error) {
     console.error("Error fetching data:", error);
-    throw error; // You might want to rethrow the error to handle it in the calling code
   }
 };

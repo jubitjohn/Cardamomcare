@@ -16,7 +16,8 @@ import SlotBooking from "../screens/ConsultationScreens/SlotBooking";
 import PhoneSignIn from "../screens/UserLogin/phone/PhoneSignIn";
 import PhoneAuth from "../screens/UserLogin/phone/PhoneAuth";
 import DataProvider from "../screens/UserLogin/data/DataProvider";
-
+import RoadmapPage from "../screens/ResultScreenDetails/StatusComponent";
+import UserUploads from "../screens/userUploads";
 const screens = {
   Login: {
     screen: PhoneAuth,
@@ -44,6 +45,9 @@ const screens = {
   },
   AppointmentScreen: {
     screen: AppointmentScreen,
+  },
+  UserUploads: {
+    screen: UserUploads,
   },
   Imagepick: {
     screen: ImagePickerExample,
@@ -77,6 +81,13 @@ const screens = {
     screen: SlotBooking,
     navigationOptions: ({ navigation }) => ({
       headerTitle: "Slot Booking",
+      headerTitleAlign: "left",
+    }),
+  },
+  RoadmapPage: {
+    screen: RoadmapPage,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: "Scan Status",
       headerTitleAlign: "left",
     }),
   },

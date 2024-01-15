@@ -10,7 +10,7 @@ import {
 //import { Svg, Circle } from 'react-native-svg';
 import { collectUserUploadedImageData } from "../utils/collectUserUploadedImages";
 
-const UserUploads = () => {
+const UserUploads = ({ navigation }) => {
   const [selectedStage, setSelectedStage] = useState("Pending");
   const [categorizedData, setCategorizedData] = useState({
     Pending: [],
@@ -133,7 +133,12 @@ const UserUploads = () => {
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View style={styles.row}>
               {categorizedData[selectedStage].map((uploads, index) => (
-                <TouchableOpacity key={index} style={styles.diseaseCard}>
+                <TouchableOpacity
+                  key={index}
+                  style={styles.diseaseCard}
+                  // onPress={navigation.navigate("RoadmapPage")}
+                >
+                  {console.log("navigatiom", navigation)}
                   <Image
                     style={styles.diseaseImage}
                     source={{ uri: uploads.downloadURL }}

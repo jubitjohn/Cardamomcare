@@ -9,9 +9,15 @@ const statuses = [
 ];
 
 const RoadmapPage = ({ navigation }) => {
+  const prop1 = navigation.getParam("uploadDetails");
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Image
+        style={styles.diseaseImage}
+        source={{ uri: prop1.data.downloadURL }}
+      />
       <View style={styles.statusRow}>
+        <Text>{prop1.id}</Text>
         {statuses.map((status, index) => (
           <View key={index} style={styles.statusBox}>
             <Text
@@ -22,6 +28,11 @@ const RoadmapPage = ({ navigation }) => {
             >
               {status.icon}
             </Text>
+            {console.log(
+              "uri: prop1.data.downloadURL ",
+              prop1.data.downloadURL
+            )}
+            <View></View>
           </View>
         ))}
       </View>
@@ -31,6 +42,7 @@ const RoadmapPage = ({ navigation }) => {
       </Svg>
 
       <View style={styles.messageRow}>
+        <Text>{prop1.data.sta}</Text>
         {statuses.map((status, index) => (
           <View key={index} style={styles.messageBox}>
             <Text style={styles.messageText}>{status.message}</Text>
@@ -66,6 +78,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 20,
     marginBottom: 10,
+  },
+  diseaseImage: {
+    width: 100, // Adjust according to your layout
+    height: 100, // Adjust according to your layout
   },
   statusBox: {
     flex: 1,

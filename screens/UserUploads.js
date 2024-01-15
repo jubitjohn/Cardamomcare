@@ -18,6 +18,7 @@ const UserUploads = ({ navigation }) => {
     flowering: [],
   });
   const [data, setData] = useState([]);
+  console.log("Hello");
 
   useEffect(() => {
     // Fetch data when the component mounts
@@ -38,30 +39,29 @@ const UserUploads = ({ navigation }) => {
       const newData = { ...categorizedData }; // Copy the existing state
 
       data.forEach((item) => {
-        const itemDownloadURL = item.downloadURL;
+        const itemId = item.id;
 
         if (
-          item.status === "Pending" &&
-          !newData.Pending.some(
-            (existingItem) => existingItem.downloadURL === itemDownloadURL
-          )
+          item.data.status === "Pending" &&
+          !newData.Pending.some((existingItem) => existingItem.id === itemId)
         ) {
           newData.Pending.push(item);
-        } else if (
-          item.status === "vegetative" &&
-          !newData.vegetative.some(
-            (existingItem) => existingItem.downloadURL === itemDownloadURL
-          )
-        ) {
-          newData.vegetative.push(item);
-        } else if (
-          item.status === "flowering" &&
-          !newData.flowering.some(
-            (existingItem) => existingItem.downloadURL === itemDownloadURL
-          )
-        ) {
-          newData.flowering.push(item);
         }
+        // else if (
+        //   item.status === "vegetative" &&
+        //   !newData.vegetative.some(
+        //     (existingItem) => existingItem.downloadURL === itemDownloadURL
+        //   )
+        // ) {
+        //   newData.vegetative.push(item);
+        // } else if (
+        //   item.status === "flowering" &&
+        //   !newData.flowering.some(
+        //     (existingItem) => existingItem.downloadURL === itemDownloadURL
+        //   )
+        // ) {
+        //   newData.flowering.push(item);
+        // }
       });
 
       // Update the state with the new categorized data
@@ -74,6 +74,7 @@ const UserUploads = ({ navigation }) => {
   }, [data]);
 
   console.log(" PRINTING CATEGORIZED DATA", categorizedData);
+  console.log("Datadata", data);
 
   return (
     <ScrollView>
@@ -136,16 +137,23 @@ const UserUploads = ({ navigation }) => {
                 <TouchableOpacity
                   key={index}
                   style={styles.diseaseCard}
-                  // onPress={navigation.navigate("RoadmapPage")}
+                  onPress={() =>
+                    navigation.navigate("RoadmapPage", {
+                      uploadDetails: uploads,
+                    })
+                  }
                 >
-                  {console.log("navigatiom", navigation)}
                   <Image
                     style={styles.diseaseImage}
-                    source={{ uri: uploads.downloadURL }}
+                    source={{ uri: uploads.data.downloadURL }}
                   />
                   <View style={styles.diseaseInfo}>
-                    <Text style={styles.diseaseTitle}>{uploads.status}</Text>
-                    <Text style={styles.diseaseType}>{uploads.message}</Text>
+                    <Text style={styles.diseaseTitle}>
+                      {uploads.data.status}
+                    </Text>
+                    <Text style={styles.diseaseType}>
+                      {uploads.data.message}
+                    </Text>
                   </View>
                 </TouchableOpacity>
               ))}

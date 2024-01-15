@@ -227,7 +227,7 @@ const HomeScreen = ({ navigation }) => {
               <View style={styles.bookingButtonContainer}>
                 <TouchableOpacity
                   style={styles.bookingButton}
-                  onPress={() => pressHandler("PackageSelector")}
+                  onPress={() => pressHandler("RoadmapPage")}
                 >
                   <Text style={styles.consultationBoxButtonText}>Book</Text>
                 </TouchableOpacity>
@@ -266,9 +266,7 @@ const HomeScreen = ({ navigation }) => {
         </View>
       </View>
       <View>
-        <View>
-          <UserUploads />
-        </View>
+        <UserUploads navigation={navigation} />
       </View>
     </ScrollView>
   );

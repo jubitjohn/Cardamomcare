@@ -26,7 +26,10 @@ export const collectUserUploadedImageData = async (
     const querySnapshot = await getDocs(imagesCollectionRef);
     console.log("Testing querySnapshot fetch", querySnapshot);
 
-    const imageData = querySnapshot.docs.map((doc) => doc.data());
+    const imageData = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      data: doc.data(),
+    }));
     console.log("Testing imageData fetch", imageData);
 
     return imageData;

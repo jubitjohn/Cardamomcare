@@ -31,6 +31,9 @@ const screens = {
       headerBackTitle: null,
     }),
   },
+  RoadmapPage: {
+    screen: RoadmapPage,
+  },
   ReviewDetails: {
     screen: Profile,
   },
@@ -84,16 +87,6 @@ const screens = {
       headerTitleAlign: "left",
     }),
   },
-  RoadmapPage: {
-    screen: RoadmapPage,
-    navigationOptions: ({ navigation }) => ({
-      headerTitle: "Scan Status",
-      headerTitleAlign: "left",
-    }),
-  },
-  // DataProvider: {
-  //   screen: DataProvider,
-  // },
 };
 
 const stackNavigatorConfig = {

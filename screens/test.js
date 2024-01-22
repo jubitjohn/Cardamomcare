@@ -97,7 +97,7 @@ export default function ImagePickerExample({ navigation }) {
       console.log("addDoc", addDoc);
       const imageDocRef = await addDoc(imagesCollection, {
         downloadURL,
-        status: "Pending",
+        status: "Uploaded",
         message: "Under Review with Scientist", // You can set the initial status as needed
       });
 

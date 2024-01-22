@@ -9,13 +9,12 @@ import {
 } from "react-native";
 //import { Svg, Circle } from 'react-native-svg';
 import { collectUserUploadedImageData } from "../utils/collectUserUploadedImages";
+import { NavigationContext } from "react-navigation";
 
 const UserUploads = ({ navigation }) => {
-  const [selectedStage, setSelectedStage] = useState("Pending");
+  const [selectedStage, setSelectedStage] = useState("RecentUploads");
   const [categorizedData, setCategorizedData] = useState({
-    Pending: [],
-    vegetative: [],
-    flowering: [],
+    RecentUploads: [],
   });
   const [data, setData] = useState([]);
   console.log("Hello");
@@ -31,7 +30,7 @@ const UserUploads = ({ navigation }) => {
         console.error("Error fetching data:", error);
       });
     console.log("testing data inside useeffects", data);
-  }, []);
+  }, [collectUserUploadedImageData, NavigationContext]);
 
   useEffect(() => {
     // Categorize the fetched data based on the status value
@@ -42,26 +41,12 @@ const UserUploads = ({ navigation }) => {
         const itemId = item.id;
 
         if (
-          item.data.status === "Pending" &&
-          !newData.Pending.some((existingItem) => existingItem.id === itemId)
+          !newData.RecentUploads.some(
+            (existingItem) => existingItem.id === itemId
+          )
         ) {
-          newData.Pending.push(item);
+          newData.RecentUploads.push(item);
         }
-        // else if (
-        //   item.status === "vegetative" &&
-        //   !newData.vegetative.some(
-        //     (existingItem) => existingItem.downloadURL === itemDownloadURL
-        //   )
-        // ) {
-        //   newData.vegetative.push(item);
-        // } else if (
-        //   item.status === "flowering" &&
-        //   !newData.flowering.some(
-        //     (existingItem) => existingItem.downloadURL === itemDownloadURL
-        //   )
-        // ) {
-        //   newData.flowering.push(item);
-        // }
       });
 
       // Update the state with the new categorized data
@@ -73,65 +58,22 @@ const UserUploads = ({ navigation }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  console.log(" PRINTING CATEGORIZED DATA", categorizedData);
-  console.log("Datadata", data);
-
   return (
     <ScrollView>
       <View style={styles.diseasesSection}>
         <View style={styles.stageButtons}>
           <TouchableOpacity
-            style={[
-              styles.stageButton,
-              selectedStage === "Pending" && styles.stageButtonSelected,
-            ]}
-            onPress={() => setSelectedStage("Pending")}
+            style={[styles.stageButton, styles.stageButtonSelected]}
           >
             <Text
-              style={[
-                styles.stageButtonText,
-                selectedStage === "seeding" && styles.stageButtonTextSelected,
-              ]}
+              style={[styles.stageButtonText, styles.stageButtonTextSelected]}
             >
-              Pending
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.stageButton,
-              selectedStage === "vegetative" && styles.stageButtonSelected,
-            ]}
-            onPress={() => setSelectedStage("vegetative")}
-          >
-            <Text
-              style={[
-                styles.stageButtonText,
-                selectedStage === "vegetative" &&
-                  styles.stageButtonTextSelected,
-              ]}
-            >
-              Vegetative
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.stageButton,
-              selectedStage === "flowering" && styles.stageButtonSelected,
-            ]}
-            onPress={() => setSelectedStage("flowering")}
-          >
-            <Text
-              style={[
-                styles.stageButtonText,
-                selectedStage === "flowering" && styles.stageButtonTextSelected,
-              ]}
-            >
-              Flowering
+              Recent Uploads
             </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.container}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={true}>
             <View style={styles.row}>
               {categorizedData[selectedStage].map((uploads, index) => (
                 <TouchableOpacity

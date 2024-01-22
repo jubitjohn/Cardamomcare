@@ -330,12 +330,12 @@ const styles = StyleSheet.create({
   },
   cropSelectorButtonText: {
     fontSize: 16,
-    fontWeight: "500",
+    fontWeight: 500,
   },
   serviceContainerText: {
     fontSize: 16,
     textAlign: "center",
-    fontWeight: "500",
+    fontWeight: 500,
     color: "#333333",
   },
   DiseaseDetectionContainer: {

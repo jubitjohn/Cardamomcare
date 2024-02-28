@@ -175,7 +175,7 @@ const HomeScreen = ({ navigation }) => {
                 <View style={styles.outerBox}>
                   <View style={styles.innerBox}>
                     <View style={styles.subBox}>
-                      <Ionicons name="ios-camera" size={54} color="white" />
+                      <Ionicons name="camera" size={54} color="white" />
                       <Text style={styles.subBoxtext}>Upload Image</Text>
                     </View>
                     <View style={styles.subBox}>
@@ -330,12 +330,12 @@ const styles = StyleSheet.create({
   },
   cropSelectorButtonText: {
     fontSize: 16,
-    fontWeight: 500,
+    // fontWeight: 500,
   },
   serviceContainerText: {
     fontSize: 16,
     textAlign: "center",
-    fontWeight: 500,
+    // fontWeight: 500,
     color: "#333333",
   },
   DiseaseDetectionContainer: {
@@ -390,7 +390,7 @@ const styles = StyleSheet.create({
   HealCropText: {
     padding: 1,
     fontSize: 16,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     color: "black",
     textAlign: "left",
     textTransform: "uppercase",
@@ -443,7 +443,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     color: "white",
     fontSize: 20,
-    fontWeight: 500,
+    // fontWeight: 500,
   },
 
   consultationBox: {
@@ -471,7 +471,7 @@ const styles = StyleSheet.create({
   consultationBoxText: {
     fontSize: 23,
     color: "black",
-    fontWeight: 500,
+    fontWeight: "500",
   },
   bookingButton: {
     backgroundColor: "#046AE1",
@@ -486,7 +486,7 @@ const styles = StyleSheet.create({
   consultationBoxButtonText: {
     color: "white",
     fontSize: 18,
-    fontWeight: 700,
+    // fontWeight: 700,
     padding: 5,
     textAlign: "center",
   },
@@ -521,7 +521,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 24,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     marginBottom: 8,
   },
   weatherText: {

@@ -14,10 +14,13 @@ import ProductSuggestion from "./ProductSuggestion";
 import { MaterialIcons } from "@expo/vector-icons";
 import { fetchData } from "../../utils/getDataFromDb";
 import DataContext from "../UserLogin/data/data-context";
+import RoadmapPage from "./StatusComponent";
 // import TreatmentPlan from "./TreatmentPlan";
 
 const ResultScreen = ({ navigation }) => {
   const [status, setStatus] = useState("");
+  const [instance, setInstance] = useState({});
+  const [dataLoaded, setDataLoaded] = useState(false); // New state variable
   const prop1 = navigation.getParam("res");
   const uploadId = navigation.getParam("imageId");
   const userId = useContext(DataContext).userNumber;
@@ -27,17 +30,24 @@ const ResultScreen = ({ navigation }) => {
   useEffect(() => {
     const fetchDataFromFirestore = async () => {
       const result = await fetchData("users", userId, "images", uploadId);
-      setStatus(result.status);
+      const formattedInstance = {
+        data: {
+          downloadURL: result.downloadURL,
+          message: result.message,
+          status: result.status,
+        },
+      };
+      console.log("instance", instance);
+      setInstance(formattedInstance);
       console.log("result from common db pick : ", result.status);
+      setDataLoaded(true);
     };
 
     fetchDataFromFirestore();
   }, [uploadId, userId]);
-
   return (
     <ScrollView style={styles.container}>
       {/* First Section */}
-
       <LinearGradient
         colors={["#1a961a", "white", "white", "white", "#1a961a"]}
         start={[0, 1]} // Top-left corner
@@ -66,27 +76,11 @@ const ResultScreen = ({ navigation }) => {
           </View>
         </View>
       </LinearGradient>
-
-      {/* Second Section */}
-      <View style={styles.secondSection}>
-        <Text style={styles.cardHeading}>{status}</Text>
-        <Text style={styles.cardHeading}>{prop1}</Text>
-        <View>
-          <DiseaseDetails disease={prop1} />
-        </View>
-        <View>
-          <DiseasesRelatedPictures disease={prop1} />
-        </View>
-        <View>
-          <ProductSuggestion disease={prop1} />
-        </View>
-      </View>
-
-      {/* ///Treatment section */}
-
-      {/* <View>
-        <TreatmentPlan />
-      </View> */}
+      <RoadmapPage
+        navigation={navigation}
+        uploadDetails={instance}
+        dataLoaded={dataLoaded}
+      />
     </ScrollView>
   );
 };

@@ -23,6 +23,7 @@ const UserUploads = ({ navigation }) => {
     // Fetch data when the component mounts
     collectUserUploadedImageData("users", "+917356771642", "images")
       .then((fetchedData) => {
+        print("fetchedDatafetchedDatafetchedData", fetchedData);
         // Set the fetched data to the state
         setData(fetchedData);
       })
@@ -82,6 +83,7 @@ const UserUploads = ({ navigation }) => {
                   onPress={() =>
                     navigation.navigate("RoadmapPage", {
                       uploadDetails: uploads,
+                      isVisible: true,
                     })
                   }
                 >
@@ -107,7 +109,7 @@ const UserUploads = ({ navigation }) => {
             <Text
               style={[styles.cropSectionTitle, { color: "#FFF", fontSize: 24 }]}
             >
-              Crop Diagnosis
+              AI Crop Diagnosis
             </Text>
             <Text
               style={[

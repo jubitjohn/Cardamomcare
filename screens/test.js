@@ -62,7 +62,7 @@ export default function ImagePickerExample({ navigation }) {
     }
     console.log("test1");
     const storageRef = ref(storage);
-    console.log("test122");
+
     console.log("test122", storageRef);
     const fileRef = ref(storageRef, "images/" + userId + "/" + Date.now());
     try {

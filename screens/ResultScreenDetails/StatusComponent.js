@@ -25,25 +25,73 @@ const statuses = [
   },
 ];
 
-const RoadmapPage = ({ navigation }) => {
-  const prop1 = navigation.getParam("uploadDetails");
+const RoadmapPage = ({ navigation, dataLoaded, uploadDetails }) => {
+  dataLoadedValue = navigation.getParam("isVisible", dataLoaded);
+  if (!dataLoadedValue) {
+    return null; // or a loading indicator, or any fallback
+  }
+  console.log("RoadmapPageRecieved2", uploadDetails);
+  const prop1 = navigation.getParam("uploadDetails", uploadDetails);
+  console.log("RoadmapPageRecieved", prop1);
+
+  const getStyles = (status) => {
+    const uploadedTextBackgroundColor = getUploadedTextBackgroundColor(status);
+
+    return StyleSheet.create({
+      uploadedText: {
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 10,
+        height: 39,
+        margin: 1,
+        backgroundColor: uploadedTextBackgroundColor,
+        borderRadius: 30,
+      },
+    });
+  };
+
+  const getUploadedTextBackgroundColor = (status) => {
+    switch (status) {
+      case "Uploaded":
+        return "#bad750"; // Example background color for 'Uploaded'
+      case "Under Analysis":
+        return "#FFCD4C"; // Example background color for 'Under Analysis'
+      case "Expert Review":
+        return "#065a00"; // Example background color for 'Expert Review'
+      // Add more cases if needed
+      default:
+        return "#FFFFFF"; // Default background color
+    }
+  };
+  const stylescard = getStyles(prop1.data.status);
+
+  const getStatusMessage = (status) => {
+    switch (status) {
+      case "Uploaded":
+        return "Thank you for sharing your cardamom plant image! Our expert team is analyzing it with advanced technology for an accurate diagnosis. Stay tuned for updates!";
+      case "Under Analysis":
+        return "Your cardamom plant image is currently under analysis by our expert team. We're working diligently to provide you with accurate insights. Stay tuned!";
+      case "Expert Review":
+        return "Your cardamom plant image is now under expert review. We're utilizing cutting-edge technology to ensure precise results. Stay tuned for updates!";
+      default:
+        return "Thank you for sharing your cardamom plant image! Our expert team is analyzing it with advanced technology for an accurate diagnosis. Stay tuned for updates!";
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.imageUploadedMsg}>
         {/* Left side - Upload Successful text */}
         <View style={styles.uploadedTextOuter}>
-          <View style={styles.uploadedText}>
+          <View style={stylescard.uploadedText}>
             <View style={styles.dot}></View>
             <View>
-              <Text>Upload Successful</Text>
+              <Text>{prop1.data.status}</Text>
             </View>
           </View>
           <View style={styles.halfWidthMessageBox}>
             <Text style={styles.halfWidthMessageText}>
-              our cardamom plant image is currently undergoing detailed analysis
-              by our cutting-edge machine learning models and expert team.
-              Please stay tuned for updates.
+              {getStatusMessage(prop1.data.status)}
             </Text>
           </View>
           <View></View>
@@ -121,8 +169,8 @@ const RoadmapPage = ({ navigation }) => {
         </View>
 
         <View>
-          <View style={styles.fullWidthMessageBox}>
-            <Text style={styles.fullWidthMessageText}>
+          <View style={styles.fullWidthMessageBoxStatus}>
+            <Text style={styles.fullWidthMessageTextStatus}>
               Status : {prop1.data.status}
             </Text>
           </View>
@@ -136,9 +184,7 @@ const RoadmapPage = ({ navigation }) => {
             <View style={styles.fullWidthMessageBox}>
               <View>
                 <Text style={styles.fullWidthMessageText}>
-                  our cardamom plant image is currently undergoing detailed
-                  analysis by our cutting-edge machine learning models and
-                  expert team. Please stay tuned for updates.
+                  {prop1.data.message}
                 </Text>
               </View>
             </View>
@@ -280,11 +326,25 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     margin: 30,
     borderColor: "#ddd",
-    backgroundColor: "#f4f3f321",
+    backgroundColor: "#ffffff",
     borderRadius: 30,
+    height: 200,
   },
   fullWidthMessageText: {
-    fontSize: 16,
+    fontSize: 18,
+    color: "#333",
+  },
+  fullWidthMessageBoxStatus: {
+    padding: 10,
+    marginVertical: 20,
+    borderWidth: 1,
+    margin: 30,
+    borderColor: "#ddd",
+    backgroundColor: "#f4f3f3",
+    borderRadius: 10,
+  },
+  fullWidthMessageTextStatus: {
+    fontSize: 26,
     color: "#333",
   },
   halfWidthMessageBox: {

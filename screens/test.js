@@ -4,6 +4,7 @@ import { Image, Animated, ActivityIndicator, Dimensions } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 const windowHeight = Dimensions.get("window").height;
 import { FontAwesome } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 // import firebas
 import {
   storage,
@@ -177,9 +178,38 @@ export default function ImagePickerExample({ navigation }) {
       current === CameraType.back ? CameraType.front : CameraType.back
     );
   }
+
+  const handleGallery = async () => {
+    try {
+      const permissionResult =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!permissionResult.granted) {
+        Alert.alert(
+          "Permission Denied",
+          "Please grant permission to access the gallery"
+        );
+        return;
+      }
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: false,
+        aspect: [4, 3],
+        quality: 1,
+      });
+      if (result && !result.cancelled) {
+        setPhoto(result.assets[0]);
+        console.log("result inside", result);
+      }
+    } catch (error) {
+      console.log("Error picking an image: ", error);
+    }
+  };
+
   async function takePicture() {
     if (cameraRef) {
       const photoData = await cameraRef.takePictureAsync();
+      console.log("image from camera", photoData);
       setPhoto(photoData);
     }
   }
@@ -349,6 +379,7 @@ export default function ImagePickerExample({ navigation }) {
               style={[styles.camera, { aspectRatio: 3 / 4 }]}
               type={type}
               ref={(ref) => (cameraRef = ref)}
+              autoFocus="on"
             >
               <Dot style={styles.dot1} />
               <Dot style={styles.dot2} />
@@ -376,13 +407,9 @@ export default function ImagePickerExample({ navigation }) {
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={styles.galleryButton}
-                  onPress={toggleCameraType}
+                  onPress={handleGallery}
                 >
-                  <MaterialIcons
-                    name="flip-camera-android"
-                    size={44}
-                    color="white"
-                  />
+                  <MaterialIcons name="photo-library" size={44} color="white" />
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.captureButton}

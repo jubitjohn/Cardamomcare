@@ -25,7 +25,7 @@ const screens = {
   Home: {
     screen: HomeScreen,
     navigationOptions: ({ navigation }) => ({
-      headerTitle: "Kizhakkemuri Agro Research",
+      headerTitle: "AgroLens",
       headerTitleAlign: "left",
       headerLeft: null, // Disable back arrow
       headerBackTitle: null,

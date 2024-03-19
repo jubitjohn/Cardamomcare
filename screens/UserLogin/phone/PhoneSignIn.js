@@ -57,7 +57,7 @@ export default function PhoneSignIn({ onPhoneNumberSubmit }) {
       }} /> */}
       <Image source={require("..//../../assets/mainlogo.png")} style={{
         marginLeft: 20,
-        marginTop: "30%",
+        marginTop: "20%",
         resizeMode: "contain",
         width: 40,
         height: 50
@@ -82,7 +82,7 @@ export default function PhoneSignIn({ onPhoneNumberSubmit }) {
           marginRight: 80,
           textAlign: 'left',
           fontSize: 14,
-          fontWeight: 300
+          fontWeight: 300,
         }}>
         Please sign in to your account and start your
         journey with us.</Text>

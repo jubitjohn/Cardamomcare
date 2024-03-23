@@ -72,12 +72,12 @@ export default function PhoneAuth({ navigation }) {
         title="Verification Failed"
         content="The verification code you entered is incorrect. Please try again."
       />
-      <Card style={styles.loginContainer}>
+      {/* <Card style={styles.loginContainer}>
         <Image
           style={styles.loginLogo}
-          source={require("..//..//../assets/consultant.png")}
+        // source={require("..//..//../assets/consultant.png")}
         />
-      </Card>
+      </Card> */}
       <VerifyPhone
         onVerify={verifyCode}
         onVerificationRetry={() => {
@@ -89,12 +89,12 @@ export default function PhoneAuth({ navigation }) {
     </View>
   ) : (
     <View>
-      <Card style={styles.loginContainer}>
+      {/* <Card style={styles.loginContainerlogo}>
         <Image
-          style={styles.loginLogo}
-          source={require("..//../../assets/consultant.png")}
+        // style={styles.loginLogo}
+        // source={require("..//../../assets/consultant.png")}
         />
-      </Card>
+      </Card> */}
       <FirebaseRecaptchaVerifierModal
         ref={recaptchaVerifier}
         firebaseConfig={app.options}

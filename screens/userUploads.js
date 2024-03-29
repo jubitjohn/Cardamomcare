@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import DataContext from "./UserLogin/data/data-context";
 import {
   View,
   Text,
@@ -16,12 +17,16 @@ const UserUploads = ({ navigation }) => {
   const [categorizedData, setCategorizedData] = useState({
     RecentUploads: [],
   });
+  const [userNumber, setUserNumber] = useState(
+    useContext(DataContext).userNumber
+  );
+
   const [data, setData] = useState([]);
   console.log("Hello");
 
   useEffect(() => {
     // Fetch data when the component mounts
-    collectUserUploadedImageData("users", "+917356771642", "images")
+    collectUserUploadedImageData("users", userNumber, "images")
       .then((fetchedData) => {
         print("fetchedDatafetchedDatafetchedData", fetchedData);
         // Set the fetched data to the state

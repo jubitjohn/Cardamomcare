@@ -4,7 +4,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import DataContext from "./UserLogin/data/data-context";
-import UserUploads from "./UserUploads";
+import UserUploads from "./userUploads";
 
 import {
   db,

@@ -517,12 +517,11 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
   },
   frameInstruction: {
-    color: "white",
+    color: "#ffffff",
     padding: 25,
     alignContent: "center",
     justifyContent: "center",
     alignSelf: "center",
-    fontWeight: 600,
   },
 
   galleryButton: {
@@ -629,7 +628,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     padding: 15,
     fontSize: 20,
-    fontWeight: 600,
+    fontWeight: "600",
   },
   popUpinfoDescription: {
     fontSize: 17,

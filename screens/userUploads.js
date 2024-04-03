@@ -26,6 +26,7 @@ const UserUploads = ({ navigation }) => {
 
   useEffect(() => {
     // Fetch data when the component mounts
+    console.log("Hello Before");
     collectUserUploadedImageData("users", userNumber, "images")
       .then((fetchedData) => {
         print("fetchedDatafetchedDatafetchedData", fetchedData);
@@ -33,7 +34,8 @@ const UserUploads = ({ navigation }) => {
         setData(fetchedData);
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        console.log("Hello after in catch 1");
+        console.error("Error fetching data useruploads:", error);
       });
     console.log("testing data inside useeffects", data);
   }, [collectUserUploadedImageData, NavigationContext]);
@@ -42,18 +44,19 @@ const UserUploads = ({ navigation }) => {
     // Categorize the fetched data based on the status value
     const categorizeData = () => {
       const newData = { ...categorizedData }; // Copy the existing state
+      if (data) {
+        data.forEach((item) => {
+          const itemId = item.id;
 
-      data.forEach((item) => {
-        const itemId = item.id;
-
-        if (
-          !newData.RecentUploads.some(
-            (existingItem) => existingItem.id === itemId
-          )
-        ) {
-          newData.RecentUploads.push(item);
-        }
-      });
+          if (
+            !newData.RecentUploads.some(
+              (existingItem) => existingItem.id === itemId
+            )
+          ) {
+            newData.RecentUploads.push(item);
+          }
+        });
+      }
 
       // Update the state with the new categorized data
       setCategorizedData(newData);

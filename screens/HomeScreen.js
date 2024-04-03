@@ -36,10 +36,13 @@ const HomeScreen = ({ navigation }) => {
         const documentId = "test_id"; // Replace with the actual document ID
 
         // Create a reference to the document
+        console.log("documentRef:::beforedb", db);
         const documentRef = doc(db, "test", documentId);
+        console.log("documentRef:::", documentRef);
 
         // Get the document
         const documentSnapshot = await getDoc(documentRef);
+        console.log("testing test_id get ");
 
         // Check if the document exists
         if (documentSnapshot.exists()) {
@@ -50,7 +53,8 @@ const HomeScreen = ({ navigation }) => {
           console.log("Document does not exist!");
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.log("testing test_id get catch ");
+        console.error("Error fetching data Home Page:", error);
       }
     };
 

@@ -3,11 +3,9 @@ import { Button, TextInput, DefaultTheme, Text } from "react-native-paper";
 import { Linking } from "react-native";
 import { View, Image } from "react-native-animatable";
 
-
 export default function PhoneSignIn({ onPhoneNumberSubmit }) {
   const [phoneNumber, setPhoneNumber] = React.useState("");
   const [validPhoneNumber, setValidPhoneNumber] = React.useState(false);
-
 
   const theme = {
     ...DefaultTheme,
@@ -16,7 +14,7 @@ export default function PhoneSignIn({ onPhoneNumberSubmit }) {
       primary: "#3f51b5",
       underlineColor: "transparent",
       background: "#fffffff",
-      fontFamily: 'Poppins'
+      fontFamily: "Poppins",
     },
   };
 
@@ -50,49 +48,55 @@ export default function PhoneSignIn({ onPhoneNumberSubmit }) {
   };
 
   return (
-    <View style={{ backgroundColor: 'white', height: "100%" }}>
+    <View style={{ backgroundColor: "white", height: "100%" }}>
       {/* <Image source={require("..//../../assets/mainlogo.png")} style={{
         marginLeft: 10,
 
       }} /> */}
-      <Image source={require("..//../../assets/mainlogo.png")} style={{
-        marginLeft: 20,
-        marginTop: "20%",
-        resizeMode: "contain",
-        width: 40,
-        height: 50
-      }} />
-      <Text style={{
-        marginTop: "0%",
-        marginLeft: 20,
-        marginBottom: 10,
-        textAlign: 'left',
-        fontSize: 17,
-        color: "#0B3104",
-        fontFamily: "Poppins",
-        fontWeight: 500
-      }}>
-
+      <Image
+        source={require("..//../../assets/mainlogo.png")}
+        style={{
+          marginLeft: 20,
+          marginTop: "20%",
+          resizeMode: "contain",
+          width: 40,
+          height: 50,
+        }}
+      />
+      <Text
+        style={{
+          marginTop: "0%",
+          marginLeft: 20,
+          marginBottom: 10,
+          textAlign: "left",
+          fontSize: 17,
+          color: "#0B3104",
+          fontFamily: "Poppins",
+          fontWeight: 500,
+        }}
+      >
         Welcome to CardamomCare!
-      </Text >
+      </Text>
       <Text
         style={{
           marginLeft: 20,
           marginBottom: 30,
           marginRight: 80,
-          textAlign: 'left',
+          textAlign: "left",
           fontSize: 14,
           fontWeight: 300,
-        }}>
-        Please sign in to your account and start your
-        journey with us.</Text>
+        }}
+      >
+        Please sign in to your account and start your journey with us.
+      </Text>
       <Text
         style={{
           marginLeft: 20,
           marginRight: 80,
-          textAlign: 'left',
-          fontSize: 14
-        }}>
+          textAlign: "left",
+          fontSize: 14,
+        }}
+      >
         Name
       </Text>
       <TextInput
@@ -107,18 +111,19 @@ export default function PhoneSignIn({ onPhoneNumberSubmit }) {
           marginBottom: 20,
           height: 40,
           borderRadius: 8,
-          backgroundColor: "#DDE8DB"
+          backgroundColor: "#DDE8DB",
         }}
-      // theme={theme}
+        // theme={theme}
       />
       <Text
         style={{
           marginLeft: 20,
           marginRight: 80,
           marginBottom: 0,
-          textAlign: 'left',
-          fontSize: 14
-        }}>
+          textAlign: "left",
+          fontSize: 14,
+        }}
+      >
         Mobile Number
       </Text>
       <TextInput
@@ -158,8 +163,9 @@ export default function PhoneSignIn({ onPhoneNumberSubmit }) {
       >
         <Text
           style={{
-            color: "#FFFFFF"
-          }}>
+            color: "#FFFFFF",
+          }}
+        >
           Sign In
         </Text>
       </Button>
@@ -188,6 +194,6 @@ export default function PhoneSignIn({ onPhoneNumberSubmit }) {
   );
   const Mainlogo = styled.img`
     max-width: 100%;
-    max-height:90%;
-`;
+    max-height: 90%;
+  `;
 }

@@ -34,6 +34,6 @@ export const fetchData = async (
       console.log("Document does not exist!");
     }
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error("Error fetching data from Data from DB:", error);
   }
 };

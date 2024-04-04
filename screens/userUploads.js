@@ -68,7 +68,7 @@ const UserUploads = ({ navigation }) => {
   }, [data]);
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: "white" }}>
       <View style={styles.diseasesSection}>
         <View style={styles.stageButtons}>
           <TouchableOpacity
@@ -114,6 +114,10 @@ const UserUploads = ({ navigation }) => {
         </View>
         <View style={[styles.cropDiagnosisContainer, { flexDirection: "row" }]}>
           <View style={styles.cropDiagnosis}>
+            <View style={styles.comingBox}>
+              <View style={styles.dot}></View>
+              <Text style={styles.comingText}>Coming Soon</Text>
+            </View>
             <Text
               style={[styles.cropSectionTitle, { color: "#FFF", fontSize: 24 }]}
             >
@@ -137,7 +141,7 @@ const UserUploads = ({ navigation }) => {
             <Image
               style={styles.cropImage}
               source={require("../assets/crop.png")}
-              //style={{ width: "100%" }}
+            //style={{ width: "100%" }}
             />
           </View>
         </View>
@@ -221,9 +225,9 @@ const styles = StyleSheet.create({
   stageButton: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     //backgroundColor: "#D9D9D9",
-    backgroundColor: "#F6F6F6",
+    backgroundColor: "#0B3104",
     borderWidth: 1,
     borderColor: "#0B3104",
     marginRight: 10,
@@ -231,16 +235,17 @@ const styles = StyleSheet.create({
   },
   stageButtonSelected: {
     //backgroundColor: "#222222",
-    backgroundColor: "#D9D9D9",
+    backgroundColor: "#0B3104",
     borderWidth: 0,
   },
   stageButtonText: {
     fontSize: 14,
     fontWeight: "bold",
     color: "#333",
+    borderRadius: 20,
   },
   stageButtonTextSelected: {
-    color: "#0B3104",
+    color: "white",
   },
   row: {
     flexDirection: "row",
@@ -248,8 +253,8 @@ const styles = StyleSheet.create({
   },
   diseaseCard: {
     //width: '50%',
-    width: 150,
-    height: 190,
+    width: "10%",
+    height: "92%",
     borderRadius: 10,
     backgroundColor: "#fff",
     marginRight: 10,
@@ -261,6 +266,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
+    padding: 10
   },
   diseaseImage: {
     width: "100%",
@@ -268,7 +274,7 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   diseaseInfo: {
-    padding: 10,
+    paddingTop: 15,
   },
   diseaseTitle: {
     fontSize: 16,
@@ -278,6 +284,32 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#888",
     marginTop: 5,
+    marginBottom: 15
+  },
+  container: {
+    // backgroundColor: "red"
+  },
+  comingBox: {
+    flexDirection: "row",
+    width: "110%",
+    backgroundColor: "#daf2d5",
+    // opacity: 0.6,
+    padding: 5,
+    borderRadius: 10,
+    paddingLeft: 5,
+    paddingRight: 15
+  },
+  dot: {
+    backgroundColor: "#434f41",
+    width: 13,
+    height: 13,
+    margin: 5,
+    borderRadius: 50,
+    marginRight: 10
+  },
+  comingText: {
+    color: "black",
+    fontSize: 16
   },
   cropDiagnosisContainer: {
     flex: 1,

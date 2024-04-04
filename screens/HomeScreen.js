@@ -87,7 +87,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollViewContent}>
+    <ScrollView contentContainerStyle={styles.scrollViewContent} style={styles.main}>
       <View style={styles.container}>
         <View style={styles.cropSelectorContainer}>
           <View style={styles.cropsection}>
@@ -179,13 +179,13 @@ const HomeScreen = ({ navigation }) => {
                 <View style={styles.outerBox}>
                   <View style={styles.innerBox}>
                     <View style={styles.subBox}>
-                      <Ionicons name="camera" size={54} color="white" />
+                      <Ionicons name="camera" size={35} color="white" />
                       <Text style={styles.subBoxtext}>Upload Image</Text>
                     </View>
                     <View style={styles.subBox}>
                       <MaterialCommunityIcons
                         name="magnify-scan"
-                        size={54}
+                        size={35}
                         color="white"
                       />
                       <Text style={styles.subBoxtext}>Get Diagonis</Text>
@@ -194,7 +194,7 @@ const HomeScreen = ({ navigation }) => {
                       <View>
                         <MaterialCommunityIcons
                           name="leaf-circle"
-                          size={54}
+                          size={35}
                           color="white"
                         />
                       </View>
@@ -238,7 +238,7 @@ const HomeScreen = ({ navigation }) => {
                 <View>
                   <FontAwesome5
                     name="leaf"
-                    size={114}
+                    size={80}
                     color="green"
                     style={styles.consultationBoxButtonIcon}
                   />
@@ -297,6 +297,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F0F0F0",
     margin: 10,
+    marginLeft: "3%",
+    marginRight: "3%",
     height: 40,
   },
   cropSelectorButton: {
@@ -306,10 +308,10 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: "center", // center text horizontally
     alignItems: "center", // center text vertically
-    shadowColor: "#000",
+    shadowColor: "black",
     shadowOffset: {
       width: 3,
-      height: 0,
+      height: 10,
     },
     shadowOpacity: 0.5,
     shadowRadius: 2,
@@ -331,13 +333,17 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     alignItems: "center",
+    // marginBottom: 10,
+    marginLeft: "2%",
+    marginRight: "2%"
   },
   cropSelectorButtonText: {
     fontSize: 16,
     // fontWeight: 500,
   },
   serviceContainerText: {
-    fontSize: 16,
+    marginTop: 10,
+    fontSize: 14,
     textAlign: "center",
     // fontWeight: 500,
     color: "#333333",
@@ -353,10 +359,13 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   cropServiceScreen: {
-    margin: 10,
+    // margin: "2%",
     borderRadius: 20,
     backgroundColor: "#0B310417",
     flexDirection: "row",
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginBottom: 10
   },
   serviceComponents: {
     flex: 1,
@@ -365,7 +374,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
     marginBottom: 25,
     height: 95,
-    borderWidth: 1,
+    borderWidth: 0.3,
     borderColor: "#CFCECE",
     padding: 10,
     borderRadius: 13,
@@ -382,14 +391,18 @@ const styles = StyleSheet.create({
   serviceComponentsicons: {
     alignSelf: "center",
     justifyContent: "center",
+
   },
   HealCropContainer: {
     flex: 1,
+    padding: 10,
+    marginLeft: "10%",
+    marginRight: "10%"
   },
   HealCropTextContainer: {
     marginTop: 5,
     margin: 5,
-    padding: 0,
+    paddingBottom: 5,
   },
   HealCropText: {
     padding: 1,
@@ -405,7 +418,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#0B3104",
     borderColor: "#0B3104",
     borderRadius: 20,
-    height: 201,
+    width: "60%",
+    height: "90%",
     shadowColor: "black",
     shadowOffset: {
       width: 0,
@@ -413,20 +427,30 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.8,
     shadowRadius: 4,
+    padding: 10
   },
   innerBox: {
-    padding: 10,
+    // padding: 0,
     flexDirection: "row",
+    // backgroundColor: "yellow",
+    paddingTop: 5,
+    marginLeft: "10%",
+    marginRight: "10%",
+    marginBottom: 15
+    // backgroundColor: "red",
   },
   subBox: {
-    margin: 15,
+    // margin: 10,
+    padding: 4,
+    paddingRight: 10,
     height: 83,
     borderRadius: 15,
-    marginVertical: 5,
     alignItems: "center",
+    // backgroundColor: "red"
   },
   subBoxtext: {
     color: "white",
+    paddingTop: 10,
   },
   cameraButton: {
     height: 42,
@@ -435,7 +459,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#046AE1",
     borderRadius: 18,
-    marginTop: 10,
   },
   innerCameraBox: {
     justifyContent: "center",
@@ -452,7 +475,8 @@ const styles = StyleSheet.create({
 
   consultationBox: {
     marginTop: 28,
-    margin: 10,
+    marginLeft: "2%",
+    marginRight: "2%",
     borderRadius: 20,
     flexDirection: "row",
     height: 170,
@@ -473,7 +497,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   consultationBoxText: {
-    fontSize: 23,
+    fontSize: 20,
     color: "black",
     fontWeight: "500",
   },
@@ -499,7 +523,7 @@ const styles = StyleSheet.create({
   },
   consultationBoxButtonIcon: {
     position: "absolute",
-    top: -45,
+    top: "-30%",
     left: 17,
   },
 

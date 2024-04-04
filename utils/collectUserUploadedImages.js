@@ -1,12 +1,4 @@
-import {
-  db,
-  firestore,
-  collection,
-  getDoc,
-  getDocs,
-  doc,
-  listCollections,
-} from "../firebase/firebaseConfig";
+import { db } from "../firebase/firebaseConfig";
 
 export const collectUserUploadedImageData = async (
   collection_id,
@@ -17,13 +9,13 @@ export const collectUserUploadedImageData = async (
   try {
     // Create a reference to the document
     // User document
-    const userDocRef = doc(db, collection_id, documentId);
+    const userDocRef = db.doc(collection_id + "/" + documentId);
 
     // Reference to image subcollections
-    const imagesCollectionRef = collection(userDocRef, imagesCollection);
+    const imagesCollectionRef = userDocRef.collection(imagesCollection);
 
     // Fetch documents from the image subcollection
-    const querySnapshot = await getDocs(imagesCollectionRef);
+    const querySnapshot = await imagesCollectionRef.get();
     console.log("Testing querySnapshot fetch", querySnapshot);
 
     const imageData = querySnapshot.docs.map((doc) => ({

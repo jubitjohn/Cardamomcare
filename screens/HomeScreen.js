@@ -6,13 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import DataContext from "./UserLogin/data/data-context";
 import UserUploads from "./userUploads";
 
-import {
-  db,
-  firestore,
-  collection,
-  getDoc,
-  doc,
-} from "../firebase/firebaseConfig";
+import { db } from "../firebase/firebaseConfig";
 
 import {
   View,
@@ -37,15 +31,15 @@ const HomeScreen = ({ navigation }) => {
 
         // Create a reference to the document
         console.log("documentRef:::beforedb", db);
-        const documentRef = doc(db, "test", documentId);
+        const documentRef = db.doc("test/" + documentId);
         console.log("documentRef:::", documentRef);
 
         // Get the document
-        const documentSnapshot = await getDoc(documentRef);
+        const documentSnapshot = await documentRef.get();
         console.log("testing test_id get ");
 
         // Check if the document exists
-        if (documentSnapshot.exists()) {
+        if (documentSnapshot.exists) {
           // Document data
           const documentData = documentSnapshot.data();
           setData(documentData);
@@ -87,7 +81,10 @@ const HomeScreen = ({ navigation }) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollViewContent} style={styles.main}>
+    <ScrollView
+      contentContainerStyle={styles.scrollViewContent}
+      style={styles.main}
+    >
       <View style={styles.container}>
         <View style={styles.cropSelectorContainer}>
           <View style={styles.cropsection}>
@@ -335,7 +332,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // marginBottom: 10,
     marginLeft: "2%",
-    marginRight: "2%"
+    marginRight: "2%",
   },
   cropSelectorButtonText: {
     fontSize: 16,
@@ -365,7 +362,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingLeft: 10,
     paddingRight: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   serviceComponents: {
     flex: 1,
@@ -391,13 +388,12 @@ const styles = StyleSheet.create({
   serviceComponentsicons: {
     alignSelf: "center",
     justifyContent: "center",
-
   },
   HealCropContainer: {
     flex: 1,
     padding: 10,
     marginLeft: "10%",
-    marginRight: "10%"
+    marginRight: "10%",
   },
   HealCropTextContainer: {
     marginTop: 5,
@@ -427,7 +423,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.8,
     shadowRadius: 4,
-    padding: 10
+    padding: 10,
   },
   innerBox: {
     // padding: 0,
@@ -436,7 +432,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     marginLeft: "10%",
     marginRight: "10%",
-    marginBottom: 15
+    marginBottom: 15,
     // backgroundColor: "red",
   },
   subBox: {

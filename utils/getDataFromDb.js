@@ -1,10 +1,4 @@
-import {
-  db,
-  firestore,
-  collection,
-  getDoc,
-  doc,
-} from "../firebase/firebaseConfig";
+import { db } from "../firebase/firebaseConfig";
 
 export const fetchData = async (
   collection_id,
@@ -14,19 +8,15 @@ export const fetchData = async (
 ) => {
   try {
     // Create a reference to the document
-    const documentRef = doc(
-      db,
-      collection_id,
-      documentId,
-      imagesCollection,
-      imageId
+    const documentRef = db.doc(
+      collection_id + "/" + documentId + "/" + imagesCollection + "/" + imageId
     );
 
     // Get the document
-    const documentSnapshot = await getDoc(documentRef);
+    const documentSnapshot = await documentRef.get();
 
     // Check if the document exists
-    if (documentSnapshot.exists()) {
+    if (documentSnapshot.exists) {
       // Document data
       const documentData = documentSnapshot.data();
       return documentData;

@@ -18,6 +18,8 @@ import PhoneAuth from "../screens/UserLogin/phone/PhoneAuth";
 import DataProvider from "../screens/UserLogin/data/DataProvider";
 import RoadmapPage from "../screens/ResultScreenDetails/StatusComponent";
 import UserUploads from "../screens/userUploads";
+import AboutUs from "../screens/aboutUs";
+
 const screens = {
   Login: {
     screen: PhoneAuth,
@@ -25,7 +27,7 @@ const screens = {
   Home: {
     screen: HomeScreen,
     navigationOptions: ({ navigation }) => ({
-      headerTitle: "AgroLens",
+      headerTitle: "CardamomCare",
       headerTitleAlign: "left",
       headerLeft: null, // Disable back arrow
       headerBackTitle: null,
@@ -36,6 +38,17 @@ const screens = {
   },
   ReviewDetails: {
     screen: Profile,
+  },
+  AboutUs: {
+    screen: AboutUs,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: "About Us",
+      headerTitleAlign: "left",
+      headerStyle: {
+        backgroundColor: "#0B3104", // Set background color to dark green
+      },
+      headerTintColor: "#fff", // Set text color to white
+    }),
   },
   FertilizerCalulator: {
     screen: FertilizerCalulator,

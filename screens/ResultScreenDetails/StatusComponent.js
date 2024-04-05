@@ -41,8 +41,8 @@ const RoadmapPage = ({ navigation, dataLoaded, uploadDetails }) => {
       uploadedText: {
         flexDirection: "row",
         alignItems: "center",
-        padding: 10,
-        height: 39,
+        paddingLeft: 5,
+        height: 32,
         margin: 1,
         backgroundColor: uploadedTextBackgroundColor,
         borderRadius: 30,
@@ -79,116 +79,120 @@ const RoadmapPage = ({ navigation, dataLoaded, uploadDetails }) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.imageUploadedMsg}>
-        {/* Left side - Upload Successful text */}
-        <View style={styles.uploadedTextOuter}>
-          <View style={stylescard.uploadedText}>
-            <View style={styles.dot}></View>
-            <View>
-              <Text>{prop1.data.status}</Text>
+    <ScrollView >
+      <View style={styles.container}>
+        <View style={styles.imageUploadedMsg}>
+          {/* Left side - Upload Successful text */}
+          <View style={styles.uploadedTextOuter}>
+            <View style={stylescard.uploadedText}>
+              <View style={styles.dot}></View>
+              <View>
+                <Text>{prop1.data.status}</Text>
+              </View>
+            </View>
+            <View style={styles.halfWidthMessageBox}>
+              <Text style={styles.halfWidthMessageText}>
+                {getStatusMessage(prop1.data.status)}
+              </Text>
+            </View>
+            <View></View>
+          </View>
+
+          {/* Right side - Uploaded Image */}
+          <View style={styles.imageCont}>
+            <View style={styles.uploadedImageContainer}>
+              <Image
+                style={styles.diseaseImage}
+                source={{ uri: prop1.data.downloadURL }}
+              />
             </View>
           </View>
-          <View style={styles.halfWidthMessageBox}>
-            <Text style={styles.halfWidthMessageText}>
-              {getStatusMessage(prop1.data.status)}
-            </Text>
-          </View>
-          <View></View>
         </View>
-
-        {/* Right side - Uploaded Image */}
-        <View styles={styles.uploadedImageContainer}>
-          <Image
-            style={styles.diseaseImage}
-            source={{ uri: prop1.data.downloadURL }}
-          />
-        </View>
-      </View>
-      <View style={styles.statusDivOuter}>
-        <View style={styles.statusDiv}>
-          <View style={styles.statusBox}>
-            <View style={styles.statusIconBox}>
-              {prop1.data.status === "Uploaded" ||
-              prop1.data.status === "Under Analysis" ||
+        <View style={styles.statusDivOuter}>
+          <View style={styles.statusDiv}>
+            <View style={styles.statusBox}>
+              <View style={styles.statusIconBox}>
+                {prop1.data.status === "Uploaded" ||
+                  prop1.data.status === "Under Analysis" ||
+                  prop1.data.status === "Expert Review" ? (
+                  <Entypo name="upload-to-cloud" size={34} color="#065a00" />
+                ) : (
+                  <Entypo name="upload-to-cloud" size={34} color="#eaeae8" />
+                )}
+              </View>
+              <View style={styles.statusIconBoxText}>
+                <Text>Upoaded</Text>
+              </View>
+            </View>
+            {prop1.data.status === "Under Analysis" ||
               prop1.data.status === "Expert Review" ? (
-                <Entypo name="upload-to-cloud" size={64} color="#065a00" />
-              ) : (
-                <Entypo name="upload-to-cloud" size={64} color="#eaeae8" />
-              )}
-            </View>
-            <View style={styles.statusIconBoxText}>
-              <Text>Upoaded</Text>
-            </View>
-          </View>
-          {prop1.data.status === "Under Analysis" ||
-          prop1.data.status === "Expert Review" ? (
-            <View style={styles.connector1} />
-          ) : (
-            <View style={styles.connector10} />
-          )}
+              <View style={styles.connector1} />
+            ) : (
+              <View style={styles.connector10} />
+            )}
 
-          <View style={styles.statusBox}>
-            <View style={styles.statusIconBox}>
-              {prop1.data.status === "Under Analysis" ||
-              prop1.data.status === "Expert Review" ? (
-                <MaterialCommunityIcons
-                  name="leaf-circle-outline"
-                  size={64}
-                  color="#065a00"
-                />
-              ) : (
-                <MaterialCommunityIcons
-                  name="leaf-circle-outline"
-                  size={64}
-                  color="#eaeae8"
-                />
-              )}
+            <View style={styles.statusBox}>
+              <View style={styles.statusIconBox}>
+                {prop1.data.status === "Under Analysis" ||
+                  prop1.data.status === "Expert Review" ? (
+                  <MaterialCommunityIcons
+                    name="leaf-circle-outline"
+                    size={34}
+                    color="#065a00"
+                  />
+                ) : (
+                  <MaterialCommunityIcons
+                    name="leaf-circle-outline"
+                    size={34}
+                    color="#eaeae8"
+                  />
+                )}
+              </View>
+              <View style={styles.statusIconBoxText}>
+                <Text>Under Analysis</Text>
+              </View>
             </View>
-            <View style={styles.statusIconBoxText}>
-              <Text>Under Analysis</Text>
+            {prop1.data.status === "Expert Review" ? (
+              <View style={styles.connector2} />
+            ) : (
+              <View style={styles.connector20} />
+            )}
+            <View style={styles.statusBox}>
+              <View style={styles.statusIconBox}>
+                {prop1.data.status === "Expert Review" ? (
+                  <MaterialIcons name="preview" size={34} color="#385600" />
+                ) : (
+                  <MaterialIcons name="preview" size={34} color="#eaeae8" />
+                )}
+              </View>
+              <View style={styles.statusIconBoxText}>
+                <Text>Expert Review</Text>
+              </View>
             </View>
           </View>
-          {prop1.data.status === "Expert Review" ? (
-            <View style={styles.connector2} />
-          ) : (
-            <View style={styles.connector20} />
-          )}
-          <View style={styles.statusBox}>
-            <View style={styles.statusIconBox}>
-              {prop1.data.status === "Expert Review" ? (
-                <MaterialIcons name="preview" size={64} color="#385600" />
-              ) : (
-                <MaterialIcons name="preview" size={64} color="#eaeae8" />
-              )}
-            </View>
-            <View style={styles.statusIconBoxText}>
-              <Text>Expert Review</Text>
-            </View>
-          </View>
-        </View>
 
-        <View>
+          {/* <View>
           <View style={styles.fullWidthMessageBoxStatus}>
             <Text style={styles.fullWidthMessageTextStatus}>
               Status : {prop1.data.status}
             </Text>
           </View>
-        </View>
-        <View>
-          <LinearGradient
-            colors={["#1a961a", "white", "white", "white", "#1a961a"]}
-            start={[1, 1]} // Top-left corner
-            end={[0, 0]} // Bottom-right corner
-          >
-            <View style={styles.fullWidthMessageBox}>
-              <View>
-                <Text style={styles.fullWidthMessageText}>
-                  {prop1.data.message}
-                </Text>
+        </View> */}
+          <View style={styles.bottomContainer}>
+            <LinearGradient style={{ borderRadius: 25 }}
+              colors={["#1a961a", "white", "white", "white", "#1a961a"]}
+              start={[1, 1]} // Top-left corner
+              end={[0, 0]} // Bottom-right corner
+            >
+              <View style={styles.fullWidthMessageBox}>
+                <View>
+                  <Text style={styles.fullWidthMessageText}>
+                    {prop1.data.message}
+                  </Text>
+                </View>
               </View>
-            </View>
-          </LinearGradient>
+            </LinearGradient>
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -201,6 +205,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 10,
     backgroundColor: "#fff", // White background
+    paddingTop: "10%"
   },
   dot: {
     backgroundColor: "#ffffff",
@@ -208,10 +213,10 @@ const styles = StyleSheet.create({
     height: 13,
     margin: 5,
     borderRadius: 50,
+    marginRight: 10
   },
   uploadedTextOuter: {
     flex: 1,
-    marginRight: 15,
   },
   statusIconBoxText: {
     justifyContent: "center",
@@ -251,13 +256,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  uploadedImageContainer: {
-    padding: 10,
-    marginLeft: 10,
-  },
   diseaseImage: {
-    width: 170,
-    height: 170,
+    marginTop: "1%",
+    width: 150,
+    height: 190,
+    marginLeft: 25,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 8, // Optional: Add border radius for a rounded image
@@ -268,32 +271,32 @@ const styles = StyleSheet.create({
   },
   connector1: {
     position: "absolute",
-    top: 77, // Adjust this value to position the line correctly
-    left: 124, // Adjust this value to position the line correctly
+    top: 55, // Adjust this value to position the line correctly
+    left: 93, // Adjust this value to position the line correctly
     height: 5,
     backgroundColor: "#065a00",
-    width: 40, // Adjust the width as needed
+    width: 50, // Adjust the width as needed
   },
   connector10: {
     position: "absolute",
-    top: 77, // Adjust this value to position the line correctly
-    left: 124, // Adjust this value to position the line correctly
+    top: 55, // Adjust this value to position the line correctly
+    left: 93, // Adjust this value to position the line correctly
     height: 5,
     backgroundColor: "#b4b4b4",
-    width: 40, // Adjust the width as needed
+    width: 50, // Adjust the width as needed
   },
   connector2: {
     position: "absolute",
-    top: 77, // Adjust this value to position the line correctly
-    left: 260, // Adjust this value to position the line correctly
+    top: 55, // Adjust this value to position the line correctly
+    left: 198, // Adjust this value to position the line correctly
     height: 5,
     backgroundColor: "#065a00",
     width: 40, // Adjust the width as needed
   },
   connector20: {
     position: "absolute",
-    top: 77, // Adjust this value to position the line correctly
-    left: 260, // Adjust this value to position the line correctly
+    top: 55, // Adjust this value to position the line correctly
+    left: 198, // Adjust this value to position the line correctly
     height: 5,
     backgroundColor: "#b4b4b4",
     width: 40, // Adjust the width as needed
@@ -307,9 +310,15 @@ const styles = StyleSheet.create({
   statusDiv: {
     flexDirection: "row",
     backgroundColor: "#f4f0f0", // Light grey background
-    padding: 10,
-    marginTop: 30,
+    paddingTop: 2,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 5,
+    marginTop: 25,
+    marginLeft: "5%",
+    marginRight: "5%",
     borderRadius: 8,
+    width: "40%",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -317,16 +326,28 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 4,
-    elevation: 3,
-    borderRadius: 60,
+    elevation: 7,
+    borderRadius: 25,
+  },
+  bottomContainer: {
+    marginTop: 30,
+    marginLeft: "2%",
+    marginRight: "2%",
+    borderRadius: 30,
+    padding: 10,
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 4,
+    // elevation: 7,
   },
   fullWidthMessageBox: {
     padding: 30,
     marginVertical: 20,
-    borderWidth: 1,
     margin: 30,
-    borderColor: "#ddd",
-    backgroundColor: "#ffffff",
     borderRadius: 30,
     height: 200,
   },

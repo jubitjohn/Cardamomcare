@@ -131,11 +131,11 @@ const UserUploads = ({ navigation }) => {
             >
               Identify the issues affecting your crops in just a few seconds.
             </Text>
-            <TouchableOpacity style={styles.DiagnoseButton}>
+            {/* <TouchableOpacity style={styles.DiagnoseButton}>
               <Text style={[styles.DiagnoseButtonText, { fontSize: 16 }]}>
                 Diagnose
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           <View style={styles.cropImageContainer}>
             <Image
@@ -326,6 +326,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
+    paddingBottom: 25
   },
   cropDiagnosis: {
     flex: 1,

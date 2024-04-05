@@ -119,7 +119,7 @@ const HomeScreen = ({ navigation }) => {
               <View style={[styles.cropServiceScreen]}>
                 <TouchableOpacity
                   style={styles.serviceComponents}
-                  onPress={() => pressHandler("FertilizerCalulator")}
+                  onPress={() => pressHandler("AboutUs")}
                 >
                   <View>
                     <FontAwesome5
@@ -129,7 +129,7 @@ const HomeScreen = ({ navigation }) => {
                       style={styles.serviceComponentsicons}
                     />
                     <Text style={styles.serviceContainerText}>
-                      Fertilizer Calculator
+                      About{"\n"} Us
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -416,14 +416,19 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: "60%",
     height: "90%",
+    // shadowColor: "black",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 4,
+    // },
+    // shadowOpacity: 0.8,
+    // shadowRadius: 4,
     shadowColor: "black",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.8,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4,
     shadowRadius: 4,
-    padding: 10,
+    elevation: 5,
+    padding: 10
   },
   innerBox: {
     // padding: 0,

@@ -5,19 +5,14 @@ import { createStackNavigator } from "@react-navigation/stack";
 const windowHeight = Dimensions.get("window").height;
 import { FontAwesome } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-// import firebas
 import {
-  storage,
-  uploadBytes,
   ref,
+  uploadBytesResumable,
   getDownloadURL,
-  db,
-  collection,
-  getDoc,
-  setDoc,
-  addDoc,
-  doc,
-} from "../firebase/firebaseConfig";
+} from "@react-native-firebase/storage";
+
+// import firebas
+import { storage, db } from "../firebase/firebaseConfig";
 
 import {
   Modal,
@@ -65,10 +60,11 @@ export default function ImagePickerExample({ navigation }) {
     const storageRef = ref(storage);
 
     console.log("test122", storageRef);
-    const fileRef = ref(storageRef, "images/" + userId + "/" + Date.now());
+    const fileRef = storage.ref(`images/${userId}/${Date.now()}`);
+    console.log("fileref", fileRef);
     try {
       // Upload the bytes to the file reference
-      await uploadBytes(fileRef, imageData);
+      await uploadBytesResumable(fileRef, imageData);
 
       // Get the download URL using the file reference
       const downloadURL = await getDownloadURL(fileRef);
@@ -76,27 +72,26 @@ export default function ImagePickerExample({ navigation }) {
       console.log("File uploaded successfully. Download URL:", downloadURL);
 
       // 3. Add the image details to Firestore
-      const usersCollection = collection(db, "users");
-      const userDocRef = doc(usersCollection, userId);
+      const userDocRef = db.collection("users").doc(userId);
 
       // Check if the user already exists in Firestore
-      const userDocSnapshot = await getDoc(userDocRef);
+      const userDocSnapshot = await userDocRef.get();
       const userData = {
         userId,
       };
+      console.log("userDocSnapshot", userDocSnapshot);
 
-      if (!userDocSnapshot.exists()) {
+      if (!userDocSnapshot.exists) {
         // If the user doesn't exist, create a new user document
-        await setDoc(userDocRef, userData);
+        await db.collection("users").doc(userId).set(userData);
       }
 
       // Create a reference to the images subcollection
-      const imagesCollection = collection(userDocRef, "images");
+      const imagesCollection = userDocRef.collection("images");
       console.log("Image test 1");
 
       // Add a new image document to the images subcollection
-      console.log("addDoc", addDoc);
-      const imageDocRef = await addDoc(imagesCollection, {
+      const imageDocRef = await imagesCollection.add({
         downloadURL,
         status: "Uploaded",
         message: "Under Review with Scientist", // You can set the initial status as needed

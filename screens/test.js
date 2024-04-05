@@ -337,10 +337,12 @@ export default function ImagePickerExample({ navigation }) {
               <View style={styles.cameraFrameContainer}>
                 <View style={styles.cameraFrame}></View>
               </View>
-              <View>
-                <Text style={styles.frameInstruction}>
-                  Fit the crop damage within the frame
-                </Text>
+              <View style={styles.cameraInstruction}>
+                <View style={styles.cameraInstructionBox}>
+                  <Text style={styles.frameInstruction}>
+                    Fit the crop damage within the frame
+                  </Text>
+                </View>
               </View>
 
               <View style={styles.buttonContainer}>
@@ -509,10 +511,9 @@ const styles = StyleSheet.create({
   },
   frameInstruction: {
     color: "#ffffff",
-    padding: 25,
-    alignContent: "center",
-    justifyContent: "center",
-    alignSelf: "center",
+    padding: 20,
+    width: "100%",
+    textAlign: "center",
   },
 
   galleryButton: {
@@ -641,7 +642,15 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 17,
   },
-
+  cameraInstruction: {
+    flex: 1,
+  },
+  cameraInstructionBox: {
+    alignContent: "center",
+    justifyContent: "center",
+    flex: 1,
+    textAlign: "center",
+  },
   text: {
     fontSize: 24,
     fontWeight: "bold",

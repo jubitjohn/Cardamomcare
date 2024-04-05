@@ -249,11 +249,10 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    flexWrap: "wrap",
   },
   diseaseCard: {
     //width: '50%',
-    width: "10%",
+    width: 185,
     height: "92%",
     borderRadius: 10,
     backgroundColor: "#fff",
@@ -272,6 +271,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 120,
     resizeMode: "cover",
+    borderRadius: 5
   },
   diseaseInfo: {
     paddingTop: 15,
@@ -287,7 +287,9 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
   container: {
-    // backgroundColor: "red"
+    // backgroundColor: "red",
+    flexDirection: "row",
+    flexWrap: "wrap"
   },
   comingBox: {
     flexDirection: "row",

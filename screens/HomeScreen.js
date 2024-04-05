@@ -230,7 +230,7 @@ const HomeScreen = ({ navigation }) => {
                   style={styles.bookingButton}
                   onPress={() => pressHandler("RoadmapPage")}
                 >
-                  <Text style={styles.consultationBoxButtonText}>Book</Text>
+                  <Text style={styles.consultationBoxButtonText}>Call Us</Text>
                 </TouchableOpacity>
                 <View>
                   <FontAwesome5
@@ -475,7 +475,7 @@ const styles = StyleSheet.create({
   },
 
   consultationBox: {
-    marginTop: 28,
+    marginTop: 40,
     marginLeft: "2%",
     marginRight: "2%",
     borderRadius: 20,

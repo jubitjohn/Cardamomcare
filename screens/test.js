@@ -168,14 +168,9 @@ export default function ImagePickerExample({ navigation }) {
     );
   }
 
-  function toggleCameraType() {
-    setType((current) =>
-      current === CameraType.back ? CameraType.front : CameraType.back
-    );
-  }
-
   const handleGallery = async () => {
     try {
+      console.log("Inside handle Gallery");
       const permissionResult =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (!permissionResult.granted) {
@@ -316,58 +311,7 @@ export default function ImagePickerExample({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {photo ? (
-        <View style={styles.preview}>
-          <Image
-            source={photo}
-            style={styles.previewImage}
-            resizeMode="cover"
-          />
-          <View style={styles.previewButtonContainer}>
-            <TouchableOpacity
-              style={styles.captureSubmitButton}
-              onPress={() => handleTakePhoto()}
-            >
-              <FontAwesome name="check" size={50} color="white" />
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity
-            style={styles.captureRetakeButton}
-            onPress={() => (setPhoto(null), setIsDrawerOpen(false))}
-          >
-            <FontAwesome5 name="chevron-left" size={34} color="#ffffff" />
-          </TouchableOpacity>
-          {isLoading && (
-            <View style={styles.overlay}>
-              <View style={styles.overlayContent}>
-                <Animatable.View ref={animateIconRef}>
-                  <FontAwesome5 name="leaf" size={iconSize} color={iconColor} />
-                </Animatable.View>
-                <Text style={styles.loadingText}>{loadingText}</Text>
-              </View>
-            </View>
-          )}
-          {isDrawerOpen && (
-            <View style={styles.drawerContainer}>
-              <View style={styles.drawerContent}>
-                <Text style={styles.drawerMessage}>
-                  Cardamom plant not identified
-                </Text>
-                <Text style={styles.drawerInstruction}>
-                  Please ensure that the image shows a close and clear view of
-                  the diseased part of the plant.
-                </Text>
-                <TouchableOpacity
-                  style={styles.scanAgainButton}
-                  onPress={() => (setPhoto(null), setIsDrawerOpen(false))}
-                >
-                  <Text style={styles.scanAgainButtonText}>Scan Again</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          )}
-        </View>
-      ) : (
+      {!photo && !modalVisible && (
         <View style={{ flex: 1, maxHeight: windowHeight }}>
           <View style={styles.cameraContainer}>
             <Camera
@@ -425,6 +369,58 @@ export default function ImagePickerExample({ navigation }) {
               </View>
             </Camera>
           </View>
+        </View>
+      )}
+      {photo && (
+        <View style={styles.preview}>
+          <Image
+            source={photo}
+            style={styles.previewImage}
+            resizeMode="cover"
+          />
+          <View style={styles.previewButtonContainer}>
+            <TouchableOpacity
+              style={styles.captureSubmitButton}
+              onPress={() => handleTakePhoto()}
+            >
+              <FontAwesome name="check" size={50} color="white" />
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity
+            style={styles.captureRetakeButton}
+            onPress={() => (setPhoto(null), setIsDrawerOpen(false))}
+          >
+            <FontAwesome5 name="chevron-left" size={34} color="#ffffff" />
+          </TouchableOpacity>
+          {isLoading && (
+            <View style={styles.overlay}>
+              <View style={styles.overlayContent}>
+                <Animatable.View ref={animateIconRef}>
+                  <FontAwesome5 name="leaf" size={iconSize} color={iconColor} />
+                </Animatable.View>
+                <Text style={styles.loadingText}>{loadingText}</Text>
+              </View>
+            </View>
+          )}
+          {isDrawerOpen && (
+            <View style={styles.drawerContainer}>
+              <View style={styles.drawerContent}>
+                <Text style={styles.drawerMessage}>
+                  Cardamom plant not identified
+                </Text>
+                <Text style={styles.drawerInstruction}>
+                  Please ensure that the image shows a close and clear view of
+                  the diseased part of the plant.
+                </Text>
+                <TouchableOpacity
+                  style={styles.scanAgainButton}
+                  onPress={() => (setPhoto(null), setIsDrawerOpen(false))}
+                >
+                  <Text style={styles.scanAgainButtonText}>Scan Again</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
         </View>
       )}
       {/* Info screen */}
@@ -615,7 +611,7 @@ const styles = StyleSheet.create({
   popUpinfoContent: {
     backgroundColor: "white",
     padding: 20,
-    height: "50%",
+    height: "65%",
     width: "75%",
     borderRadius: 20,
   },

@@ -5,6 +5,7 @@ import { View, Image } from "react-native-animatable";
 
 export default function PhoneSignIn({ onPhoneNumberSubmit }) {
   const [phoneNumber, setPhoneNumber] = React.useState("");
+  const [displayName, setDisplayName] = React.useState("");
   const [validPhoneNumber, setValidPhoneNumber] = React.useState(false);
 
   const theme = {
@@ -36,6 +37,10 @@ export default function PhoneSignIn({ onPhoneNumberSubmit }) {
     cleaned = formatted.replace(/\D/g, "");
 
     setValidPhoneNumber(cleaned.length === 10);
+  };
+
+  const onDisplayNameChange = (text) => {
+    setDisplayName(text);
   };
 
   const handleOpenURL = (url) => {
@@ -101,8 +106,9 @@ export default function PhoneSignIn({ onPhoneNumberSubmit }) {
       </Text>
       <TextInput
         // label="Name"
-        value="anju"
-        keyboardType="alpha-pad"
+        value={displayName}
+        placeholder="Please enter your name"
+        onChangeText={onDisplayNameChange}
         style={{
           margin: 0,
           marginLeft: 20,
@@ -129,6 +135,7 @@ export default function PhoneSignIn({ onPhoneNumberSubmit }) {
       <TextInput
         // label="Phone Number"
         value={phoneNumber}
+        placeholder="Please enter your mobile number"
         keyboardType="phone-pad"
         onChangeText={onChangePhoneNumber}
         style={{
@@ -150,7 +157,7 @@ export default function PhoneSignIn({ onPhoneNumberSubmit }) {
         buttonColor="#3f51b5"
         onPress={() => {
           let submittedNumber = "+91" + phoneNumber.replace(/\D/g, "");
-          onPhoneNumberSubmit(submittedNumber);
+          onPhoneNumberSubmit(submittedNumber, displayName);
         }}
         style={{
           marginLeft: 20,

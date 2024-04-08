@@ -10,7 +10,7 @@ import DataContext from "../data/data-context";
 import styles from "./LoginStyles";
 
 export default function PhoneAuth({ navigation }) {
-  const { setLoading, setUserNumber } = useContext(DataContext);
+  const { setLoading, setUserNumber, setUserProfile } = useContext(DataContext);
   const [isVerifying, setIsVerifying] = useState(false);
   const [confirmationResult, setConfirmationResult] = useState(null);
   const [verificationWrong, setVerificationWrong] = useState(false);
@@ -19,7 +19,12 @@ export default function PhoneAuth({ navigation }) {
   const recaptchaVerifier = useRef(null);
   const appVerificationDisabledForTesting = true;
 
-  const loginWithPhoneNumber = async (phoneNumber) => {
+  const loginWithPhoneNumber = async (phoneNumber, displayName) => {
+    if (!displayName.trim()) {
+      // Check if display name is empty or contains only whitespace
+      alert("Please enter your name"); // Display alert message if display name is empty
+      return;
+    }
     try {
       const result = await auth().signInWithPhoneNumber(
         phoneNumber,
@@ -27,6 +32,10 @@ export default function PhoneAuth({ navigation }) {
         appVerificationDisabledForTesting
       );
       const currentUser = auth().currentUser;
+      console.log("displayName", displayName);
+      await currentUser.updateProfile({
+        displayName: displayName,
+      });
       console.log("current user::::", currentUser);
       setConfirmationResult(result);
       setIsVerifying(true);
@@ -43,6 +52,7 @@ export default function PhoneAuth({ navigation }) {
         setLoading(true);
         if (userCredential) {
           setUserNumber(userCredential.user.phoneNumber);
+          setUserProfile(userCredential.user.displayName);
           navigation.navigate("Home");
         }
       } catch (error) {

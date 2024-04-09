@@ -1,5 +1,5 @@
 import React, { useRef, useState, useContext } from "react";
-import { View } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 import { RecaptchaVerifierModal } from "@react-native-firebase/auth";
 import auth from "@react-native-firebase/auth";
 
@@ -10,8 +10,10 @@ import DataContext from "../data/data-context";
 import styles from "./LoginStyles";
 
 export default function PhoneAuth({ navigation }) {
-  const { setLoading, setUserNumber, setUserProfile } = useContext(DataContext);
+  const { setLoading, loading, setUserNumber, setUserProfile } =
+    useContext(DataContext);
   const [isVerifying, setIsVerifying] = useState(false);
+  const [isLoadingVerification, setLoadingVerification] = useState(false);
   const [confirmationResult, setConfirmationResult] = useState(null);
   const [verificationWrong, setVerificationWrong] = useState(false);
 
@@ -25,6 +27,7 @@ export default function PhoneAuth({ navigation }) {
       alert("Please enter your name"); // Display alert message if display name is empty
       return;
     }
+    setLoadingVerification(true);
     try {
       const result = await auth().signInWithPhoneNumber(
         phoneNumber,
@@ -42,6 +45,8 @@ export default function PhoneAuth({ navigation }) {
     } catch (error) {
       console.error("Error signing in with phone number:", error);
       // Handle error (e.g., display error message to user)
+    } finally {
+      setLoadingVerification(false); // Set loading state to false when the process is complete
     }
   };
 
@@ -83,7 +88,10 @@ export default function PhoneAuth({ navigation }) {
       ) : (
         <View>
           {/* <RecaptchaVerifierModal ref={recaptchaVerifier} /> */}
-          <PhoneSignIn onPhoneNumberSubmit={loginWithPhoneNumber} />
+          <PhoneSignIn
+            onPhoneNumberSubmit={loginWithPhoneNumber}
+            loading={isLoadingVerification}
+          />
         </View>
       )}
     </View>

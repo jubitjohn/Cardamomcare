@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Button, TextInput, DefaultTheme, Text } from "react-native-paper";
-import { Linking } from "react-native";
+import { Linking, ActivityIndicator } from "react-native";
 import { View, Image } from "react-native-animatable";
 
-export default function PhoneSignIn({ onPhoneNumberSubmit }) {
+export default function PhoneSignIn({ onPhoneNumberSubmit, loading }) {
   const [phoneNumber, setPhoneNumber] = React.useState("");
   const [displayName, setDisplayName] = React.useState("");
   const [validPhoneNumber, setValidPhoneNumber] = React.useState(false);
@@ -18,6 +18,7 @@ export default function PhoneSignIn({ onPhoneNumberSubmit }) {
       fontFamily: "Poppins",
     },
   };
+  console.log("isLoadingVerification", loading);
 
   const onChangePhoneNumber = (text) => {
     let cleaned = text.replace(/\D/g, "");
@@ -58,6 +59,7 @@ export default function PhoneSignIn({ onPhoneNumberSubmit }) {
         marginLeft: 10,
 
       }} /> */}
+
       <Image
         source={require("..//../../assets/mainlogo.png")}
         style={{
@@ -197,6 +199,22 @@ export default function PhoneSignIn({ onPhoneNumberSubmit }) {
         </Text>{" "}
         of Cardamomcare
       </Text>
+      {loading && (
+        <View
+          style={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: "white",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      )}
     </View>
   );
   const Mainlogo = styled.img`

@@ -25,13 +25,15 @@ const statuses = [
   },
 ];
 
-const RoadmapPage = ({ navigation, dataLoaded, uploadDetails }) => {
-  dataLoadedValue = navigation.getParam("isVisible", dataLoaded);
+const RoadmapPage = ({ navigation, dataLoaded, uploadDetails, route }) => {
+  // dataLoadedValue = navigation.getParam("isVisible", dataLoaded);
+  dataLoadedValue = route.params?.isVisible ?? dataLoaded;
   if (!dataLoadedValue) {
     return null; // or a loading indicator, or any fallback
   }
   console.log("RoadmapPageRecieved2", uploadDetails);
-  const prop1 = navigation.getParam("uploadDetails", uploadDetails);
+  // const prop1 = navigation.getParam("uploadDetails", uploadDetails);
+  const prop1 = route.params?.uploadDetails ?? uploadDetails;
   console.log("RoadmapPageRecieved", prop1);
 
   const getStyles = (status) => {

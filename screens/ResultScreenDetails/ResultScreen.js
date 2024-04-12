@@ -17,12 +17,15 @@ import DataContext from "../UserLogin/data/data-context";
 import RoadmapPage from "./StatusComponent";
 // import TreatmentPlan from "./TreatmentPlan";
 
-const ResultScreen = ({ navigation }) => {
+const ResultScreen = ({ navigation, route }) => {
   const [status, setStatus] = useState("");
   const [instance, setInstance] = useState({});
   const [dataLoaded, setDataLoaded] = useState(false); // New state variable
-  const prop1 = navigation.getParam("res");
-  const uploadId = navigation.getParam("imageId");
+  const { res, imageId } = route.params;
+  // const prop1 = navigation.getParam("res");
+  // const uploadId = navigation.getParam("imageId");
+  const prop1 = res;
+  const uploadId = imageId;
   const userId = useContext(DataContext).userNumber;
 
   console.log("userId", uploadId);

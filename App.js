@@ -11,7 +11,7 @@ import React, { useState, useContext, useEffect } from "react";
 import Navigator from "./routes/HomeStack";
 import DataProvider from "./screens/UserLogin/data/DataProvider";
 import firebase from "firebase/app";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -33,10 +33,11 @@ import RoadmapPage from "./screens/ResultScreenDetails/StatusComponent";
 import UserUploads from "./screens/userUploads";
 import AboutUs from "./screens/aboutUs";
 import PhoneAuth from "./screens/UserLogin/phone/PhoneAuth";
-import Footer from "./screens/footer";
+
+// import Footer from "./";
 const Stack = createNativeStackNavigator();
 
-const Tab = createBottomTabNavigator();
+// const Tab = createBottomTabNavigator();
 
 const SplitScreen = () => {
   return (
@@ -67,56 +68,57 @@ const App = () => {
     //   <Navigator />
     // </DataProvider>
 
-    <NavigationContainer>
-      <Stack.Navigator>
-        {showSplitScreen ? (
-          <Stack.Screen name="SplitScreen" component={SplitScreen} options={{ headerShown: false }} />
-        ) : (
-          <>
-            <Stack.Screen name="Login" component={PhoneAuth}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Home"
-              component={HomeScreen}
-              options={({ navigation }) => ({
-                title: "CardamomCare",
-                headerTitleAlign: "left",
-                headerLeft: null,
-                headerBackTitle: null,
-              })}
-            />
-            <Stack.Screen name="RoadmapPage" component={RoadmapPage} />
-            <Stack.Screen name="ReviewDetails" component={Profile} />
-            <Stack.Screen
-              name="AboutUs"
-              component={AboutUs}
-              options={{
-                title: "About Us",
-                headerTitleAlign: "left",
-                headerStyle: {
-                  backgroundColor: "#0B3104",
-                },
-                headerTintColor: "#fff",
-              }}
-            />
-            <Stack.Screen name="FertilizerCalulator" component={FertilizerCal} />
-            <Stack.Screen name="pest_control" component={Pests} />
-            <Stack.Screen name="cardamomtips" component={CardamomPlantationTipsScreen} />
-            <Stack.Screen name="AppointmentScreen" component={AppointmentScreen} />
-            <Stack.Screen name="UserUploads" component={UserUploads} />
-            <Stack.Screen name="Imagepick" component={ImagePickerExample} options={{ title: "Scan", headerTitleAlign: "center" }} />
-            <Stack.Screen name="ResultScreen" component={ResultScreen} options={{ title: "Result", headerTitleAlign: "center" }} />
-            <Stack.Screen name="DiseaseScreen" component={DiseaseScreen} options={{ title: "Result", headerTitleAlign: "left" }} />
-            <Stack.Screen name="PackageSelector" component={PackageSelector} options={{ title: "Package Selector", headerTitleAlign: "left" }} />
-            <Stack.Screen name="SlotBooking" component={SlotBooking} options={{ title: "Slot Booking", headerTitleAlign: "left" }} />
-            <Stack.Screen name="Footer" component={Footer} />
-          </>
-        )}
+    <DataProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          {showSplitScreen ? (
+            <Stack.Screen name="SplitScreen" component={SplitScreen} options={{ headerShown: false }} />
+          ) : (
+            <>
+              <Stack.Screen name="Login" component={PhoneAuth}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Home"
+                component={HomeScreen}
+                options={({ navigation }) => ({
+                  title: "CardamomCare",
+                  headerTitleAlign: "left",
+                  headerLeft: null,
+                  headerBackTitle: null,
+                })}
+              />
+              <Stack.Screen name="RoadmapPage" component={RoadmapPage} />
+              <Stack.Screen name="ReviewDetails" component={Profile} />
+              <Stack.Screen
+                name="AboutUs"
+                component={AboutUs}
+                options={{
+                  title: "About Us",
+                  headerTitleAlign: "left",
+                  headerStyle: {
+                    backgroundColor: "#0B3104",
+                  },
+                  headerTintColor: "#fff",
+                }}
+              />
+              <Stack.Screen name="FertilizerCalulator" component={FertilizerCal} />
+              <Stack.Screen name="pest_control" component={Pests} />
+              <Stack.Screen name="cardamomtips" component={CardamomPlantationTipsScreen} />
+              <Stack.Screen name="AppointmentScreen" component={AppointmentScreen} />
+              <Stack.Screen name="UserUploads" component={UserUploads} />
+              <Stack.Screen name="Imagepick" component={ImagePickerExample} options={{ title: "Scan", headerTitleAlign: "center" }} />
+              <Stack.Screen name="ResultScreen" component={ResultScreen} options={{ title: "Result", headerTitleAlign: "center" }} />
+              <Stack.Screen name="DiseaseScreen" component={DiseaseScreen} options={{ title: "Result", headerTitleAlign: "left" }} />
+              <Stack.Screen name="PackageSelector" component={PackageSelector} options={{ title: "Package Selector", headerTitleAlign: "left" }} />
+              <Stack.Screen name="SlotBooking" component={SlotBooking} options={{ title: "Slot Booking", headerTitleAlign: "left" }} />
+              {/* <Stack.Screen name="Footer" component={Footer} /> */}
+            </>
+          )}
 
-      </Stack.Navigator>
-    </NavigationContainer>
-
+        </Stack.Navigator>
+      </NavigationContainer>
+    </DataProvider>
   );
 };
 

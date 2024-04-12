@@ -13,8 +13,8 @@ import DataProvider from "./screens/UserLogin/data/DataProvider";
 import firebase from "firebase/app";
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet, View, Image } from "react-native";
 
 import HomeScreen from "./screens/HomeScreen";
@@ -42,11 +42,10 @@ const Stack = createNativeStackNavigator();
 const SplitScreen = () => {
   return (
     <View style={styles.container}>
-      <Image source={require('./assets/mainlogo.png')} style={styles.img} />
+      <Image source={require("./assets/mainlogo.png")} style={styles.img} />
     </View>
   );
 };
-
 
 const App = () => {
   // const dataCtx = useContext(DataContext);
@@ -72,10 +71,16 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator>
           {showSplitScreen ? (
-            <Stack.Screen name="SplitScreen" component={SplitScreen} options={{ headerShown: false }} />
+            <Stack.Screen
+              name="SplitScreen"
+              component={SplitScreen}
+              options={{ headerShown: false }}
+            />
           ) : (
             <>
-              <Stack.Screen name="Login" component={PhoneAuth}
+              <Stack.Screen
+                name="Login"
+                component={PhoneAuth}
                 options={{ headerShown: false }}
               />
               <Stack.Screen
@@ -102,40 +107,70 @@ const App = () => {
                   headerTintColor: "#fff",
                 }}
               />
-              <Stack.Screen name="FertilizerCalulator" component={FertilizerCal} />
+              <Stack.Screen
+                name="FertilizerCalulator"
+                component={FertilizerCal}
+              />
               <Stack.Screen name="pest_control" component={Pests} />
-              <Stack.Screen name="cardamomtips" component={CardamomPlantationTipsScreen} />
-              <Stack.Screen name="AppointmentScreen" component={AppointmentScreen} />
+              <Stack.Screen
+                name="cardamomtips"
+                component={CardamomPlantationTipsScreen}
+              />
+              <Stack.Screen
+                name="AppointmentScreen"
+                component={AppointmentScreen}
+              />
               <Stack.Screen name="UserUploads" component={UserUploads} />
-              <Stack.Screen name="Imagepick" component={ImagePickerExample} options={{ title: "Scan", headerTitleAlign: "center" }} />
-              <Stack.Screen name="ResultScreen" component={ResultScreen} options={{ title: "Result", headerTitleAlign: "center" }} />
-              <Stack.Screen name="DiseaseScreen" component={DiseaseScreen} options={{ title: "Result", headerTitleAlign: "left" }} />
-              <Stack.Screen name="PackageSelector" component={PackageSelector} options={{ title: "Package Selector", headerTitleAlign: "left" }} />
-              <Stack.Screen name="SlotBooking" component={SlotBooking} options={{ title: "Slot Booking", headerTitleAlign: "left" }} />
+              <Stack.Screen
+                name="Imagepick"
+                component={ImagePickerExample}
+                options={{ title: "Scan", headerTitleAlign: "center" }}
+              />
+              <Stack.Screen
+                name="ResultScreen"
+                component={ResultScreen}
+                options={{ title: "Result", headerTitleAlign: "center" }}
+              />
+              <Stack.Screen
+                name="DiseaseScreen"
+                component={DiseaseScreen}
+                options={{ title: "Result", headerTitleAlign: "left" }}
+              />
+              <Stack.Screen
+                name="PackageSelector"
+                component={PackageSelector}
+                options={{
+                  title: "Package Selector",
+                  headerTitleAlign: "left",
+                }}
+              />
+              <Stack.Screen
+                name="SlotBooking"
+                component={SlotBooking}
+                options={{ title: "Slot Booking", headerTitleAlign: "left" }}
+              />
               {/* <Stack.Screen name="Footer" component={Footer} /> */}
             </>
           )}
-
         </Stack.Navigator>
       </NavigationContainer>
     </DataProvider>
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     backgroundColor: "white",
     flexDirection: "row",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   img: {
     width: 100,
     height: 150,
-    alignSelf: "center"
-  }
-})
+    alignSelf: "center",
+  },
+});
 
 export default App;

@@ -15,7 +15,7 @@ import firebase from "firebase/app";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity, Text } from "react-native";
 
 import HomeScreen from "./screens/HomeScreen";
 import Profile from "./screens/Profile";
@@ -87,10 +87,27 @@ const App = () => {
                 name="Home"
                 component={HomeScreen}
                 options={({ navigation }) => ({
-                  title: "CardamomCare",
+                  title: "CardamomCare ",
                   headerTitleAlign: "left",
                   headerLeft: null,
                   headerBackTitle: null,
+                  headerRight: () => (
+                    <TouchableOpacity
+                      // onPress={() => {
+                      //   // Navigate to the user account screen
+                      //   navigation.navigate("UserAccount");
+                      // }}
+                      style={{ marginRight: 10 }}
+                    >
+                      <View style={styles.userIconContainer}>
+                        <Text style={styles.userIconText}>
+                          {useContext(DataContext)
+                            .userProfile.charAt(0)
+                            .toUpperCase()}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  ),
                 })}
               />
               <Stack.Screen name="RoadmapPage" component={RoadmapPage} />
@@ -170,6 +187,18 @@ const styles = StyleSheet.create({
     width: 100,
     height: 150,
     alignSelf: "center",
+  },
+  userIconContainer: {
+    width: 30,
+    height: 30,
+    borderRadius: 20, // Make it a circle by setting borderRadius to half of the width and height
+    backgroundColor: "#172a01c6", // You can change the background color to whatever you like
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  userIconText: {
+    color: "white", // You can change the text color
+    fontSize: 17, // You can adjust the font size
   },
 });
 

@@ -27,6 +27,7 @@ const statuses = [
 
 const RoadmapPage = ({ navigation, dataLoaded, uploadDetails, route }) => {
   // dataLoadedValue = navigation.getParam("isVisible", dataLoaded);
+  console.log("route", route);
   dataLoadedValue = route.params?.isVisible ?? dataLoaded;
   if (!dataLoadedValue) {
     return null; // or a loading indicator, or any fallback
@@ -81,7 +82,7 @@ const RoadmapPage = ({ navigation, dataLoaded, uploadDetails, route }) => {
   };
 
   return (
-    <ScrollView >
+    <ScrollView>
       <View style={styles.container}>
         <View style={styles.imageUploadedMsg}>
           {/* Left side - Upload Successful text */}
@@ -115,8 +116,8 @@ const RoadmapPage = ({ navigation, dataLoaded, uploadDetails, route }) => {
             <View style={styles.statusBox}>
               <View style={styles.statusIconBox}>
                 {prop1.data.status === "Uploaded" ||
-                  prop1.data.status === "Under Analysis" ||
-                  prop1.data.status === "Expert Review" ? (
+                prop1.data.status === "Under Analysis" ||
+                prop1.data.status === "Expert Review" ? (
                   <Entypo name="upload-to-cloud" size={34} color="#065a00" />
                 ) : (
                   <Entypo name="upload-to-cloud" size={34} color="#eaeae8" />
@@ -127,7 +128,7 @@ const RoadmapPage = ({ navigation, dataLoaded, uploadDetails, route }) => {
               </View>
             </View>
             {prop1.data.status === "Under Analysis" ||
-              prop1.data.status === "Expert Review" ? (
+            prop1.data.status === "Expert Review" ? (
               <View style={styles.connector1} />
             ) : (
               <View style={styles.connector10} />
@@ -136,7 +137,7 @@ const RoadmapPage = ({ navigation, dataLoaded, uploadDetails, route }) => {
             <View style={styles.statusBox}>
               <View style={styles.statusIconBox}>
                 {prop1.data.status === "Under Analysis" ||
-                  prop1.data.status === "Expert Review" ? (
+                prop1.data.status === "Expert Review" ? (
                   <MaterialCommunityIcons
                     name="leaf-circle-outline"
                     size={34}
@@ -181,7 +182,8 @@ const RoadmapPage = ({ navigation, dataLoaded, uploadDetails, route }) => {
           </View>
         </View> */}
           <View style={styles.bottomContainer}>
-            <LinearGradient style={{ borderRadius: 25 }}
+            <LinearGradient
+              style={{ borderRadius: 25 }}
               colors={["#1a961a", "white", "white", "white", "#1a961a"]}
               start={[1, 1]} // Top-left corner
               end={[0, 0]} // Bottom-right corner
@@ -207,7 +209,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 10,
     backgroundColor: "#fff", // White background
-    paddingTop: "10%"
+    paddingTop: "10%",
   },
   dot: {
     backgroundColor: "#ffffff",
@@ -215,7 +217,7 @@ const styles = StyleSheet.create({
     height: 13,
     margin: 5,
     borderRadius: 50,
-    marginRight: 10
+    marginRight: 10,
   },
   uploadedTextOuter: {
     flex: 1,

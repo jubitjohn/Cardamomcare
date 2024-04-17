@@ -141,7 +141,7 @@ const UserUploads = ({ navigation }) => {
             <Image
               style={styles.cropImage}
               source={require("../assets/crop.png")}
-            //style={{ width: "100%" }}
+              //style={{ width: "100%" }}
             />
           </View>
         </View>
@@ -265,13 +265,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
-    padding: 10
+    padding: 10,
   },
   diseaseImage: {
     width: "100%",
     height: 120,
     resizeMode: "cover",
-    borderRadius: 5
+    borderRadius: 5,
   },
   diseaseInfo: {
     paddingTop: 15,
@@ -284,12 +284,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#888",
     marginTop: 5,
-    marginBottom: 15
+    marginBottom: 15,
   },
   container: {
     // backgroundColor: "red",
     flexDirection: "row",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
   },
   comingBox: {
     flexDirection: "row",
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 10,
     paddingLeft: 5,
-    paddingRight: 15
+    paddingRight: 15,
   },
   dot: {
     backgroundColor: "#434f41",
@@ -307,11 +307,11 @@ const styles = StyleSheet.create({
     height: 13,
     margin: 5,
     borderRadius: 50,
-    marginRight: 10
+    marginRight: 10,
   },
   comingText: {
     color: "black",
-    fontSize: 16
+    fontSize: 16,
   },
   cropDiagnosisContainer: {
     flex: 1,
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
-    paddingBottom: 25
+    paddingBottom: 25,
   },
   cropDiagnosis: {
     flex: 1,

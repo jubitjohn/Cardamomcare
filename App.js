@@ -33,6 +33,7 @@ import RoadmapPage from "./screens/ResultScreenDetails/StatusComponent";
 import UserUploads from "./screens/userUploads";
 import AboutUs from "./screens/aboutUs";
 import PhoneAuth from "./screens/UserLogin/phone/PhoneAuth";
+import Footer from "./screens/footer";
 
 // import Footer from "./";
 const Stack = createNativeStackNavigator();
@@ -165,6 +166,16 @@ const App = () => {
                 name="SlotBooking"
                 component={SlotBooking}
                 options={{ title: "Slot Booking", headerTitleAlign: "left" }}
+              />
+              <Stack.Screen
+                name="Profile"
+                component={Profile}
+                options={{ title: "Profile", headerTitleAlign: "left" }}
+              />
+              <Stack.Screen
+                name="Footer"
+                component={Footer}
+                options={{ title: "Footer", headerTitleAlign: "left" }}
               />
               {/* <Stack.Screen name="Footer" component={Footer} /> */}
             </>

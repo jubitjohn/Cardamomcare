@@ -8,6 +8,7 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import Footer from "../footer";
 
 const statuses = [
   {
@@ -82,124 +83,192 @@ const RoadmapPage = ({ navigation, dataLoaded, uploadDetails, route }) => {
   };
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.imageUploadedMsg}>
-          {/* Left side - Upload Successful text */}
-          <View style={styles.uploadedTextOuter}>
-            <View style={stylescard.uploadedText}>
-              <View style={styles.dot}></View>
-              <View>
-                <Text>{prop1.data.status}</Text>
+    <View>
+      <ScrollView style={{ marginBottom: 50 }}>
+        <View style={styles.container}>
+          <View style={styles.imageUploadedMsg}>
+            {/* Left side - Upload Successful text */}
+            <View style={styles.uploadedTextOuter}>
+              <View style={stylescard.uploadedText}>
+                <View style={styles.dot}></View>
+                <View>
+                  <Text>{prop1.data.status}</Text>
+                </View>
+              </View>
+              <View style={styles.halfWidthMessageBox}>
+                <Text style={styles.halfWidthMessageText}>
+                  {getStatusMessage(prop1.data.status)}
+                </Text>
+              </View>
+              <View></View>
+            </View>
+
+            {/* Right side - Uploaded Image */}
+            <View style={styles.imageCont}>
+              <View style={styles.uploadedImageContainer}>
+                <Image
+                  style={styles.diseaseImage}
+                  source={{ uri: prop1.data.downloadURL }}
+                />
               </View>
             </View>
-            <View style={styles.halfWidthMessageBox}>
-              <Text style={styles.halfWidthMessageText}>
-                {getStatusMessage(prop1.data.status)}
-              </Text>
-            </View>
-            <View></View>
           </View>
-
-          {/* Right side - Uploaded Image */}
-          <View style={styles.imageCont}>
-            <View style={styles.uploadedImageContainer}>
-              <Image
-                style={styles.diseaseImage}
-                source={{ uri: prop1.data.downloadURL }}
-              />
-            </View>
-          </View>
-        </View>
-        <View style={styles.statusDivOuter}>
-          <View style={styles.statusDiv}>
-            <View style={styles.statusBox}>
-              <View style={styles.statusIconBox}>
-                {prop1.data.status === "Uploaded" ||
-                prop1.data.status === "Under Analysis" ||
+          <View style={styles.statusDivOuter}>
+            <View style={styles.statusDiv}>
+              <View style={styles.statusBox}>
+                <View style={styles.statusIconBox}>
+                  {prop1.data.status === "Uploaded" ||
+                    prop1.data.status === "Under Analysis" ||
+                    prop1.data.status === "Expert Review" ? (
+                    <Entypo name="upload-to-cloud" size={34} color="#065a00" />
+                  ) : (
+                    <Entypo name="upload-to-cloud" size={34} color="#eaeae8" />
+                  )}
+                </View>
+                <View style={styles.statusIconBoxText}>
+                  <Text>Upoaded</Text>
+                </View>
+              </View>
+              {prop1.data.status === "Under Analysis" ||
                 prop1.data.status === "Expert Review" ? (
-                  <Entypo name="upload-to-cloud" size={34} color="#065a00" />
-                ) : (
-                  <Entypo name="upload-to-cloud" size={34} color="#eaeae8" />
-                )}
+                <View style={styles.connector1} />
+              ) : (
+                <View style={styles.connector10} />
+              )}
+
+              <View style={styles.statusBox}>
+                <View style={styles.statusIconBox}>
+                  {prop1.data.status === "Under Analysis" ||
+                    prop1.data.status === "Expert Review" ? (
+                    <MaterialCommunityIcons
+                      name="leaf-circle-outline"
+                      size={34}
+                      color="#065a00"
+                    />
+                  ) : (
+                    <MaterialCommunityIcons
+                      name="leaf-circle-outline"
+                      size={34}
+                      color="#eaeae8"
+                    />
+                  )}
+                </View>
+                <View style={styles.statusIconBoxText}>
+                  <Text>Under Analysis</Text>
+                </View>
               </View>
-              <View style={styles.statusIconBoxText}>
-                <Text>Upoaded</Text>
+              {prop1.data.status === "Expert Review" ? (
+                <View style={styles.connector2} />
+              ) : (
+                <View style={styles.connector20} />
+              )}
+              <View style={styles.statusBox}>
+                <View style={styles.statusIconBox}>
+                  {prop1.data.status === "Expert Review" ? (
+                    <MaterialIcons name="preview" size={34} color="#385600" />
+                  ) : (
+                    <MaterialIcons name="preview" size={34} color="#eaeae8" />
+                  )}
+                </View>
+                <View style={styles.statusIconBoxText}>
+                  <Text>Expert Review</Text>
+                </View>
               </View>
             </View>
-            {prop1.data.status === "Under Analysis" ||
-            prop1.data.status === "Expert Review" ? (
-              <View style={styles.connector1} />
-            ) : (
-              <View style={styles.connector10} />
-            )}
-
-            <View style={styles.statusBox}>
-              <View style={styles.statusIconBox}>
+            <View style={styles.statusDivOuter}>
+              <View style={styles.statusDiv}>
+                <View style={styles.statusBox}>
+                  <View style={styles.statusIconBox}>
+                    {prop1.data.status === "Uploaded" ||
+                      prop1.data.status === "Under Analysis" ||
+                      prop1.data.status === "Expert Review" ? (
+                      <Entypo name="upload-to-cloud" size={34} color="#065a00" />
+                    ) : (
+                      <Entypo name="upload-to-cloud" size={34} color="#eaeae8" />
+                    )}
+                  </View>
+                  <View style={styles.statusIconBoxText}>
+                    <Text>Upoaded</Text>
+                  </View>
+                </View>
                 {prop1.data.status === "Under Analysis" ||
-                prop1.data.status === "Expert Review" ? (
-                  <MaterialCommunityIcons
-                    name="leaf-circle-outline"
-                    size={34}
-                    color="#065a00"
-                  />
+                  prop1.data.status === "Expert Review" ? (
+                  <View style={styles.connector1} />
                 ) : (
-                  <MaterialCommunityIcons
-                    name="leaf-circle-outline"
-                    size={34}
-                    color="#eaeae8"
-                  />
+                  <View style={styles.connector10} />
                 )}
-              </View>
-              <View style={styles.statusIconBoxText}>
-                <Text>Under Analysis</Text>
-              </View>
-            </View>
-            {prop1.data.status === "Expert Review" ? (
-              <View style={styles.connector2} />
-            ) : (
-              <View style={styles.connector20} />
-            )}
-            <View style={styles.statusBox}>
-              <View style={styles.statusIconBox}>
-                {prop1.data.status === "Expert Review" ? (
-                  <MaterialIcons name="preview" size={34} color="#385600" />
-                ) : (
-                  <MaterialIcons name="preview" size={34} color="#eaeae8" />
-                )}
-              </View>
-              <View style={styles.statusIconBoxText}>
-                <Text>Expert Review</Text>
-              </View>
-            </View>
-          </View>
 
-          {/* <View>
+                <View style={styles.statusBox}>
+                  <View style={styles.statusIconBox}>
+                    {prop1.data.status === "Under Analysis" ||
+                      prop1.data.status === "Expert Review" ? (
+                      <MaterialCommunityIcons
+                        name="leaf-circle-outline"
+                        size={34}
+                        color="#065a00"
+                      />
+                    ) : (
+                      <MaterialCommunityIcons
+                        name="leaf-circle-outline"
+                        size={34}
+                        color="#eaeae8"
+                      />
+                    )}
+                  </View>
+                  <View style={styles.statusIconBoxText}>
+                    <Text>Under Analysis</Text>
+                  </View>
+                </View>
+                {prop1.data.status === "Expert Review" ? (
+                  <View style={styles.connector2} />
+                ) : (
+                  <View style={styles.connector20} />
+                )}
+                <View style={styles.statusBox}>
+                  <View style={styles.statusIconBox}>
+                    {prop1.data.status === "Expert Review" ? (
+                      <MaterialIcons name="preview" size={34} color="#385600" />
+                    ) : (
+                      <MaterialIcons name="preview" size={34} color="#eaeae8" />
+                    )}
+                  </View>
+                  <View style={styles.statusIconBoxText}>
+                    <Text>Expert Review</Text>
+                  </View>
+                </View>
+              </View>
+
+              {/* <View>
           <View style={styles.fullWidthMessageBoxStatus}>
             <Text style={styles.fullWidthMessageTextStatus}>
               Status : {prop1.data.status}
             </Text>
           </View>
         </View> */}
-          <View style={styles.bottomContainer}>
-            <LinearGradient
-              style={{ borderRadius: 25 }}
-              colors={["#1a961a", "white", "white", "white", "#1a961a"]}
-              start={[1, 1]} // Top-left corner
-              end={[0, 0]} // Bottom-right corner
-            >
-              <View style={styles.fullWidthMessageBox}>
-                <View>
-                  <Text style={styles.fullWidthMessageText}>
-                    {prop1.data.message}
-                  </Text>
-                </View>
+              <View style={styles.bottomContainer}>
+                <LinearGradient style={{ borderRadius: 25 }}
+                  colors={["#1a961a", "white", "white", "white", "#1a961a"]}
+                  start={[1, 1]} // Top-left corner
+                  end={[0, 0]} // Bottom-right corner
+                >
+                  <View style={styles.fullWidthMessageBox}>
+                    <View>
+                      <Text style={styles.fullWidthMessageText}>
+                        {prop1.data.message}
+                      </Text>
+                    </View>
+                  </View>
+                </LinearGradient>
               </View>
-            </LinearGradient>
+            </View>
           </View>
         </View>
+      </ScrollView>
+      <View>
+        <Footer navigation={navigation} />
       </View>
-    </ScrollView>
+    </View>
+
   );
 };
 

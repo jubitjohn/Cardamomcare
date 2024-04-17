@@ -49,43 +49,48 @@ const ResultScreen = ({ navigation, route }) => {
     fetchDataFromFirestore();
   }, [uploadId, userId]);
   return (
-    <ScrollView style={styles.container}>
-      {/* First Section */}
-      <LinearGradient
-        colors={["#1a961a", "white", "white", "white", "#1a961a"]}
-        start={[0, 1]} // Top-left corner
-        end={[1, 0]} // Bottom-right corner
-      >
-        <View style={styles.firstSection}>
-          <Text style={styles.headingText}>
-            Image successfully {"\n"}uploaded{" "}
-            <MaterialIcons name="check" size={23} color="green" />
-          </Text>
-          <Text style={styles.sectionText}>
-            Bringing expert farming advice directly to your{" "}
-            <Text style={{ color: "green", fontSize: 20 }}>doorstep </Text>
-          </Text>
-          <TouchableOpacity style={styles.bookingButton}>
-            <Text style={styles.bookingButtonText}>Book</Text>
-          </TouchableOpacity>
-          <View style={styles.imageContainer}>
-            <View style={styles.imageContainerFirst}></View>
-            <View style={styles.imageContainerSecond}>
-              <Image
-                source={require("../../assets/consultant.png")}
-                style={styles.sectionImage}
-              />
+    <View>
+      <ScrollView style={styles.container}>
+        {/* First Section */}
+        <LinearGradient
+          colors={["#1a961a", "white", "white", "white", "#1a961a"]}
+          start={[0, 1]} // Top-left corner
+          end={[1, 0]} // Bottom-right corner
+        >
+          <View style={styles.firstSection}>
+            <Text style={styles.headingText}>
+              Image successfully {"\n"}uploaded{" "}
+              <MaterialIcons name="check" size={23} color="green" />
+            </Text>
+            <Text style={styles.sectionText}>
+              Bringing expert farming advice directly to your{" "}
+              <Text style={{ color: "green", fontSize: 20 }}>doorstep </Text>
+            </Text>
+            <TouchableOpacity style={styles.bookingButton}>
+              <Text style={styles.bookingButtonText}>Book</Text>
+            </TouchableOpacity>
+            <View style={styles.imageContainer}>
+              <View style={styles.imageContainerFirst}></View>
+              <View style={styles.imageContainerSecond}>
+                <Image
+                  source={require("../../assets/consultant.png")}
+                  style={styles.sectionImage}
+                />
+              </View>
             </View>
           </View>
-        </View>
-      </LinearGradient>
-      <RoadmapPage
-        navigation={navigation}
-        uploadDetails={instance}
-        dataLoaded={dataLoaded}
-        route={route}
-      />
-    </ScrollView>
+        </LinearGradient>
+        <RoadmapPage
+          navigation={navigation}
+          uploadDetails={instance}
+          dataLoaded={dataLoaded}
+          route={route}
+        />
+      </ScrollView>
+      <View>
+        <Footer navigation={navigation} />
+      </View>
+    </View>
   );
 };
 

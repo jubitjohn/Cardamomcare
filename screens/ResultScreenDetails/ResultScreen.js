@@ -83,6 +83,7 @@ const ResultScreen = ({ navigation, route }) => {
         navigation={navigation}
         uploadDetails={instance}
         dataLoaded={dataLoaded}
+        route={route}
       />
     </ScrollView>
   );

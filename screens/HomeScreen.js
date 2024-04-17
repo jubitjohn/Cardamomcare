@@ -428,7 +428,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 4,
     elevation: 5,
-    padding: 10
+    padding: 10,
   },
   innerBox: {
     // padding: 0,

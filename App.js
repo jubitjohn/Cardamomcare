@@ -102,8 +102,8 @@ const App = () => {
                       <View style={styles.userIconContainer}>
                         <Text style={styles.userIconText}>
                           {useContext(DataContext)
-                            .userProfile.charAt(0)
-                            .toUpperCase()}
+                            .userProfile?.charAt(0)
+                            ?.toUpperCase()}
                         </Text>
                       </View>
                     </TouchableOpacity>

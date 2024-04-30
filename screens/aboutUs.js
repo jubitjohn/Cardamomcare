@@ -6,7 +6,7 @@ import Footer from './footer';
 
 const AboutUs = ({ navigation }) => {
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             <ImageBackground
                 source={require('../assets/aboutPic.png')}
                 style={styles.backgroundImage}
@@ -19,9 +19,6 @@ const AboutUs = ({ navigation }) => {
                     <Text style={styles.last}>Thank you for choosing CardamomCare! </Text>
                 </View>
             </ImageBackground>
-            <View>
-                <Footer navigation={navigation} />
-            </View>
         </View>
     );
 };
@@ -31,7 +28,7 @@ const styles = StyleSheet.create({
         flex: 1,
         resizeMode: 'cover',
         paddingLeft: "4.5%",
-        paddingRight: "4.5%"
+        paddingRight: "4.5%",
     },
     overlay: {
         flex: 1,

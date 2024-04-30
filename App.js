@@ -8,6 +8,7 @@
 import ActionSheet from "react-native-actionsheet";
 import DataContext from "./screens/UserLogin/data/data-context";
 import React, { useState, useContext, useEffect } from "react";
+import Constants from "expo-constants";
 import Navigator from "./routes/HomeStack";
 import DataProvider from "./screens/UserLogin/data/DataProvider";
 import firebase from "firebase/app";
@@ -34,9 +35,14 @@ import UserUploads from "./screens/userUploads";
 import AboutUs from "./screens/aboutUs";
 import PhoneAuth from "./screens/UserLogin/phone/PhoneAuth";
 import Footer from "./screens/footer";
+import { version } from "./package.json";
+import UpdatePopup from "./utils/updatePopup";
+import { fetchDataFromFirebase } from "./utils/getData";
 
 // import Footer from "./";
 const Stack = createNativeStackNavigator();
+
+console.log("Constants.appVersionCode", version);
 
 // const Tab = createBottomTabNavigator();
 
@@ -48,12 +54,39 @@ const SplitScreen = () => {
   );
 };
 
+const fetchLatestVersion = async () => {
+  try {
+    // Replace 'https://your-api-endpoint.com/latest-version' with your actual API endpoint
+    const response = fetchDataFromFirebase("update_centre", "app_update");
+    console.log("update response", response);
+    return response;
+  } catch (error) {
+    console.error("Error fetching latest version:", error);
+    throw error;
+  }
+};
+
 const App = () => {
   // const dataCtx = useContext(DataContext);
   // const isAuthChecked = dataCtx.isAuthChecked;
   // const isDataFetched = dataCtx.isDataFetched;
 
   const [showSplitScreen, setShowSplitScreen] = useState(true);
+  const [showUpdatePopup, setShowUpdatePopup] = useState(false);
+  const [latestVersion, setLatestVersion] = useState(null);
+
+  useEffect(() => {
+    // Fetch latest version and update note from API
+    fetchLatestVersion().then((data) => {
+      const { versionName, updateNote } = data;
+      setLatestVersion(versionName);
+
+      // Compare versions and show update popup if necessary
+      if (versionName > version) {
+        setShowUpdatePopup(true);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -182,6 +215,12 @@ const App = () => {
           )}
         </Stack.Navigator>
       </NavigationContainer>
+      {showUpdatePopup && (
+        <UpdatePopup
+          versionName="1.2.2"
+          updateNote="New features and improvements available. Update now!"
+        />
+      )}
     </DataProvider>
   );
 };

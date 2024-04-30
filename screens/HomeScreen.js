@@ -18,6 +18,7 @@ import {
   Button,
   ActionSheetIOS,
 } from "react-native";
+import Footer from "./footer";
 
 const HomeScreen = ({ navigation }) => {
   const [data, setData] = useState([]);
@@ -81,170 +82,171 @@ const HomeScreen = ({ navigation }) => {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.scrollViewContent}
-      style={styles.main}
-    >
-      <View style={styles.container}>
-        <View style={styles.cropSelectorContainer}>
-          <View style={styles.cropsection}>
-            <TouchableOpacity
-              onPress={() => handleCropSelection("Cardamom")}
-              style={[
-                styles.cropSelectorButton,
-                selectedCrop === "Cardamom" && styles.selectedCropButton,
-              ]}
-            >
-              <Text
+    <View>
+      <ScrollView
+        contentContainerStyle={styles.scrollViewContent}
+        style={styles.main}
+      >
+        <View style={styles.container}>
+          <View style={styles.cropSelectorContainer}>
+            <View style={styles.cropsection}>
+              <TouchableOpacity
+                onPress={() => handleCropSelection("Cardamom")}
                 style={[
-                  styles.cropSelectorButtonText,
-                  selectedCrop === "Cardamom" && styles.selectedCropButtonText,
+                  styles.cropSelectorButton,
+                  selectedCrop === "Cardamom" && styles.selectedCropButton,
                 ]}
               >
-                Cardamom
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.cropScreenContainer}>
-          {selectedCrop === "" && (
-            <View style={styles.placeholderContainer}>
-              <Text style={styles.placeholderText}>
-                Please select a crop to start.
-              </Text>
+                <Text
+                  style={[
+                    styles.cropSelectorButtonText,
+                    selectedCrop === "Cardamom" && styles.selectedCropButtonText,
+                  ]}
+                >
+                  Cardamom
+                </Text>
+              </TouchableOpacity>
             </View>
-          )}
-          {selectedCrop === "Cardamom" && (
-            <View style={[styles.cropScreenContainer]}>
-              <View style={[styles.cropServiceScreen]}>
-                <TouchableOpacity
-                  style={styles.serviceComponents}
-                  onPress={() => pressHandler("AboutUs")}
-                >
-                  <View>
-                    <FontAwesome5
-                      name="calculator"
-                      size={24}
-                      color="#0B3104"
-                      style={styles.serviceComponentsicons}
-                    />
-                    <Text style={styles.serviceContainerText}>
-                      About{"\n"} Us
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.serviceComponents}
-                  onPress={() => pressHandler("pest_control")}
-                >
-                  <View>
-                    <View style={{ flex: 1, justifyContent: "center" }}>
-                      <MaterialCommunityIcons
-                        name="virus"
+          </View>
+          <View style={styles.cropScreenContainer}>
+            {selectedCrop === "" && (
+              <View style={styles.placeholderContainer}>
+                <Text style={styles.placeholderText}>
+                  Please select a crop to start.
+                </Text>
+              </View>
+            )}
+            {selectedCrop === "Cardamom" && (
+              <View style={[styles.cropScreenContainer]}>
+                <View style={[styles.cropServiceScreen]}>
+                  <TouchableOpacity
+                    style={styles.serviceComponents}
+                    onPress={() => pressHandler("AboutUs")}
+                  >
+                    <View>
+                      <FontAwesome5
+                        name="calculator"
                         size={24}
                         color="#0B3104"
                         style={styles.serviceComponentsicons}
                       />
+                      <Text style={styles.serviceContainerText}>
+                        About{"\n"} Us
+                      </Text>
                     </View>
-                    <Text style={styles.serviceContainerText}>
-                      Pests & Controls
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.serviceComponents}
-                  onPress={() => pressHandler("ResultScreen")}
-                >
-                  <View style={styles.serviceComponentsView}>
-                    <Entypo
-                      name="leaf"
-                      size={24}
-                      color="#0B3104"
-                      style={styles.serviceComponentsicons}
-                    />
-                    <Text style={styles.serviceContainerText}>
-                      Cultivation Tipss
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.HealCropContainer}>
-                <View style={styles.HealCropTextContainer}>
-                  <Text style={styles.HealCropText}>Heal Your Crop</Text>
-                </View>
-
-                <View style={styles.outerBox}>
-                  <View style={styles.innerBox}>
-                    <View style={styles.subBox}>
-                      <Ionicons name="camera" size={35} color="white" />
-                      <Text style={styles.subBoxtext}>Upload Image</Text>
-                    </View>
-                    <View style={styles.subBox}>
-                      <MaterialCommunityIcons
-                        name="magnify-scan"
-                        size={35}
-                        color="white"
-                      />
-                      <Text style={styles.subBoxtext}>Get Diagonis</Text>
-                    </View>
-                    <View style={styles.subBox}>
-                      <View>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.serviceComponents}
+                    onPress={() => pressHandler("pest_control")}
+                  >
+                    <View>
+                      <View style={{ flex: 1, justifyContent: "center" }}>
                         <MaterialCommunityIcons
-                          name="leaf-circle"
+                          name="virus"
+                          size={24}
+                          color="#0B3104"
+                          style={styles.serviceComponentsicons}
+                        />
+                      </View>
+                      <Text style={styles.serviceContainerText}>
+                        Pests & Controls
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.serviceComponents}
+                    onPress={() => pressHandler("ResultScreen")}
+                  >
+                    <View style={styles.serviceComponentsView}>
+                      <Entypo
+                        name="leaf"
+                        size={24}
+                        color="#0B3104"
+                        style={styles.serviceComponentsicons}
+                      />
+                      <Text style={styles.serviceContainerText}>
+                        Cultivation Tipss
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.HealCropContainer}>
+                  <View style={styles.HealCropTextContainer}>
+                    <Text style={styles.HealCropText}>Heal Your Crop</Text>
+                  </View>
+
+                  <View style={styles.outerBox}>
+                    <View style={styles.innerBox}>
+                      <View style={styles.subBox}>
+                        <Ionicons name="camera" size={35} color="white" />
+                        <Text style={styles.subBoxtext}>Upload Image</Text>
+                      </View>
+                      <View style={styles.subBox}>
+                        <MaterialCommunityIcons
+                          name="magnify-scan"
                           size={35}
                           color="white"
                         />
+                        <Text style={styles.subBoxtext}>Get Diagonis</Text>
                       </View>
-                      <View>
-                        <Text style={styles.subBoxtext}>Get Medicine</Text>
+                      <View style={styles.subBox}>
+                        <View>
+                          <MaterialCommunityIcons
+                            name="leaf-circle"
+                            size={35}
+                            color="white"
+                          />
+                        </View>
+                        <View>
+                          <Text style={styles.subBoxtext}>Get Medicine</Text>
+                        </View>
                       </View>
                     </View>
+                    <View style={styles.innerCameraBox}>
+                      <TouchableOpacity
+                        style={styles.cameraButton}
+                        onPress={() => pressHandler("Imagepick")}
+                      >
+                        <View>
+                          <Text style={styles.cameraButtonText}>
+                            Take a picture
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                  <View style={styles.innerCameraBox}>
-                    <TouchableOpacity
-                      style={styles.cameraButton}
-                      onPress={() => pressHandler("Imagepick")}
-                    >
-                      <View>
-                        <Text style={styles.cameraButtonText}>
-                          Take a picture
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
+                </View>
+              </View>
+            )}
+            <View style={styles.consultationBox}>
+              <View style={styles.consultationContainer}>
+                <View style={styles.consultationTextContainer}>
+                  <Text style={styles.consultationBoxText}>
+                    Book your <Text style={styles.freeText}>FREE</Text>{" "}
+                    consultation {"\n"}
+                    now!
+                  </Text>
+                </View>
+                <View style={styles.bookingButtonContainer}>
+                  <TouchableOpacity
+                    style={styles.bookingButton}
+                    onPress={() => pressHandler("RoadmapPage")}
+                  >
+                    <Text style={styles.consultationBoxButtonText}>Call Us</Text>
+                  </TouchableOpacity>
+                  <View>
+                    <FontAwesome5
+                      name="leaf"
+                      size={80}
+                      color="green"
+                      style={styles.consultationBoxButtonIcon}
+                    />
                   </View>
                 </View>
               </View>
             </View>
-          )}
-          <View style={styles.consultationBox}>
-            <View style={styles.consultationContainer}>
-              <View style={styles.consultationTextContainer}>
-                <Text style={styles.consultationBoxText}>
-                  Book your <Text style={styles.freeText}>FREE</Text>{" "}
-                  consultation {"\n"}
-                  now!
-                </Text>
-              </View>
-              <View style={styles.bookingButtonContainer}>
-                <TouchableOpacity
-                  style={styles.bookingButton}
-                  onPress={() => pressHandler("RoadmapPage")}
-                >
-                  <Text style={styles.consultationBoxButtonText}>Call Us</Text>
-                </TouchableOpacity>
-                <View>
-                  <FontAwesome5
-                    name="leaf"
-                    size={80}
-                    color="green"
-                    style={styles.consultationBoxButtonIcon}
-                  />
-                </View>
-              </View>
-            </View>
-          </View>
 
-          {/* <View style={styles.weatherSection}>
+            {/* <View style={styles.weatherSection}>
             <View style={styles.weatherContainer}>
               <Text style={styles.headerText}>{data.test}</Text>
               {weatherData ? (
@@ -264,16 +266,23 @@ const HomeScreen = ({ navigation }) => {
               )}
             </View>
           </View> */}
+          </View>
         </View>
-      </View>
+        <View>
+          <UserUploads navigation={navigation} />
+        </View>
+      </ScrollView>
       <View>
-        <UserUploads navigation={navigation} />
+        <Footer navigation={navigation} />
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  main: {
+    marginBottom: 30
+  },
   scrollViewContent: {
     flexGrow: 1,
     justifyContent: "center",

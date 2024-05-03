@@ -16,6 +16,7 @@ import { fetchData } from "../../utils/getDataFromDb";
 import DataContext from "../UserLogin/data/data-context";
 import RoadmapPage from "./StatusComponent";
 // import TreatmentPlan from "./TreatmentPlan";
+import Footer from "../footer";
 
 const ResultScreen = ({ navigation, route }) => {
   const [status, setStatus] = useState("");
@@ -49,7 +50,7 @@ const ResultScreen = ({ navigation, route }) => {
     fetchDataFromFirestore();
   }, [uploadId, userId]);
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
         {/* First Section */}
         <LinearGradient

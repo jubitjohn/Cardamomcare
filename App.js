@@ -78,7 +78,7 @@ const App = () => {
   useEffect(() => {
     // Fetch latest version and update note from API
     fetchLatestVersion().then((data) => {
-      const { versionName, updateNote } = data;
+      const versionName = data;
       setLatestVersion(versionName);
 
       // Compare versions and show update popup if necessary

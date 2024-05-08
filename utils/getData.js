@@ -10,9 +10,12 @@ export const fetchDataFromFirebase = async (collection_id, documentId) => {
 
     // Check if the document exists
     if (documentSnapshot.exists) {
+      console.log("::::documentSnapshot", documentSnapshot);
       // Document data
       const documentData = documentSnapshot.data();
-      return documentData;
+      console.log("::::documentData", documentData.latest_version);
+
+      return documentData.latest_version;
     } else {
       console.log("Document does not exist!");
     }

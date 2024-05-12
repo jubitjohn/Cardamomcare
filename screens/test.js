@@ -47,6 +47,7 @@ export default function ImagePickerExample({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
   // const [uploadId, setUploadId] = useState("");
   const userId = useContext(DataContext).userNumber;
+  const username = useContext(DataContext).userProfile;
 
   const handleFireBaseUpload = async (image) => {
     const response = await fetch(image);
@@ -74,10 +75,11 @@ export default function ImagePickerExample({ navigation }) {
       // 3. Add the image details to Firestore
       const userDocRef = db.collection("users").doc(userId);
 
-      // Check if the user already exists in Firestore
+      // Check if the user already exists in FirestoreF
       const userDocSnapshot = await userDocRef.get();
       const userData = {
         userId,
+        username,
       };
       console.log("userDocSnapshot", userDocSnapshot);
 

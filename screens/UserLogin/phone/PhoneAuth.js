@@ -39,11 +39,12 @@ export default function PhoneAuth({ navigation }) {
         // recaptchaVerifier.current,
         appVerificationDisabledForTesting
       );
-      const currentUser = auth().currentUser;
+      const currentUser = auth().currentUser;     
       console.log("displayName", displayName);
-      await currentUser.updateProfile({
+      if(currentUser)
+      {await currentUser.updateProfile({
         displayName: displayName,
-      });
+      })};
       console.log("current user::::", currentUser);
       setConfirmationResult(result);
       setIsVerifying(true);

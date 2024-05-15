@@ -36,7 +36,7 @@ const Footer = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     main: {
-        height: 50,
+        height: 55,
         width: "100%",
         backgroundColor: "white",
         position: "absolute",

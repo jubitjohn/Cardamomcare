@@ -2,8 +2,6 @@ import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import PropTypes from "prop-types";
 
-import { Foundation } from "@expo/vector-icons";
-
 const diseasesSet = [
   {
     name: "Thrips_1",
@@ -54,22 +52,20 @@ const DiseasesRelatedPictures = ({ disease }) => {
         <View style={styles.diseasePictureBoxRight}>
           <View style={styles.diseasePictureBoxRightTop}>
             <Image
-             style={styles.image}
+              style={styles.image}
               source={require("../../assets/capsule_rot.jpeg")}
               resizeMode="cover"
             />
           </View>
           <View style={styles.diseasePictureBoxRightBottom}>
             <Image
-             style={styles.image}
+              style={styles.image}
               source={require("../../assets/thrips.jpeg")}
               resizeMode="cover"
             />
           </View>
         </View>
       </View>
-
-     
     </View>
   );
 };
@@ -92,7 +88,6 @@ const styles = StyleSheet.create({
   },
   diseasePictureBoxLeft: {
     flex: 1,
-    
   },
   diseasePictureBoxRight: {
     flex: 1,
@@ -100,14 +95,12 @@ const styles = StyleSheet.create({
   },
   diseasePictureBoxRightTop: {
     flex: 1,
-   
   },
   diseasePictureBoxRightBottom: {
     flex: 1,
-    
   },
   image: {
-    margin:5,
+    margin: 5,
     flex: 1,
     borderRadius: 10,
     width: undefined,

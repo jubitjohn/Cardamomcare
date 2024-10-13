@@ -6,7 +6,9 @@
         {
           "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
         }
-      ]
+      ],
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth"
     ],
     "name": "Cardamomcare",
     "slug": "Cardamomcare",
@@ -37,7 +39,8 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.jubitjohn1.Cardamomcare"
+      "package": "com.jubitjohn1.Cardamomcare",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"

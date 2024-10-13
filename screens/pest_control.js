@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet} from "react-native";
+import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
+import Footer from "./footer";
 //import { Svg, Circle } from 'react-native-svg';
 
 
 
 
 
-const Pests = () => {
+const Pests = ({ navigation }) => {
   const [selectedStage, setSelectedStage] = useState("seeding");
 
   const diseases = {
@@ -67,122 +68,128 @@ const Pests = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.cardamomSection}>
-        <View style={styles.fieldMonitoring}>
-          <Text style={styles.sectionTitle}>Field Monitoring</Text>
-          <Text style={styles.sectionText}>
-            Cardamom plants normally start bearing capsules from the third year
-            of planting. The fruit matures in 120 days after flowering. On
-            maturity, seeds turn dark brown to black in colour.
-          </Text>
-          <TouchableOpacity style={styles.learnMoreButton}>
-            <Text style={styles.learnMoreButtonText}>Learn More</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.cardamomImage}>
-          <Image
-            source={require("../assets/cardomom_pests.jpeg")}
-            style={{ width: "100%",  }}
-          />
-        </View>
-      </View>
-      <View style={styles.diseasesSection}>
-        <Text style={styles.sectionTitle}>Diseases By Stage</Text>
-        <View style={styles.stageButtons}>
-          <TouchableOpacity
-            style={[
-              styles.stageButton,
-              selectedStage === "seeding" && styles.stageButtonSelected,
-            ]}
-            onPress={() => setSelectedStage("seeding")}
-          >
-            <Text
-              style={[
-                styles.stageButtonText,
-                selectedStage === "seeding" && styles.stageButtonTextSelected,
-              ]}
-            >
-              Seeding
+    <View style={{ flex: 1 }}>
+      <ScrollView style={styles.container}>
+        <View style={styles.cardamomSection}>
+          <View style={styles.fieldMonitoring}>
+            <Text style={styles.sectionTitle}>Field Monitoring</Text>
+            <Text style={styles.sectionText}>
+              Cardamom plants normally start bearing capsules from the third year
+              of planting. The fruit matures in 120 days after flowering. On
+              maturity, seeds turn dark brown to black in colour.
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.stageButton,
-              selectedStage === "vegetative" && styles.stageButtonSelected,
-            ]}
-            onPress={() => setSelectedStage("vegetative")}
-          >
-            <Text
-              style={[
-                styles.stageButtonText,
-                selectedStage === "vegetative" &&
-                  styles.stageButtonTextSelected,
-              ]}
-            >
-              Vegetative
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.stageButton,
-              selectedStage === "flowering" && styles.stageButtonSelected,
-            ]}
-            onPress={() => setSelectedStage("flowering")}
-          >
-            <Text
-              style={[
-                styles.stageButtonText,
-                selectedStage === "flowering" && styles.stageButtonTextSelected,
-              ]}
-            >
-              Flowering
-           </Text>
-          </TouchableOpacity>
-          
-        </View>
-        <View style={styles.container}>
-         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <View style={styles.row}>
-            {diseases[selectedStage].map((disease, index) => (
-              <TouchableOpacity key={index} style={styles.diseaseCard}>
-                <Image
-                  style={styles.diseaseImage}
-                  source={{ uri: disease.image }}
-                />
-                <View style={styles.diseaseInfo}>
-                  <Text style={styles.diseaseTitle}>{disease.title}</Text>
-                  <Text style={styles.diseaseType}>{disease.type}</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </ScrollView>
-        </View>
-        <View style={[styles.cropDiagnosisContainer, { flexDirection: 'row' }]}>
-          <View style={styles.cropDiagnosis}>
-            <Text style={[styles.cropSectionTitle, { color: '#FFF', fontSize: 24 }]}>
-              Crop Diagnosis
-            </Text>
-            <Text style={[styles.cropSectionText, { color: '#F2F2F2', lineHeight: 20, fontSize: 14 }]}>
-              Identify the issues affecting your crops in just a few seconds. 
-            </Text>
-            <TouchableOpacity style={styles.DiagnoseButton}>
-              <Text style={[styles.DiagnoseButtonText, { fontSize: 16 }]}>
-                Diagnose
-              </Text>
+            <TouchableOpacity style={styles.learnMoreButton}>
+              <Text style={styles.learnMoreButtonText}>Learn More</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.cropImageContainer}>
-            <Image style={styles.cropImage}
-              source={require("../assets/crop.png")}
-               //style={{ width: "100%" }}
+          <View style={styles.cardamomImage}>
+            <Image
+              source={require("../assets/cardomom_pests.jpeg")}
+              style={{ width: "100%", }}
             />
           </View>
-       </View>
-       </View>
-  </ScrollView> 
-)};
+        </View>
+        <View style={styles.diseasesSection}>
+          <Text style={styles.sectionTitle}>Diseases By Stage</Text>
+          <View style={styles.stageButtons}>
+            <TouchableOpacity
+              style={[
+                styles.stageButton,
+                selectedStage === "seeding" && styles.stageButtonSelected,
+              ]}
+              onPress={() => setSelectedStage("seeding")}
+            >
+              <Text
+                style={[
+                  styles.stageButtonText,
+                  selectedStage === "seeding" && styles.stageButtonTextSelected,
+                ]}
+              >
+                Seeding
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.stageButton,
+                selectedStage === "vegetative" && styles.stageButtonSelected,
+              ]}
+              onPress={() => setSelectedStage("vegetative")}
+            >
+              <Text
+                style={[
+                  styles.stageButtonText,
+                  selectedStage === "vegetative" &&
+                  styles.stageButtonTextSelected,
+                ]}
+              >
+                Vegetative
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.stageButton,
+                selectedStage === "flowering" && styles.stageButtonSelected,
+              ]}
+              onPress={() => setSelectedStage("flowering")}
+            >
+              <Text
+                style={[
+                  styles.stageButtonText,
+                  selectedStage === "flowering" && styles.stageButtonTextSelected,
+                ]}
+              >
+                Flowering
+              </Text>
+            </TouchableOpacity>
+
+          </View>
+          <View style={styles.container}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <View style={styles.row}>
+                {diseases[selectedStage].map((disease, index) => (
+                  <TouchableOpacity key={index} style={styles.diseaseCard}>
+                    <Image
+                      style={styles.diseaseImage}
+                      source={{ uri: disease.image }}
+                    />
+                    <View style={styles.diseaseInfo}>
+                      <Text style={styles.diseaseTitle}>{disease.title}</Text>
+                      <Text style={styles.diseaseType}>{disease.type}</Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </ScrollView>
+          </View>
+          <View style={[styles.cropDiagnosisContainer, { flexDirection: 'row', marginBottom: 50 }]}>
+            <View style={styles.cropDiagnosis}>
+              <Text style={[styles.cropSectionTitle, { color: '#FFF', fontSize: 24 }]}>
+                Crop Diagnosis
+              </Text>
+              <Text style={[styles.cropSectionText, { color: '#F2F2F2', lineHeight: 20, fontSize: 14 }]}>
+                Identify the issues affecting your crops in just a few seconds.
+              </Text>
+              <TouchableOpacity style={styles.DiagnoseButton}>
+                <Text style={[styles.DiagnoseButtonText, { fontSize: 16 }]}>
+                  Diagnose
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.cropImageContainer}>
+              <Image style={styles.cropImage}
+                source={require("../assets/crop.png")}
+              //style={{ width: "100%" }}
+              />
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+      <View>
+        <Footer navigation={navigation} />
+      </View>
+    </View>
+  )
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -220,9 +227,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#888",
   },
-  cardamomImage:{
-    width:150,
-    height:150,
+  cardamomImage: {
+    width: 150,
+    height: 150,
   },
   learnMoreButton: {
     flex: 1,
@@ -274,8 +281,8 @@ const styles = StyleSheet.create({
   stageButtonSelected: {
     //backgroundColor: "#222222",
     backgroundColor: '#D9D9D9',
-    borderWidth:0,
-    
+    borderWidth: 0,
+
   },
   stageButtonText: {
     fontSize: 14,
@@ -382,9 +389,9 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
 
-  
-  
 
-  });
+
+
+});
 
 export default Pests;

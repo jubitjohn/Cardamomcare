@@ -13,7 +13,7 @@ const diseasesSet = [
   {
     name: "Capsule Rot",
     description:
-    "• The disease appears during the rainy season.\n\n• On the infected leaves, water soaked lesions appear fi rst followed by rotting and shredding of leaves along the veins.\n\n• The infected capsules become dull greenish brown and decay. This emits a foul smell and subsequently shed. \n\n• Infection spreads to the panicles and tillers resulting in their decay.",
+      "• The disease appears during the rainy season.\n\n• On the infected leaves, water soaked lesions appear fi rst followed by rotting and shredding of leaves along the veins.\n\n• The infected capsules become dull greenish brown and decay. This emits a foul smell and subsequently shed. \n\n• Infection spreads to the panicles and tillers resulting in their decay.",
   },
   {
     name: "Fuzarium_2",
@@ -25,13 +25,15 @@ const diseasesSet = [
     description:
       "Root rot is a soil-borne disease caused by fungi that affects the roots of the cardamom plant. The disease causes the roots to rot, which results in stunted growth and yellowing of leaves. It can be controlled by using fungicides and improving drainage in the plantation.",
   },
+  {
+    name: "Thatta Marichil",
+    description:
+      "Root rot is a soil-borne disease caused by fungi that affects the roots of the cardamom plant. The disease causes the roots to rot, which results in stunted growth and yellowing of leaves. It can be controlled by using fungicides and improving drainage in the plantation.",
+  },
 ];
 
 const DiseaseDetails = ({ disease }) => {
-
-  const selectedDisease = diseasesSet.find(
-    (item) => item.name === disease
-  );
+  const selectedDisease = diseasesSet.find((item) => item.name === disease);
   return (
     <View>
       <View style={styles.headingBox}>
@@ -43,13 +45,13 @@ const DiseaseDetails = ({ disease }) => {
         </View>
       </View>
       <View>
-      {selectedDisease && (
-        <View style={styles.descriptionBox}>
-          <Text style={styles.descriptionText}>
-            {selectedDisease.description}
-          </Text>
-        </View>
-      )}
+        {selectedDisease && (
+          <View style={styles.descriptionBox}>
+            <Text style={styles.descriptionText}>
+              {selectedDisease.description}
+            </Text>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -81,14 +83,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 700,
   },
-  descriptionBox :{
-    padding:10,
-    paddingTop:15,
-
+  descriptionBox: {
+    padding: 10,
+    paddingTop: 15,
   },
-  descriptionText:{
-
-    fontSize:15,
-
+  descriptionText: {
+    fontSize: 15,
   },
 });

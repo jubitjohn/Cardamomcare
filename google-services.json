@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "860137368879",
+    "project_id": "cardamomcare-79da3",
+    "storage_bucket": "cardamomcare-79da3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860137368879:android:f4ff0493bb3b244f6d45da",
+        "android_client_info": {
+          "package_name": "com.jubitjohn1.Cardamomcare"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC348Tw3NxDP8o7Gpy452IXsMu4yq5L9WA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

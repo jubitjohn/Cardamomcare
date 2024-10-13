@@ -1,12 +1,18 @@
 import { Camera, CameraType } from "expo-camera";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { Image, Animated, ActivityIndicator, Dimensions } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { PinchGestureHandler } from "react-native-gesture-handler";
 const windowHeight = Dimensions.get("window").height;
 import { FontAwesome } from "@expo/vector-icons";
-// const windowWidth = Dimensions.get("window").width;
+import * as ImagePicker from "expo-image-picker";
+import {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "@react-native-firebase/storage";
+
+// import firebas
+import { storage, db } from "../firebase/firebaseConfig";
 
 import {
   Modal,
@@ -20,10 +26,12 @@ import * as Animatable from "react-native-animatable";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import * as ImageManipulator from "expo-image-manipulator";
+import * as ScanImage from "expo-image-manipulator";
+import DataContext from "./UserLogin/data/data-context";
 
 export default function ImagePickerExample({ navigation }) {
-  const Stack = createStackNavigator();
+  // const storage = getStorage(firebaseConfig);
+
   const animateIconRef = useRef(null);
   const iconSize = 25;
   const iconColor = "white";
@@ -34,8 +42,74 @@ export default function ImagePickerExample({ navigation }) {
   const [photo, setPhoto] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
+  // const [uploadId, setUploadId] = useState("");
+  const userId = useContext(DataContext).userNumber;
+  const username = useContext(DataContext).userProfile;
+
+  const handleFireBaseUpload = async (image) => {
+    const response = await fetch(image);
+    const imageData = await response.blob();
+    console.log("start of upload");
+    // async magic goes here...
+    if (image === "") {
+      console.error(`not an image, the image file is a ${typeof imageAsFile}`);
+    }
+    console.log("test1");
+    const storageRef = ref(storage);
+
+    console.log("test122", storageRef);
+    const fileRef = storage.ref(`images/${userId}/${Date.now()}`);
+    console.log("fileref", fileRef);
+    try {
+      // Upload the bytes to the file reference
+      await uploadBytesResumable(fileRef, imageData);
+
+      // Get the download URL using the file reference
+      const downloadURL = await getDownloadURL(fileRef);
+
+      console.log("File uploaded successfully. Download URL:", downloadURL);
+
+      // 3. Add the image details to Firestore
+      const userDocRef = db.collection("users").doc(userId);
+
+      // Check if the user already exists in Firestore
+      const userDocSnapshot = await userDocRef.get();
+      const userData = {
+        userId,
+        username,
+      };
+      console.log("userDocSnapshot", userDocSnapshot);
+
+      if (!userDocSnapshot.exists) {
+        // If the user doesn't exist, create a new user document
+        await db.collection("users").doc(userId).set(userData);
+      }
+
+      // Create a reference to the images subcollection
+      const imagesCollection = userDocRef.collection("images");
+      console.log("Image test 1");
+
+      // Add a new image document to the images subcollection
+      const imageDocRef = await imagesCollection.add({
+        downloadURL,
+        status: "Uploaded",
+        message: "Under Review with Scientist", // You can set the initial status as needed
+      });
+
+      console.log("Image uploaded and Firestore updated successfully.");
+      console.log("imageDocRef.id", imageDocRef.id);
+      const uploadTemp = await imageDocRef.id;
+      // setUploadId(uploadTemp);
+      // console.log("logging uploadID", uploadId);
+      return imageDocRef.id;
+    } catch (error) {
+      console.error("Error uploading file:", error.message);
+      throw error;
+    }
+  };
 
   let cameraRef = null;
 
@@ -96,14 +170,38 @@ export default function ImagePickerExample({ navigation }) {
     );
   }
 
-  function toggleCameraType() {
-    setType((current) =>
-      current === CameraType.back ? CameraType.front : CameraType.back
-    );
-  }
+  const handleGallery = async () => {
+    try {
+      console.log("Inside handle Gallery");
+      const permissionResult =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!permissionResult.granted) {
+        Alert.alert(
+          "Permission Denied",
+          "Please grant permission to access the gallery"
+        );
+        return;
+      }
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: false,
+        aspect: [4, 3],
+        quality: 1,
+      });
+      if (result && !result.cancelled) {
+        setPhoto(result.assets[0]);
+        console.log("result inside", result);
+      }
+    } catch (error) {
+      console.log("Error picking an image: ", error);
+    }
+  };
+
   async function takePicture() {
     if (cameraRef) {
       const photoData = await cameraRef.takePictureAsync();
+      console.log("image from camera", photoData);
       setPhoto(photoData);
     }
   }
@@ -117,7 +215,7 @@ export default function ImagePickerExample({ navigation }) {
   };
 
   const reducePhotoSize = async (photoUri) => {
-    const manipulatedPhoto = await ImageManipulator.manipulateAsync(
+    const manipulatedPhoto = await ScanImage.manipulateAsync(
       photoUri,
       [{ resize: { width: 800 } }], // Adjust the width as needed
       { compress: 0.7, format: "jpeg" } // Adjust the compression and format as needed
@@ -128,6 +226,7 @@ export default function ImagePickerExample({ navigation }) {
 
   const sendImageToApi = async (photoUri) => {
     result = "Cardamom plant not identified";
+    let uploadId;
     try {
       setIsLoading(true);
       const resizedPhotoUri = await reducePhotoSize(photoUri);
@@ -152,6 +251,8 @@ export default function ImagePickerExample({ navigation }) {
         }
       );
 
+      // Commented out the overlay prediction for cardamom because the model is not active now
+
       const dataOverlay = await responseOverlay.json();
       resultOverlay = await dataOverlay.predictions[0].tagName;
       console.log("Is cardamom or not :", dataOverlay.predictions[0].tagName);
@@ -159,6 +260,7 @@ export default function ImagePickerExample({ navigation }) {
       // Main model
 
       if (resultOverlay == "Cardamom") {
+        uploadId = await handleFireBaseUpload(resizedPhotoUri);
         const response = await fetch(
           "https://cardamomdiseaseprediction-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/22a1ef84-a940-4f32-99cb-a26c6a6aedf8/classify/iterations/Iteration2/image",
           {
@@ -172,12 +274,12 @@ export default function ImagePickerExample({ navigation }) {
         );
 
         const data = await response.json();
-        result = await data.predictions[0].tagName;
+        result = (await data.predictions[0].tagName) || "Thrips_1";
         console.log(data.predictions[0].tagName);
         console.log("Result Value", result);
         console.log(data.predictions[0].probability);
       }
-
+      console.log("imageId inside try 11", uploadId);
       animateIconRef.current?.swing(2000);
 
       setTimeout(() => {
@@ -185,6 +287,7 @@ export default function ImagePickerExample({ navigation }) {
 
         console.log("Delayed execution of prediction results");
       }, 2000); // Delay of 2000 milliseconds (2 seconds)
+      console.log("imageId inside try", uploadId);
     } catch (error) {
       console.error(error);
     } finally {
@@ -197,7 +300,11 @@ export default function ImagePickerExample({ navigation }) {
         if (resultOverlay !== "Cardamom") {
           setIsDrawerOpen(true);
         } else {
-          navigation.navigate("ResultScreen", { res: result });
+          console.log("imageId inside finally", uploadId);
+          navigation.navigate("ResultScreen", {
+            res: result,
+            imageId: uploadId,
+          });
         }
       }, 2000);
       // Hide the dark overlay after API response
@@ -206,7 +313,69 @@ export default function ImagePickerExample({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {photo ? (
+      {!photo && !modalVisible && (
+        <View style={{ flex: 1, maxHeight: windowHeight }}>
+          <View style={styles.cameraContainer}>
+            <Camera
+              style={[styles.camera, { aspectRatio: 3 / 4 }]}
+              type={type}
+              ref={(ref) => (cameraRef = ref)}
+              autoFocus="on"
+            >
+              <Dot style={styles.dot1} />
+              <Dot style={styles.dot2} />
+              <Dot style={styles.dot3} />
+              <Dot style={styles.dot4} />
+              <Dot style={styles.dot5} />
+              <Dot style={styles.dot6} />
+              <Dot style={styles.dot7} />
+              <Dot style={styles.dot8} />
+              <Dot style={styles.dot9} />
+              <Dot style={styles.dot10} />
+              <Dot style={styles.dot11} />
+              <Dot style={styles.dot12} />
+              <Dot style={styles.dot13} />
+              <Dot style={styles.dot14} />
+              <View style={styles.cameraFrameContainer}>
+                <View style={styles.cameraFrame}></View>
+              </View>
+              <View style={styles.cameraInstruction}>
+                <View style={styles.cameraInstructionBox}>
+                  <Text style={styles.frameInstruction}>
+                    Fit the crop damage within the frame
+                  </Text>
+                </View>
+              </View>
+
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.galleryButton}
+                  onPress={handleGallery}
+                >
+                  <MaterialIcons name="photo-library" size={44} color="white" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.captureButton}
+                  onPress={takePicture}
+                >
+                  <Text style={styles.text}></Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.infoButton}
+                  onPress={() => setModalVisible(true)}
+                >
+                  <FontAwesome5
+                    name="question-circle"
+                    size={44}
+                    color="white"
+                  />
+                </TouchableOpacity>
+              </View>
+            </Camera>
+          </View>
+        </View>
+      )}
+      {photo && (
         <View style={styles.preview}>
           <Image
             source={photo}
@@ -257,70 +426,8 @@ export default function ImagePickerExample({ navigation }) {
             </View>
           )}
         </View>
-      ) : (
-        <View style={{ flex: 1, maxHeight: windowHeight }}>
-          <View style={styles.cameraContainer}>
-            <Camera
-              style={[styles.camera, { aspectRatio: 3 / 4 }]}
-              type={type}
-              ref={(ref) => (cameraRef = ref)}
-            >
-              <Dot style={styles.dot1} />
-              <Dot style={styles.dot2} />
-              <Dot style={styles.dot3} />
-              <Dot style={styles.dot4} />
-              <Dot style={styles.dot5} />
-              <Dot style={styles.dot6} />
-              <Dot style={styles.dot7} />
-              <Dot style={styles.dot8} />
-              <Dot style={styles.dot9} />
-              <Dot style={styles.dot10} />
-              <Dot style={styles.dot11} />
-              <Dot style={styles.dot12} />
-              <Dot style={styles.dot13} />
-              <Dot style={styles.dot14} />
-              <View style={styles.cameraFrameContainer}>
-                <View style={styles.cameraFrame}></View>
-              </View>
-              <View>
-                <Text style={styles.frameInstruction}>
-                  Fit the crop damage within the frame
-                </Text>
-              </View>
-
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                  style={styles.galleryButton}
-                  onPress={toggleCameraType}
-                >
-                  <MaterialIcons
-                    name="flip-camera-android"
-                    size={44}
-                    color="white"
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.captureButton}
-                  onPress={takePicture}
-                >
-                  <Text style={styles.text}></Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.infoButton}
-                  onPress={() => setModalVisible(true)}
-                >
-                  <FontAwesome5
-                    name="question-circle"
-                    size={44}
-                    color="white"
-                  />
-                </TouchableOpacity>
-              </View>
-            </Camera>
-          </View>
-        </View>
       )}
-
+      {/* Info screen */}
       {modalVisible && (
         <View>
           <Modal
@@ -405,12 +512,10 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
   },
   frameInstruction: {
-    color: "white",
-    padding: 25,
-    alignContent: "center",
-    justifyContent: "center",
-    alignSelf: "center",
-    fontWeight: 600,
+    color: "#ffffff",
+    padding: 20,
+    width: "100%",
+    textAlign: "center",
   },
 
   galleryButton: {
@@ -509,7 +614,7 @@ const styles = StyleSheet.create({
   popUpinfoContent: {
     backgroundColor: "white",
     padding: 20,
-    height: "50%",
+    height: "65%",
     width: "75%",
     borderRadius: 20,
   },
@@ -517,7 +622,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     padding: 15,
     fontSize: 20,
-    fontWeight: 600,
+    fontWeight: "600",
   },
   popUpinfoDescription: {
     fontSize: 17,
@@ -539,7 +644,15 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 17,
   },
-
+  cameraInstruction: {
+    flex: 1,
+  },
+  cameraInstructionBox: {
+    alignContent: "center",
+    justifyContent: "center",
+    flex: 1,
+    textAlign: "center",
+  },
   text: {
     fontSize: 24,
     fontWeight: "bold",
